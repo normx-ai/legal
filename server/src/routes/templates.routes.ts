@@ -61,6 +61,22 @@ templatesRoutes.get("/", (_req, res: Response) => {
     available: true,
   });
 
+  // GIE (Groupement d'Intérêt Économique)
+  templates.push({
+    id: "gie-convention",
+    forme: "GIE",
+    label: "Convention constitutive — Groupement d'Intérêt Économique",
+    available: true,
+  });
+
+  // Société en Participation
+  templates.push({
+    id: "ste-part-statuts",
+    forme: "STE PART",
+    label: "Statuts — Société en Participation",
+    available: true,
+  });
+
   // Templates transversaux
   for (const doc of ohadaRules.documents_transversaux) {
     templates.push({

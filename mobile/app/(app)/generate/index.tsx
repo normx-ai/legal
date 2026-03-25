@@ -40,7 +40,11 @@ const DOCUMENT_TYPES = [
   },
   {
     id: "gie", label: "Convention GIE", desc: "Groupement d'Intérêt Économique",
-    icon: "people-outline" as const, available: false, tag: "Bientôt",
+    icon: "people-outline" as const, available: true, tag: "Disponible",
+  },
+  {
+    id: "ste-part", label: "Statuts Sté en Participation", desc: "Société en Participation (2+ associés)",
+    icon: "git-compare-outline" as const, available: true, tag: "Disponible",
   },
   {
     id: "pv-ago", label: "PV d'AGO", desc: "Assemblée Générale Ordinaire",
@@ -97,6 +101,10 @@ export default function GenerateIndexScreen() {
                   router.navigate("/(app)/generate/sas");
                 } else if (docType.id === "sasu") {
                   router.navigate("/(app)/generate/sasu");
+                } else if (docType.id === "gie") {
+                  router.navigate("/(app)/generate/gie");
+                } else if (docType.id === "ste-part") {
+                  router.navigate("/(app)/generate/ste-part");
                 }
               }}
               style={{
