@@ -1,0 +1,65 @@
+export type ThemeColors = {
+  background: string;
+  card: string;
+  text: string;
+  textSecondary: string;
+  textMuted: string;
+  border: string;
+  primary: string;
+  accent: string;
+  sidebar: string;
+  sidebarText: string;
+  sidebarBorder: string;
+  sidebarActive: string;
+  headerBg: string;
+  input: string;
+  danger: string;
+  success: string;
+  warning: string;
+  disabled: string;
+  icon: string;
+};
+
+export const lightColors: ThemeColors = {
+  background: "#f3f4f6",
+  card: "#ffffff",
+  text: "#1f2937",
+  textSecondary: "#6b7280",
+  textMuted: "#9ca3af",
+  border: "#e5e7eb",
+  primary: "#D4A843",
+  accent: "#c49a38",
+  sidebar: "#ffffff",
+  sidebarText: "#1A3A5C",
+  sidebarBorder: "#e5e7eb",
+  sidebarActive: "#FDF8EE",
+  headerBg: "#1A3A5C",
+  input: "#ffffff",
+  danger: "#ef4444",
+  success: "#22c55e",
+  warning: "#f59e0b",
+  disabled: "#d1d5db",
+  icon: "#6b7280",
+};
+
+export const darkColors: ThemeColors = {
+  background: "#1A3A5C",
+  card: "#1A3A5C",
+  text: "#e8e6e1",
+  textSecondary: "#8a9bb0",
+  textMuted: "#5a6e82",
+  border: "rgba(255,255,255,0.12)",
+  primary: "#D4A843",
+  accent: "#e0b84f",
+  sidebar: "#1A3A5C",
+  sidebarText: "#e8e6e1",
+  sidebarBorder: "rgba(255,255,255,0.12)",
+  sidebarActive: "rgba(255,255,255,0.08)",
+  headerBg: "#1A3A5C",
+  input: "rgba(255,255,255,0.08)",
+  danger: "#f87171",
+  success: "#4ade80",
+  warning: "#fbbf24",
+  disabled: "rgba(255,255,255,0.2)",
+  icon: "#8a9bb0",
+};

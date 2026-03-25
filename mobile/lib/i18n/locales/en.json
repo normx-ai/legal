@@ -1,0 +1,75 @@
+{
+  "common": {
+    "next": "Next",
+    "previous": "Previous",
+    "generate": "Generate",
+    "download": "Download",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "add": "Add",
+    "edit": "Edit",
+    "close": "Close",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "required": "Required field",
+    "fcfa": "FCFA"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "email": "Email address",
+    "password": "Password",
+    "forgotPassword": "Forgot password?",
+    "logout": "Logout",
+    "companyName": "Company name",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "phone": "Phone"
+  },
+  "dashboard": {
+    "title": "My documents",
+    "newDocument": "New document",
+    "noDocuments": "No documents generated",
+    "noDocumentsDesc": "Create your first legal document by clicking the button above."
+  },
+  "documents": {
+    "statutsSarl": "SARL Articles of Association",
+    "statutsSa": "SA Articles of Association",
+    "statutsSas": "SAS Articles of Association",
+    "statutsSci": "SCI Articles of Association",
+    "pvNominationGerant": "Manager Appointment Minutes",
+    "cessionParts": "Share Transfer",
+    "pvAgo": "Ordinary General Meeting Minutes",
+    "pvAge": "Extraordinary General Meeting Minutes"
+  },
+  "wizard": {
+    "step": "Step {{current}} / {{total}}",
+    "societe": "Company",
+    "associes": "Partners",
+    "capital": "Capital",
+    "gerance": "Management",
+    "recap": "Summary",
+    "generation": "Generation"
+  },
+  "sarl": {
+    "title": "SARL Articles of Association",
+    "subtitle": "Limited Liability Company — OHADA Compliant",
+    "denomination": "Company name",
+    "sigle": "Acronym (optional)",
+    "objetSocial": "Business purpose",
+    "siegeSocial": "Registered office (full address)",
+    "ville": "City",
+    "pays": "Country",
+    "duree": "Company duration (years)",
+    "addAssocie": "Add partner",
+    "removeAssocie": "Remove partner",
+    "capitalTotal": "Total share capital (FCFA)",
+    "valeurNominale": "Par value per share (FCFA)",
+    "nombreParts": "Total number of shares",
+    "generateDocx": "Generate DOCX",
+    "generatePdf": "Generate PDF",
+    "downloadReady": "Your document is ready!"
+  }
+}

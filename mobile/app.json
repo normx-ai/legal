@@ -1,0 +1,18 @@
+{
+  "expo": {
+    "name": "NORMX Legal",
+    "slug": "normx-legal",
+    "version": "1.0.0",
+    "scheme": "normx-legal",
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/favicon.png",
+      "lang": "fr"
+    },
+    "plugins": ["expo-router", "expo-secure-store", "expo-localization"],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

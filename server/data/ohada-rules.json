@@ -1,0 +1,76 @@
+{
+  "rules": {
+    "sarl": {
+      "label": "Société à Responsabilité Limitée",
+      "sigle": "SARL",
+      "capital_minimum": 1000000,
+      "valeur_nominale_minimum": 5000,
+      "associes_min": 1,
+      "associes_max": 50,
+      "gerant_personne_physique": true,
+      "commissaire_comptes_obligatoire_seuil_ca": 250000000,
+      "documents": ["statuts", "pv-nomination-gerant", "registre-associes"]
+    },
+    "sa": {
+      "label": "Société Anonyme",
+      "sigle": "SA",
+      "capital_minimum_sans_ape": 10000000,
+      "capital_minimum_avec_ape": 100000000,
+      "valeur_nominale_minimum": 10000,
+      "associes_min": 1,
+      "associes_max": null,
+      "conseil_admin_min": 3,
+      "conseil_admin_max": 12,
+      "commissaire_comptes_obligatoire": true,
+      "documents": ["statuts", "pv-ag-constitutive", "pv-nomination-dg", "registre-actionnaires"]
+    },
+    "sas": {
+      "label": "Société par Actions Simplifiée",
+      "sigle": "SAS",
+      "capital_minimum": 1000000,
+      "valeur_nominale_minimum": null,
+      "associes_min": 1,
+      "associes_max": null,
+      "president_obligatoire": true,
+      "president_personne_morale_autorise": true,
+      "documents": ["statuts", "pv-president", "registre-actionnaires"]
+    },
+    "sci": {
+      "label": "Société Civile Immobilière",
+      "sigle": "SCI",
+      "capital_minimum": null,
+      "associes_min": 2,
+      "associes_max": null,
+      "gerant_personne_physique": true,
+      "documents": ["statuts", "pv-gerant"]
+    },
+    "gie": {
+      "label": "Groupement d'Intérêt Économique",
+      "sigle": "GIE",
+      "capital_minimum": null,
+      "associes_min": 2,
+      "associes_max": null,
+      "documents": ["convention-constitutive"]
+    },
+    "ei": {
+      "label": "Entreprise Individuelle",
+      "sigle": "EI",
+      "capital_minimum": null,
+      "associes_min": 1,
+      "associes_max": 1,
+      "documents": ["declaration-activite"]
+    }
+  },
+  "documents_transversaux": [
+    { "id": "pv-ago", "label": "PV d'Assemblée Générale Ordinaire" },
+    { "id": "pv-age", "label": "PV d'Assemblée Générale Extraordinaire" },
+    { "id": "cession-parts", "label": "Contrat de cession de parts" },
+    { "id": "augmentation-capital", "label": "Augmentation de capital" },
+    { "id": "reduction-capital", "label": "Réduction de capital" },
+    { "id": "pv-dissolution", "label": "PV de dissolution / liquidation" },
+    { "id": "modification-statuts", "label": "Modification de statuts" }
+  ],
+  "devise": "FCFA",
+  "pays_defaut": "République du Congo",
+  "reference_legale": "Acte Uniforme OHADA relatif au droit des sociétés commerciales et du GIE, révisé le 30 janvier 2014"
+}

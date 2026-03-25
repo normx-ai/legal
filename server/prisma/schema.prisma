@@ -1,0 +1,103 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ── Auth & Organisation ──
+
+model User {
+  id                   Int       @id @default(autoincrement())
+  email                String    @unique
+  password             String
+  nom                  String
+  prenom               String
+  telephone            String?
+  role                 String    @default("USER")
+  isEmailVerified      Boolean   @default(false)
+  emailVerifyToken     String?
+  emailVerifyExpires   DateTime?
+  resetPasswordToken   String?
+  resetPasswordExpires DateTime?
+  failedLoginAttempts  Int       @default(0)
+  lockedUntil          DateTime?
+  tokenRevokedAt       DateTime?
+  lastLoginAt          DateTime?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+
+  memberships OrganizationMember[]
+  documents   Document[]
+}
+
+model Organization {
+  id        Int      @id @default(autoincrement())
+  name      String
+  slug      String   @unique
+  pays      String   @default("242")
+  logo      String?
+  website   String?
+  address   String?
+  phone     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  members      OrganizationMember[]
+  subscription Subscription?
+  documents    Document[]
+}
+
+model OrganizationMember {
+  id             Int      @id @default(autoincrement())
+  userId         Int
+  organizationId Int
+  role           String   @default("MEMBER")
+  joinedAt       DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  user         User         @relation(fields: [userId], references: [id])
+  organization Organization @relation(fields: [organizationId], references: [id])
+
+  @@unique([userId, organizationId])
+}
+
+model Subscription {
+  id                 Int       @id @default(autoincrement())
+  organizationId     Int       @unique
+  plan               String    @default("FREE")
+  status             String    @default("ACTIVE")
+  documentsPerMonth  Int       @default(1)
+  documentsUsed      Int       @default(0)
+  currentPeriodStart DateTime  @default(now())
+  currentPeriodEnd   DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id])
+}
+
+// ── Documents juridiques ──
+
+model Document {
+  id              String   @id @default(uuid())
+  type            String   // "statuts-sarl", "pv-nomination-gerant", etc.
+  label           String   // "Statuts SARL — Société XYZ"
+  formeJuridique  String   // "SARL", "SA", "SAS", etc.
+  denomination    String   // Nom de la société générée
+  status          String   @default("draft") // draft, generated, error
+  data            Json     // Données du formulaire (snapshot)
+  docxPath        String?  // Chemin vers le fichier .docx généré
+  pdfPath         String?  // Chemin vers le fichier .pdf généré
+  errorMessage    String?
+
+  userId         Int
+  organizationId Int?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  user         User          @relation(fields: [userId], references: [id])
+  organization Organization? @relation(fields: [organizationId], references: [id])
+}

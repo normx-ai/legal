@@ -1,0 +1,101 @@
+# ==========================================
+# NORMX Legal — Docker Compose Production
+# ==========================================
+
+services:
+  # --- Backend API ---
+  api:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: normx-legal-api
+    restart: unless-stopped
+    env_file: ./server/.env.production
+    environment:
+      - PORT=3004
+      - DATABASE_URL=postgresql://normxlegal:${POSTGRES_PASSWORD}@postgres:5432/normxlegal?schema=public
+    ports:
+      - "127.0.0.1:3004:3004"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - normx-legal-net
+    volumes:
+      - generated_docs:/app/generated
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '1.0'
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # --- PostgreSQL ---
+  postgres:
+    image: postgres:16-alpine
+    container_name: normx-legal-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: normxlegal
+      POSTGRES_USER: normxlegal
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U normxlegal"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - normx-legal-net
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: '0.5'
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # --- Nginx (reverse proxy + frontend) ---
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: normx-legal-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - /var/www/certbot:/var/www/certbot:ro
+      - generated_docs:/var/www/files:ro
+    depends_on:
+      - api
+    networks:
+      - normx-legal-net
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+          cpus: '0.5'
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  pgdata:
+  generated_docs:
+
+networks:
+  normx-legal-net:
+    driver: bridge
