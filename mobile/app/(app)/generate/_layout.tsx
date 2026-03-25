@@ -7,6 +7,7 @@ export default function GenerateLayout() {
       <Stack.Screen name="sarl" />
       <Stack.Screen name="sa-ag" />
       <Stack.Screen name="sa-ca" />
+      <Stack.Screen name="sa-uni" />
     </Stack>
   );
 }

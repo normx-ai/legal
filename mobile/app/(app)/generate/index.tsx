@@ -23,6 +23,10 @@ const DOCUMENT_TYPES = [
     icon: "business-outline" as const, available: true, tag: "Disponible",
   },
   {
+    id: "sa-uni", label: "Statuts SA Unipersonnelle", desc: "SA avec actionnaire unique",
+    icon: "person-outline" as const, available: true, tag: "Disponible",
+  },
+  {
     id: "sas", label: "Statuts SAS", desc: "Société par Actions Simplifiée",
     icon: "business-outline" as const, available: false, tag: "Bientôt",
   },
@@ -83,6 +87,8 @@ export default function GenerateIndexScreen() {
                   router.navigate("/(app)/generate/sa-ag");
                 } else if (docType.id === "sa-ca") {
                   router.navigate("/(app)/generate/sa-ca");
+                } else if (docType.id === "sa-uni") {
+                  router.navigate("/(app)/generate/sa-uni");
                 }
               }}
               style={{

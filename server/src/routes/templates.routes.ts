@@ -37,6 +37,14 @@ templatesRoutes.get("/", (_req, res: Response) => {
     available: true,
   });
 
+  // SA Unipersonnelle (sous-type de SA)
+  templates.push({
+    id: "sa-uni-statuts",
+    forme: "SA UNI",
+    label: "Statuts — Société Anonyme Unipersonnelle",
+    available: true,
+  });
+
   // Templates transversaux
   for (const doc of ohadaRules.documents_transversaux) {
     templates.push({
