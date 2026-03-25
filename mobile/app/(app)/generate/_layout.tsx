@@ -8,6 +8,8 @@ export default function GenerateLayout() {
       <Stack.Screen name="sa-ag" />
       <Stack.Screen name="sa-ca" />
       <Stack.Screen name="sa-uni" />
+      <Stack.Screen name="sas" />
+      <Stack.Screen name="sasu" />
     </Stack>
   );
 }

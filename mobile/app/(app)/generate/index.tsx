@@ -28,7 +28,11 @@ const DOCUMENT_TYPES = [
   },
   {
     id: "sas", label: "Statuts SAS", desc: "Société par Actions Simplifiée",
-    icon: "business-outline" as const, available: false, tag: "Bientôt",
+    icon: "business-outline" as const, available: true, tag: "Disponible",
+  },
+  {
+    id: "sasu", label: "Statuts SASU", desc: "SAS Unipersonnelle (associé unique)",
+    icon: "person-outline" as const, available: true, tag: "Disponible",
   },
   {
     id: "sci", label: "Statuts SCI", desc: "Société Civile Immobilière",
@@ -89,6 +93,10 @@ export default function GenerateIndexScreen() {
                   router.navigate("/(app)/generate/sa-ca");
                 } else if (docType.id === "sa-uni") {
                   router.navigate("/(app)/generate/sa-uni");
+                } else if (docType.id === "sas") {
+                  router.navigate("/(app)/generate/sas");
+                } else if (docType.id === "sasu") {
+                  router.navigate("/(app)/generate/sasu");
                 }
               }}
               style={{

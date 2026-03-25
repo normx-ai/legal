@@ -45,6 +45,22 @@ templatesRoutes.get("/", (_req, res: Response) => {
     available: true,
   });
 
+  // SAS (Société par Actions Simplifiée)
+  templates.push({
+    id: "sas-statuts",
+    forme: "SAS",
+    label: "Statuts — Société par Actions Simplifiée",
+    available: true,
+  });
+
+  // SASU (SAS Unipersonnelle)
+  templates.push({
+    id: "sasu-statuts",
+    forme: "SASU",
+    label: "Statuts — Société par Actions Simplifiée Unipersonnelle",
+    available: true,
+  });
+
   // Templates transversaux
   for (const doc of ohadaRules.documents_transversaux) {
     templates.push({
