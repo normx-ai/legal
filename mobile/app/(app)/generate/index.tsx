@@ -20,7 +20,7 @@ const DOCUMENT_TYPES = [
   },
   {
     id: "sa-ca", label: "Statuts SA (CA)", desc: "SA avec Conseil d'Administration",
-    icon: "business-outline" as const, available: false, tag: "Bientôt",
+    icon: "business-outline" as const, available: true, tag: "Disponible",
   },
   {
     id: "sas", label: "Statuts SAS", desc: "Société par Actions Simplifiée",
@@ -81,6 +81,8 @@ export default function GenerateIndexScreen() {
                   router.navigate("/(app)/generate/sarl");
                 } else if (docType.id === "sa-ag") {
                   router.navigate("/(app)/generate/sa-ag");
+                } else if (docType.id === "sa-ca") {
+                  router.navigate("/(app)/generate/sa-ca");
                 }
               }}
               style={{

@@ -29,6 +29,14 @@ templatesRoutes.get("/", (_req, res: Response) => {
     available: true,
   });
 
+  // SA avec Conseil d'Administration (sous-type de SA)
+  templates.push({
+    id: "sa-ca-statuts",
+    forme: "SA CA",
+    label: "Statuts — Société Anonyme avec Conseil d'Administration",
+    available: true,
+  });
+
   // Templates transversaux
   for (const doc of ohadaRules.documents_transversaux) {
     templates.push({
