@@ -5,6 +5,7 @@ export default function GenerateLayout() {
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="index" />
       <Stack.Screen name="sarl" />
+      <Stack.Screen name="sa-ag" />
     </Stack>
   );
 }

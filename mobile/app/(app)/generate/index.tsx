@@ -15,7 +15,11 @@ const DOCUMENT_TYPES = [
     icon: "person-outline" as const, available: true, tag: "Disponible",
   },
   {
-    id: "sa", label: "Statuts SA", desc: "Société Anonyme",
+    id: "sa-ag", label: "Statuts SA (AG)", desc: "Société Anonyme avec Administrateur Général",
+    icon: "business-outline" as const, available: true, tag: "Disponible",
+  },
+  {
+    id: "sa-ca", label: "Statuts SA (CA)", desc: "SA avec Conseil d'Administration",
     icon: "business-outline" as const, available: false, tag: "Bientôt",
   },
   {
@@ -75,6 +79,8 @@ export default function GenerateIndexScreen() {
               onPress={() => {
                 if (docType.id === "sarl" || docType.id === "sarlu") {
                   router.navigate("/(app)/generate/sarl");
+                } else if (docType.id === "sa-ag") {
+                  router.navigate("/(app)/generate/sa-ag");
                 }
               }}
               style={{

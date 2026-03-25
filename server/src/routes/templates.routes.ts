@@ -9,16 +9,25 @@ templatesRoutes.get("/", (_req, res: Response) => {
 
   // Templates par forme juridique
   for (const [key, rule] of Object.entries(ohadaRules.rules)) {
-    const r = rule as any;
-    for (const docId of r.documents) {
+    const r = rule as Record<string, unknown>;
+    const documents = r.documents as string[];
+    for (const docId of documents) {
       templates.push({
         id: `${key}-${docId}`,
-        forme: r.sigle,
-        label: `${formatDocLabel(docId)} — ${r.label}`,
-        available: key === "sarl" && docId === "statuts", // Seul statuts SARL est dispo pour l'instant
+        forme: r.sigle as string,
+        label: `${formatDocLabel(docId)} — ${r.label as string}`,
+        available: (key === "sarl" && docId === "statuts") || (key === "sa" && docId === "statuts"),
       });
     }
   }
+
+  // SA avec Administrateur Général (sous-type de SA)
+  templates.push({
+    id: "sa-ag-statuts",
+    forme: "SA AG",
+    label: "Statuts — Société Anonyme avec Administrateur Général",
+    available: true,
+  });
 
   // Templates transversaux
   for (const doc of ohadaRules.documents_transversaux) {
