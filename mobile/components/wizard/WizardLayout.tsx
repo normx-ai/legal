@@ -5,6 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/lib/theme/ThemeContext";
 import { fonts, fontWeights } from "@/lib/theme/fonts";
 import { useResponsive } from "@/lib/hooks/useResponsive";
+import { MainHeader } from "@/components/layout/MainHeader";
 
 interface PreviewLine {
   text: string;
@@ -155,24 +156,30 @@ export function WizardLayout({
     return form;
   }
 
-  // Desktop : 65% aperçu | 35% formulaire
+  // Desktop : header principal + split 65/35
   return (
-    <View style={{ flex: 1, flexDirection: "row" }}>
-      <View style={{ width: "65%", borderRightWidth: 1, borderRightColor: "#e2e8f0" }}>
-        {/* En-tête aperçu */}
-        <View style={{ backgroundColor: "#f1f5f9", paddingVertical: 10, paddingHorizontal: 20, borderBottomWidth: 1, borderBottomColor: "#e2e8f0", flexDirection: "row", alignItems: "center", gap: 8 }}>
-          <Ionicons name="eye-outline" size={16} color={colors.textSecondary} />
-          <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 15, color: colors.textSecondary }}>
-            Aperçu du document
-          </Text>
-          <Text style={{ fontFamily: fonts.regular, fontSize: 13, color: colors.textMuted, marginLeft: "auto" }}>
-            Les données se mettent à jour en temps réel
-          </Text>
+    <View style={{ flex: 1 }}>
+      {/* Header principal toujours visible */}
+      <MainHeader compact />
+
+      {/* Split aperçu / formulaire */}
+      <View style={{ flex: 1, flexDirection: "row" }}>
+        <View style={{ width: "65%", borderRightWidth: 1, borderRightColor: "#e2e8f0" }}>
+          {/* En-tête aperçu */}
+          <View style={{ backgroundColor: "#f1f5f9", paddingVertical: 10, paddingHorizontal: 20, borderBottomWidth: 1, borderBottomColor: "#e2e8f0", flexDirection: "row", alignItems: "center", gap: 8 }}>
+            <Ionicons name="eye-outline" size={16} color={colors.textSecondary} />
+            <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 15, color: colors.textSecondary }}>
+              Aperçu du document
+            </Text>
+            <Text style={{ fontFamily: fonts.regular, fontSize: 13, color: colors.textMuted, marginLeft: "auto" }}>
+              Mise à jour en temps réel
+            </Text>
+          </View>
+          {preview}
         </View>
-        {preview}
-      </View>
-      <View style={{ width: "35%" }}>
-        {form}
+        <View style={{ width: "35%" }}>
+          {form}
+        </View>
       </View>
     </View>
   );
