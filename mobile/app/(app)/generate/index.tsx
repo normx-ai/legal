@@ -6,43 +6,157 @@ import { useTheme } from "@/lib/theme/ThemeContext";
 import { fonts, fontWeights } from "@/lib/theme/fonts";
 import { useResponsive } from "@/lib/hooks/useResponsive";
 
-// ── Catégories de documents ──
-const CATEGORIES = [
-  {
-    title: "Créez votre entreprise",
-    icon: "briefcase-outline" as const,
-    color: "#1A3A5C",
-    docs: [
-      { id: "sarl", label: "Statuts SARL", desc: "2 à 50 associés, capital min. 1M FCFA", available: true },
-      { id: "sarlu", label: "Statuts SARLU", desc: "SARL à associé unique", available: true },
-      { id: "sas", label: "Statuts SAS", desc: "Société par Actions Simplifiée", available: true },
-      { id: "sasu", label: "Statuts SASU", desc: "SAS Unipersonnelle", available: true },
-      { id: "sa-ag", label: "Statuts SA (AG)", desc: "SA avec Administrateur Général", available: true },
-      { id: "sa-ca", label: "Statuts SA (CA)", desc: "SA avec Conseil d'Administration", available: true },
-      { id: "sa-uni", label: "Statuts SA Unipersonnelle", desc: "SA à actionnaire unique", available: true },
-    ],
-  },
-  {
-    title: "Autres formes juridiques",
-    icon: "people-outline" as const,
-    color: "#0891b2",
-    docs: [
-      { id: "gie", label: "Convention GIE", desc: "Groupement d'Intérêt Économique (22 articles)", available: true },
-      { id: "ste-part", label: "Statuts Sté en Participation", desc: "Société en Participation (13 articles)", available: true },
-      { id: "sci", label: "Statuts SCI", desc: "Société Civile Immobilière", available: false },
-    ],
-  },
-  {
-    title: "Documents transversaux",
-    icon: "document-text-outline" as const,
-    color: "#7c3aed",
-    docs: [
-      { id: "drc", label: "DRC", desc: "Déclaration de Régularité et de Conformité (art. 73)", available: true },
-      { id: "pv-ago", label: "PV d'AGO", desc: "Assemblée Générale Ordinaire", available: false },
-      { id: "cession", label: "Cession de parts", desc: "Transfert de parts sociales SARL", available: false },
-    ],
-  },
+// ── Onglets principaux ──
+const TABS = [
+  { key: "entreprise", label: "Entreprise", icon: "briefcase-outline" as const },
+  { key: "travail", label: "Travail", icon: "people-outline" as const },
+  { key: "immobilier", label: "Immobilier", icon: "home-outline" as const },
+  { key: "famille", label: "Famille", icon: "heart-outline" as const },
 ];
+
+// ── Contenu par onglet ──
+type DocItem = { id: string; label: string; available: boolean };
+type Section = { title: string; docs: DocItem[] };
+type TabContent = { sections: Section[]; popular: DocItem[] };
+
+const TAB_CONTENT: Record<string, TabContent> = {
+  entreprise: {
+    popular: [
+      { id: "sarl", label: "Statuts SARL", available: true },
+      { id: "sas", label: "Statuts SAS", available: true },
+      { id: "drc", label: "DRC", available: true },
+      { id: "sa-ag", label: "Statuts SA (AG)", available: true },
+    ],
+    sections: [
+      {
+        title: "Créez votre entreprise",
+        docs: [
+          { id: "sarl", label: "Statuts SARL", available: true },
+          { id: "sarlu", label: "Statuts SARLU", available: true },
+          { id: "sas", label: "Statuts SAS", available: true },
+          { id: "sasu", label: "Statuts SASU", available: true },
+          { id: "sa-ag", label: "Statuts SA (AG)", available: true },
+          { id: "sa-ca", label: "Statuts SA (CA)", available: true },
+          { id: "sa-uni", label: "Statuts SA Unipersonnelle", available: true },
+          { id: "gie", label: "Convention GIE", available: true },
+          { id: "ste-part", label: "Statuts Société en Participation", available: true },
+        ],
+      },
+      {
+        title: "Gérez votre entreprise",
+        docs: [
+          { id: "drc", label: "Déclaration de Régularité et de Conformité", available: true },
+          { id: "pv-ago", label: "PV d'Assemblée Générale Ordinaire", available: false },
+          { id: "pv-age", label: "PV d'Assemblée Générale Extraordinaire", available: false },
+          { id: "cession", label: "Cession de parts sociales", available: false },
+          { id: "augmentation-capital", label: "Augmentation de capital", available: false },
+          { id: "modification-statuts", label: "Modification de statuts", available: false },
+          { id: "transfert-siege", label: "Transfert de siège social", available: false },
+        ],
+      },
+      {
+        title: "Dissolution & Liquidation",
+        docs: [
+          { id: "pv-dissolution", label: "PV de dissolution", available: false },
+          { id: "pv-liquidation", label: "PV de clôture de liquidation", available: false },
+          { id: "bilan-liquidation", label: "Bilan de liquidation", available: false },
+        ],
+      },
+    ],
+  },
+  travail: {
+    popular: [
+      { id: "cdd", label: "Contrat CDD", available: false },
+      { id: "cdi", label: "Contrat CDI", available: false },
+      { id: "licenciement", label: "Lettre de licenciement", available: false },
+    ],
+    sections: [
+      {
+        title: "Recrutez votre équipe",
+        docs: [
+          { id: "cdi", label: "Contrat de travail CDI", available: false },
+          { id: "cdd", label: "Contrat de travail CDD", available: false },
+          { id: "stage", label: "Convention de stage", available: false },
+          { id: "promesse-embauche", label: "Promesse d'embauche", available: false },
+          { id: "description-poste", label: "Description de poste", available: false },
+        ],
+      },
+      {
+        title: "Gérez votre équipe",
+        docs: [
+          { id: "avenant", label: "Avenant au contrat de travail", available: false },
+          { id: "attestation-travail", label: "Attestation de travail", available: false },
+          { id: "avertissement", label: "Avertissement à un salarié", available: false },
+          { id: "conge", label: "Acceptation de congé", available: false },
+          { id: "certificat-travail", label: "Certificat de travail", available: false },
+        ],
+      },
+      {
+        title: "Se séparer d'un employé",
+        docs: [
+          { id: "licenciement", label: "Convocation pour un licenciement", available: false },
+          { id: "rupture-cdd", label: "Rupture anticipée de CDD", available: false },
+          { id: "solde-tout-compte", label: "Reçu pour solde de tout compte", available: false },
+          { id: "demission", label: "Lettre de démission", available: false },
+        ],
+      },
+    ],
+  },
+  immobilier: {
+    popular: [
+      { id: "bail-habitation", label: "Bail d'habitation", available: false },
+      { id: "bail-commercial", label: "Bail commercial", available: false },
+      { id: "sci", label: "Statuts SCI", available: false },
+    ],
+    sections: [
+      {
+        title: "Immobilier commercial",
+        docs: [
+          { id: "bail-commercial", label: "Bail commercial", available: false },
+          { id: "bail-professionnel", label: "Bail professionnel", available: false },
+          { id: "sous-location", label: "Autorisation de sous-location", available: false },
+          { id: "resiliation-bail-com", label: "Résiliation de bail commercial", available: false },
+        ],
+      },
+      {
+        title: "Patrimoine immobilier résidentiel",
+        docs: [
+          { id: "bail-habitation", label: "Bail d'habitation meublée", available: false },
+          { id: "bail-non-meuble", label: "Bail d'habitation non meublée", available: false },
+          { id: "sci", label: "Statuts SCI", available: false },
+          { id: "etat-lieux-entree", label: "État des lieux d'entrée", available: false },
+          { id: "etat-lieux-sortie", label: "État des lieux de sortie", available: false },
+          { id: "quittance", label: "Quittance de loyer", available: false },
+        ],
+      },
+    ],
+  },
+  famille: {
+    popular: [
+      { id: "donation", label: "Acte de donation", available: false },
+      { id: "testament", label: "Testament", available: false },
+    ],
+    sections: [
+      {
+        title: "Succession & Patrimoine",
+        docs: [
+          { id: "testament", label: "Testament", available: false },
+          { id: "donation", label: "Acte de donation", available: false },
+          { id: "procuration", label: "Procuration générale", available: false },
+          { id: "reconnaissance-dette", label: "Reconnaissance de dette", available: false },
+        ],
+      },
+      {
+        title: "Associations",
+        docs: [
+          { id: "statuts-asso", label: "Statuts d'association", available: false },
+          { id: "pv-ag-asso", label: "PV d'AG d'association", available: false },
+          { id: "reglement-interieur", label: "Règlement intérieur", available: false },
+        ],
+      },
+    ],
+  },
+};
 
 const ROUTES: Record<string, string> = {
   sarl: "/(app)/generate/sarl",
@@ -57,164 +171,161 @@ const ROUTES: Record<string, string> = {
   drc: "/(app)/generate/drc",
 };
 
-// ── Raccourcis populaires ──
-const POPULAR = [
-  { id: "sarl", label: "Statuts SARL", icon: "people-outline" as const },
-  { id: "sas", label: "Statuts SAS", icon: "business-outline" as const },
-  { id: "drc", label: "DRC", icon: "checkmark-circle-outline" as const },
-  { id: "gie", label: "Convention GIE", icon: "people-outline" as const },
-];
-
 export default function GenerateIndexScreen() {
   const { colors } = useTheme();
   const { isMobile } = useResponsive();
-  const [expandedCat, setExpandedCat] = useState<number | null>(0);
+  const [activeTab, setActiveTab] = useState("entreprise");
 
   const navigateTo = (id: string) => {
     const route = ROUTES[id];
     if (route) router.navigate(route as any);
   };
 
+  const content = TAB_CONTENT[activeTab];
+
   return (
     <View style={{ flex: 1, backgroundColor: "#f8fafc" }}>
       {/* Header */}
-      <View style={{
-        backgroundColor: colors.headerBg, paddingTop: 50, paddingBottom: 24, paddingHorizontal: 24,
-      }}>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 12, marginBottom: 20 }}>
-          <TouchableOpacity onPress={() => router.back()} style={{ padding: 4 }}>
-            <Ionicons name="arrow-back" size={22} color="#ffffff" />
-          </TouchableOpacity>
-          <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 18, color: "#ffffff" }}>
-            Nouveau document
+      <View style={{ backgroundColor: colors.headerBg, paddingTop: 50 }}>
+        <View style={{ paddingHorizontal: 24, paddingBottom: 16 }}>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 12, marginBottom: 8 }}>
+            <TouchableOpacity onPress={() => router.back()} style={{ padding: 4 }}>
+              <Ionicons name="arrow-back" size={22} color="#ffffff" />
+            </TouchableOpacity>
+            <Text style={{ fontFamily: fonts.bold, fontWeight: fontWeights.bold, fontSize: 20, color: "#ffffff" }}>
+              Nouveau document
+            </Text>
+          </View>
+          <Text style={{ fontFamily: fonts.regular, fontSize: 14, color: "rgba(255,255,255,0.65)", marginLeft: 38 }}>
+            Tous nos modèles sont conformes à l'Acte Uniforme OHADA révisé.
           </Text>
         </View>
 
-        {/* Hero */}
-        <Text style={{ fontFamily: fonts.bold, fontWeight: fontWeights.bold, fontSize: 24, color: "#ffffff", marginBottom: 6 }}>
-          Vos documents juridiques OHADA
-        </Text>
-        <Text style={{ fontFamily: fonts.regular, fontSize: 15, color: "rgba(255,255,255,0.7)", marginBottom: 20 }}>
-          Conformes à l'Acte Uniforme révisé. Générés en quelques minutes.
-        </Text>
-
-        {/* Raccourcis populaires */}
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: -24, paddingHorizontal: 24 }}>
-          <View style={{ flexDirection: "row", gap: 10 }}>
-            {POPULAR.map((item) => (
-              <TouchableOpacity
-                key={item.id}
-                onPress={() => navigateTo(item.id)}
-                style={{
-                  backgroundColor: colors.primary, paddingHorizontal: 18, paddingVertical: 12,
-                  flexDirection: "row", alignItems: "center", gap: 8, borderRadius: 6,
-                }}
-              >
-                <Ionicons name={item.icon} size={18} color="#ffffff" />
-                <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 13, color: "#ffffff" }}>
-                  {item.label}
-                </Text>
-              </TouchableOpacity>
-            ))}
+        {/* Onglets */}
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 16 }}>
+          <View style={{ flexDirection: "row", gap: 0 }}>
+            {TABS.map((tab) => {
+              const isActive = activeTab === tab.key;
+              return (
+                <TouchableOpacity
+                  key={tab.key}
+                  onPress={() => setActiveTab(tab.key)}
+                  style={{
+                    paddingHorizontal: 20, paddingVertical: 14,
+                    borderBottomWidth: 3,
+                    borderBottomColor: isActive ? colors.primary : "transparent",
+                    flexDirection: "row", alignItems: "center", gap: 7,
+                  }}
+                >
+                  <Ionicons name={tab.icon} size={16} color={isActive ? colors.primary : "rgba(255,255,255,0.5)"} />
+                  <Text style={{
+                    fontFamily: isActive ? fonts.bold : fonts.medium,
+                    fontWeight: isActive ? fontWeights.bold : fontWeights.medium,
+                    fontSize: 14,
+                    color: isActive ? "#ffffff" : "rgba(255,255,255,0.5)",
+                  }}>
+                    {tab.label}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
           </View>
         </ScrollView>
       </View>
 
       <ScrollView style={{ flex: 1 }} contentContainerStyle={{ maxWidth: 900, alignSelf: "center", width: "100%", padding: isMobile ? 16 : 24 }}>
 
-        {/* Catégories */}
-        {CATEGORIES.map((cat, catIndex) => (
-          <View key={catIndex} style={{ marginBottom: 16 }}>
-            {/* En-tête catégorie */}
-            <TouchableOpacity
-              onPress={() => setExpandedCat(expandedCat === catIndex ? null : catIndex)}
-              style={{
-                backgroundColor: "#ffffff", padding: 18,
-                borderWidth: 1, borderColor: "#e2e8f0",
-                flexDirection: "row", alignItems: "center", gap: 14,
-                borderBottomWidth: expandedCat === catIndex ? 0 : 1,
-              }}
-            >
-              <View style={{
-                width: 44, height: 44, borderRadius: 10,
-                backgroundColor: cat.color + "12", alignItems: "center", justifyContent: "center",
-              }}>
-                <Ionicons name={cat.icon} size={22} color={cat.color} />
-              </View>
-              <View style={{ flex: 1 }}>
-                <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 16, color: colors.text }}>
-                  {cat.title}
-                </Text>
-                <Text style={{ fontFamily: fonts.regular, fontSize: 13, color: colors.textSecondary, marginTop: 2 }}>
-                  {cat.docs.filter(d => d.available).length} modèle{cat.docs.filter(d => d.available).length > 1 ? "s" : ""} disponible{cat.docs.filter(d => d.available).length > 1 ? "s" : ""}
-                </Text>
-              </View>
-              <Ionicons
-                name={expandedCat === catIndex ? "chevron-up" : "chevron-down"}
-                size={20} color={colors.textMuted}
-              />
-            </TouchableOpacity>
+        {/* Services populaires */}
+        {content.popular.length > 0 && (
+          <View style={{ marginBottom: 24 }}>
+            <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 14, color: colors.textSecondary, textTransform: "uppercase", letterSpacing: 1, marginBottom: 12 }}>
+              Services populaires
+            </Text>
+            <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}>
+              {content.popular.map((item) => (
+                <TouchableOpacity
+                  key={item.id}
+                  disabled={!item.available}
+                  onPress={() => navigateTo(item.id)}
+                  style={{
+                    backgroundColor: item.available ? colors.primary : colors.disabled,
+                    paddingHorizontal: 18, paddingVertical: 12, borderRadius: 6,
+                    opacity: item.available ? 1 : 0.5,
+                  }}
+                >
+                  <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 13, color: "#ffffff" }}>
+                    {item.label}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+        )}
 
-            {/* Liste des documents de la catégorie */}
-            {expandedCat === catIndex && (
-              <View style={{ backgroundColor: "#ffffff", borderWidth: 1, borderColor: "#e2e8f0", borderTopWidth: 0 }}>
-                {cat.docs.map((doc, docIndex) => (
+        {/* Sections avec listes de documents */}
+        <View style={{ flexDirection: isMobile ? "column" : "row", gap: isMobile ? 20 : 32, flexWrap: "wrap" }}>
+          {content.sections.map((section, sIdx) => (
+            <View key={sIdx} style={{ flex: 1, minWidth: isMobile ? "100%" : 220 }}>
+              <Text style={{
+                fontFamily: fonts.bold, fontWeight: fontWeights.bold, fontSize: 15, color: colors.headerBg,
+                textTransform: "uppercase", marginBottom: 14, letterSpacing: 0.5,
+              }}>
+                {section.title}
+              </Text>
+              <View style={{ gap: 2 }}>
+                {section.docs.map((doc) => (
                   <TouchableOpacity
                     key={doc.id}
                     disabled={!doc.available}
                     onPress={() => navigateTo(doc.id)}
                     style={{
-                      padding: 16, paddingLeft: 24,
-                      flexDirection: "row", alignItems: "center", gap: 14,
-                      borderTopWidth: docIndex > 0 ? 1 : 0, borderTopColor: "#f1f5f9",
-                      opacity: doc.available ? 1 : 0.5,
+                      paddingVertical: 10, paddingHorizontal: 4,
+                      opacity: doc.available ? 1 : 0.45,
+                      flexDirection: "row", alignItems: "center", gap: 8,
                     }}
                   >
-                    <View style={{
-                      width: 8, height: 8, borderRadius: 4,
-                      backgroundColor: doc.available ? colors.success : colors.disabled,
-                    }} />
-                    <View style={{ flex: 1 }}>
-                      <Text style={{ fontFamily: fonts.medium, fontWeight: fontWeights.medium, fontSize: 15, color: colors.text }}>
-                        {doc.label}
-                      </Text>
-                      <Text style={{ fontFamily: fonts.regular, fontSize: 12, color: colors.textSecondary, marginTop: 1 }}>
-                        {doc.desc}
-                      </Text>
-                    </View>
-                    {doc.available ? (
-                      <Ionicons name="arrow-forward" size={18} color={cat.color} />
-                    ) : (
-                      <View style={{ backgroundColor: "#f1f5f9", paddingHorizontal: 10, paddingVertical: 3, borderRadius: 4 }}>
-                        <Text style={{ fontFamily: fonts.medium, fontSize: 11, color: colors.textMuted }}>Bientôt</Text>
-                      </View>
+                    {doc.available && (
+                      <View style={{ width: 6, height: 6, borderRadius: 3, backgroundColor: colors.success }} />
+                    )}
+                    <Text style={{
+                      fontFamily: fonts.regular, fontSize: 14,
+                      color: doc.available ? colors.text : colors.textMuted,
+                    }}>
+                      {doc.label}
+                    </Text>
+                    {!doc.available && (
+                      <Text style={{ fontFamily: fonts.regular, fontSize: 10, color: colors.textMuted }}> (bientôt)</Text>
                     )}
                   </TouchableOpacity>
                 ))}
               </View>
-            )}
-          </View>
-        ))}
+            </View>
+          ))}
+        </View>
 
         {/* Aide */}
-        <View style={{
-          backgroundColor: "#f0f9ff", padding: 20, marginTop: 8, marginBottom: 24,
-          borderLeftWidth: 4, borderLeftColor: "#0891b2", borderRadius: 4,
-        }}>
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 8, marginBottom: 8 }}>
-            <Ionicons name="help-circle-outline" size={20} color="#0891b2" />
-            <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 15, color: "#164e63" }}>
-              Besoin d'aide pour choisir ?
+        {activeTab === "entreprise" && (
+          <View style={{
+            backgroundColor: "#f0f9ff", padding: 20, marginTop: 28, marginBottom: 24,
+            borderLeftWidth: 4, borderLeftColor: "#0891b2", borderRadius: 4,
+          }}>
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 8, marginBottom: 8 }}>
+              <Ionicons name="help-circle-outline" size={20} color="#0891b2" />
+              <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 15, color: "#164e63" }}>
+                Besoin d'aide pour choisir ?
+              </Text>
+            </View>
+            <Text style={{ fontFamily: fonts.regular, fontSize: 13, color: "#155e75", lineHeight: 20 }}>
+              {"SARL / SARLU : capital min. 1.000.000 FCFA, parts sociales\n"}
+              {"SA : capital min. 10.000.000 FCFA, actions\n"}
+              {"SAS / SASU : capital min. 1.000.000 FCFA, grande liberté\n"}
+              {"GIE : pas de capital minimum (art. 869 OHADA)\n"}
+              {"Sté en Participation : pas d'immatriculation RCCM"}
             </Text>
           </View>
-          <Text style={{ fontFamily: fonts.regular, fontSize: 13, color: "#155e75", lineHeight: 20 }}>
-            {"SARL / SARLU : capital min. 1.000.000 FCFA, parts sociales\n"}
-            {"SA : capital min. 10.000.000 FCFA, actions\n"}
-            {"SAS / SASU : capital min. 1.000.000 FCFA, grande liberté\n"}
-            {"GIE : pas de capital minimum (art. 869 OHADA)\n"}
-            {"Sté en Participation : pas d'immatriculation RCCM"}
-          </Text>
-        </View>
+        )}
+
+        <View style={{ height: 40 }} />
       </ScrollView>
     </View>
   );
