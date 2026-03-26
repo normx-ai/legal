@@ -1,9 +1,10 @@
 import React, { useState, useCallback } from "react";
-import { View, Text, ScrollView, TouchableOpacity, TextInput, Platform, Switch } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, Platform } from "react-native";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/lib/theme/ThemeContext";
 import { fonts, fontWeights } from "@/lib/theme/fonts";
+import { Field, Choice, ToggleRow, SectionTitle } from "@/components/wizard/FormComponents";
 import { documentsApi } from "@/lib/api/documents";
 import { useDocumentsStore } from "@/lib/store/documents";
 import { create } from "zustand";
@@ -91,58 +92,6 @@ const useStePartStore = create<StePartState>((set) => ({
 }));
 
 const STEPS = ["Soci\u00e9t\u00e9", "Associ\u00e9s", "Apports", "G\u00e9rance", "D\u00e9cisions", "R\u00e9capitulatif", "Aper\u00e7u"];
-
-// ── UI Components ──
-function Field({ label, value, onChangeText, placeholder, multiline, keyboardType, colors }: {
-  label: string; value: string; onChangeText: (v: string) => void;
-  placeholder?: string; multiline?: boolean; keyboardType?: "default" | "numeric"; colors: Record<string, string>;
-}) {
-  return (
-    <View style={{ marginBottom: 14 }}>
-      <Text style={{ fontFamily: fonts.medium, fontWeight: fontWeights.medium, fontSize: 14, color: colors.text, marginBottom: 6 }}>{label}</Text>
-      <TextInput value={value} onChangeText={onChangeText} placeholder={placeholder} placeholderTextColor={colors.textMuted}
-        multiline={multiline} keyboardType={keyboardType}
-        style={{ backgroundColor: colors.input, borderWidth: 1, borderColor: colors.border, padding: 13,
-          fontFamily: fonts.regular, color: colors.text, fontSize: 15,
-          minHeight: multiline ? 80 : undefined, textAlignVertical: multiline ? "top" : undefined }} />
-    </View>
-  );
-}
-
-function Choice({ label, options, value, onChange, colors }: {
-  label: string; options: { value: string; label: string }[]; value: string;
-  onChange: (v: string) => void; colors: Record<string, string>;
-}) {
-  return (
-    <View style={{ marginBottom: 14 }}>
-      <Text style={{ fontFamily: fonts.medium, fontWeight: fontWeights.medium, fontSize: 14, color: colors.text, marginBottom: 6 }}>{label}</Text>
-      <View style={{ flexDirection: "row", gap: 8, flexWrap: "wrap" }}>
-        {options.map((o) => (
-          <TouchableOpacity key={o.value} onPress={() => onChange(o.value)}
-            style={{ flex: 1, minWidth: 80, padding: 12, backgroundColor: value === o.value ? colors.primary : colors.input,
-              alignItems: "center", borderWidth: 1, borderColor: value === o.value ? colors.primary : colors.border }}>
-            <Text style={{ fontFamily: fonts.medium, fontSize: 13, color: value === o.value ? "#fff" : colors.text }}>{o.label}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-    </View>
-  );
-}
-
-function ToggleRow({ label, value, onToggle, colors }: {
-  label: string; value: boolean; onToggle: (v: boolean) => void; colors: Record<string, string>;
-}) {
-  return (
-    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: "#e2e8f0" }}>
-      <Text style={{ fontFamily: fonts.medium, fontSize: 14, color: colors.text, flex: 1 }}>{label}</Text>
-      <Switch value={value} onValueChange={onToggle} trackColor={{ false: "#e2e8f0", true: colors.primary }} />
-    </View>
-  );
-}
-
-function SectionTitle({ title, colors }: { title: string; colors: Record<string, string> }) {
-  return <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 16, color: colors.primary, marginBottom: 12, marginTop: 8 }}>{title}</Text>;
-}
 
 // ── Main Screen ──
 export default function StePartWizardScreen() {
