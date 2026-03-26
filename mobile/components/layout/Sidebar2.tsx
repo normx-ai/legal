@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
@@ -208,7 +208,14 @@ interface Sidebar2Props {
 
 export function Sidebar2({ section, activeItem, onItemPress, onClose }: Sidebar2Props) {
   const data = SIDEBAR2_DATA[section];
+  // Première section ouverte par défaut
+  const [openSections, setOpenSections] = useState<Record<number, boolean>>({ 0: true });
+
   if (!data) return null;
+
+  const toggleSection = (idx: number) => {
+    setOpenSections((prev) => ({ ...prev, [idx]: !prev[idx] }));
+  };
 
   const handlePress = (item: SubItem) => {
     if (!item.available) return;
@@ -260,85 +267,103 @@ export function Sidebar2({ section, activeItem, onItemPress, onClose }: Sidebar2
         style={{ flex: 1 }}
         contentContainerStyle={{ paddingVertical: 8 }}
       >
-        {data.map((group, gIdx) => (
-          <View key={gIdx} style={{ paddingHorizontal: 16, marginBottom: 16 }}>
-            {/* Section header */}
-            <Text
-              style={{
-                fontFamily: fonts.semiBold,
-                fontWeight: fontWeights.semiBold,
-                fontSize: 10,
-                color: "#9ca3af",
-                textTransform: "uppercase",
-                letterSpacing: 1,
-                marginBottom: 8,
-                marginTop: gIdx > 0 ? 4 : 8,
-              }}
-            >
-              {group.title}
-            </Text>
-
-            {/* Items */}
-            {group.items.map((item) => {
-              const isActive = activeItem === item.id;
-              return (
-                <TouchableOpacity
-                  key={item.id}
-                  onPress={() => handlePress(item)}
-                  disabled={!item.available}
+        {data.map((group, gIdx) => {
+          const isOpen = !!openSections[gIdx];
+          return (
+            <View key={gIdx} style={{ paddingHorizontal: 16, marginBottom: 4 }}>
+              {/* Section header - clickable toggle */}
+              <TouchableOpacity
+                onPress={() => toggleSection(gIdx)}
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  paddingVertical: 10,
+                  marginTop: gIdx > 0 ? 2 : 4,
+                }}
+              >
+                <Text
                   style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    paddingVertical: 8,
-                    paddingHorizontal: 10,
-                    borderRadius: 6,
-                    backgroundColor: isActive ? "#FAF0D8" : "transparent",
-                    marginVertical: 1,
-                    gap: 8,
+                    fontFamily: fonts.semiBold,
+                    fontWeight: fontWeights.semiBold,
+                    fontSize: 10,
+                    color: isOpen ? "#374151" : "#9ca3af",
+                    textTransform: "uppercase",
+                    letterSpacing: 1,
+                    flex: 1,
                   }}
                 >
-                  {/* Status dot */}
-                  <View
+                  {group.title}
+                </Text>
+                <Ionicons
+                  name={isOpen ? "chevron-down" : "chevron-forward"}
+                  size={14}
+                  color={isOpen ? "#374151" : "#9ca3af"}
+                />
+              </TouchableOpacity>
+
+              {/* Items - visible only when open */}
+              {isOpen && group.items.map((item) => {
+                const isActive = activeItem === item.id;
+                return (
+                  <TouchableOpacity
+                    key={item.id}
+                    onPress={() => handlePress(item)}
+                    disabled={!item.available}
                     style={{
-                      width: 6,
-                      height: 6,
-                      borderRadius: 3,
-                      backgroundColor: item.available ? "#22c55e" : "#d1d5db",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      paddingVertical: 8,
+                      paddingHorizontal: 10,
+                      borderRadius: 6,
+                      backgroundColor: isActive ? "#FAF0D8" : "transparent",
+                      marginVertical: 1,
+                      gap: 8,
                     }}
-                  />
-                  <Text
-                    style={{
-                      flex: 1,
-                      fontFamily: isActive ? fonts.semiBold : fonts.regular,
-                      fontWeight: isActive ? fontWeights.semiBold : fontWeights.regular,
-                      fontSize: 13,
-                      color: item.available
-                        ? isActive
-                          ? "#92400e"
-                          : "#374151"
-                        : "#9ca3af",
-                    }}
-                    numberOfLines={1}
                   >
-                    {item.label}
-                  </Text>
-                  {!item.available && (
+                    {/* Status dot */}
+                    <View
+                      style={{
+                        width: 6,
+                        height: 6,
+                        borderRadius: 3,
+                        backgroundColor: item.available ? "#22c55e" : "#d1d5db",
+                      }}
+                    />
                     <Text
                       style={{
-                        fontFamily: fonts.regular,
-                        fontSize: 9,
-                        color: "#d1d5db",
-                        textTransform: "uppercase",
+                        flex: 1,
+                        fontFamily: isActive ? fonts.semiBold : fonts.regular,
+                        fontWeight: isActive ? fontWeights.semiBold : fontWeights.regular,
+                        fontSize: 13,
+                        color: item.available
+                          ? isActive
+                            ? "#92400e"
+                            : "#374151"
+                          : "#9ca3af",
                       }}
+                      numberOfLines={1}
                     >
-                      soon
+                      {item.label}
                     </Text>
-                  )}
-                </TouchableOpacity>
-              );
-            })}
-          </View>
-        ))}
+                    {!item.available && (
+                      <Text
+                        style={{
+                          fontFamily: fonts.regular,
+                          fontSize: 9,
+                          color: "#d1d5db",
+                          textTransform: "uppercase",
+                        }}
+                      >
+                        soon
+                      </Text>
+                    )}
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          );
+        })}
       </ScrollView>
     </View>
   );
