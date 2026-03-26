@@ -3,8 +3,7 @@ import { View, Platform } from "react-native";
 import { router } from "expo-router";
 import { useResponsive } from "@/lib/hooks/useResponsive";
 import { Topbar } from "./Topbar";
-import { Sidebar } from "./Sidebar";
-import { Sidebar2 } from "./Sidebar2";
+import { Topbar2 } from "./Topbar2";
 
 // ── Context for sidebar state (so index.tsx can read it) ──
 type LayoutContextType = {
@@ -82,37 +81,24 @@ export function AppLayout({ children }: AppLayoutProps) {
     );
   }
 
-  // ── Desktop: topbar + sidebar + sidebar2 + content ──
+  // ── Desktop: topbar + topbar2 (nav horizontale + dropdown) + content ──
   return (
     <LayoutContext.Provider value={contextValue}>
       <View style={{ height: "100vh" as any, width: "100vw" as any, overflow: "hidden" }}>
-        {/* Topbar */}
+        {/* Topbar (header) */}
         <Topbar />
 
-        {/* Below topbar */}
-        <View style={{ flex: 1, flexDirection: "row" }}>
-          {/* Sidebar 1 */}
-          <Sidebar
-            collapsed={collapsed}
-            onToggle={() => setCollapsed(!collapsed)}
-            activeSection={activeSection}
-            onSectionPress={handleSectionPress}
-          />
+        {/* Topbar2 (navigation horizontale + dropdown) */}
+        <Topbar2
+          activeSection={activeSection}
+          onSectionPress={handleSectionPress}
+          activeSubItem={activeSubItem}
+          onItemPress={(id) => setActiveSubItem(id)}
+        />
 
-          {/* Sidebar 2 (conditional) */}
-          {sidebar2Section && (
-            <Sidebar2
-              section={sidebar2Section}
-              activeItem={activeSubItem}
-              onItemPress={(id) => setActiveSubItem(id)}
-              onClose={() => setSidebar2Section(null)}
-            />
-          )}
-
-          {/* Main content — occupe tout l'espace restant */}
-          <View style={{ flex: 1, backgroundColor: "#f3f4f6", overflow: "auto" as any }}>
-            {children}
-          </View>
+        {/* Main content — occupe tout l'espace restant */}
+        <View style={{ flex: 1, backgroundColor: "#f3f4f6", overflow: "auto" as any }}>
+          {children}
         </View>
       </View>
     </LayoutContext.Provider>
