@@ -42,7 +42,7 @@ documentsRoutes.get("/", requireAuth(), async (req: AuthRequest, res: Response) 
 // GET /documents/:id
 documentsRoutes.get("/:id", requireAuth(), async (req: AuthRequest, res: Response) => {
   const doc = await prisma.document.findFirst({
-    where: { id: req.params.id, userId: req.userId },
+    where: { id: String(req.params.id), userId: req.userId },
   });
 
   if (!doc) {
@@ -68,7 +68,7 @@ documentsRoutes.get("/:id", requireAuth(), async (req: AuthRequest, res: Respons
 // GET /documents/:id/download
 documentsRoutes.get("/:id/download", requireAuth(), async (req: AuthRequest, res: Response) => {
   const doc = await prisma.document.findFirst({
-    where: { id: req.params.id, userId: req.userId },
+    where: { id: String(req.params.id), userId: req.userId },
   });
 
   if (!doc) {
