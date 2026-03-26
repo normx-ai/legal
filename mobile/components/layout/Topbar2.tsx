@@ -5,13 +5,14 @@ import { Ionicons } from "@expo/vector-icons";
 import { fonts, fontWeights } from "@/lib/theme/fonts";
 import { SIDEBAR2_DATA, ROUTES } from "./Sidebar2";
 
-// ── Onglets principaux ──
+// ── Onglets principaux OHADA ──
 const NAV_ITEMS = [
   { key: "accueil", label: "Accueil", icon: "home-outline" as const },
-  { key: "entreprise", label: "Entreprise", icon: "briefcase-outline" as const, hasDropdown: true },
-  { key: "travail", label: "Travail", icon: "people-outline" as const, hasDropdown: true },
-  { key: "immobilier", label: "Immobilier", icon: "home-outline" as const, hasDropdown: true },
-  { key: "famille", label: "Famille", icon: "heart-outline" as const, hasDropdown: true },
+  { key: "creer", label: "Créer", icon: "add-circle-outline" as const, hasDropdown: true },
+  { key: "gerer", label: "Gérer", icon: "settings-outline" as const, hasDropdown: true },
+  { key: "convoquer", label: "Convoquer", icon: "megaphone-outline" as const, hasDropdown: true },
+  { key: "capital", label: "Capital & Fusion", icon: "trending-up-outline" as const, hasDropdown: true },
+  { key: "dissoudre", label: "Dissoudre", icon: "close-circle-outline" as const, hasDropdown: true },
   { key: "documents", label: "Mes documents", icon: "document-text-outline" as const },
 ];
 

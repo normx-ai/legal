@@ -42,8 +42,8 @@ export function AppLayout({ children }: AppLayoutProps) {
   const handleSectionPress = (key: string) => {
     setActiveSection(key);
 
-    // Sections with sub-items toggle sidebar 2
-    const sectionsWithSub = ["entreprise", "travail", "immobilier", "famille"];
+    // Sections with sub-items (dropdowns OHADA)
+    const sectionsWithSub = ["creer", "gerer", "convoquer", "capital", "dissoudre"];
     if (sectionsWithSub.includes(key)) {
       if (sidebar2Section === key) {
         setSidebar2Section(null);

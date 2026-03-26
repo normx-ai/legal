@@ -66,144 +66,158 @@ const ROUTES: Record<string, string> = {
 
 // ── Sidebar 2 data by section ──
 const SIDEBAR2_DATA: Record<string, SubSection[]> = {
-  entreprise: [
+  creer: [
     {
-      title: "CRÉEZ VOTRE ENTREPRISE",
+      title: "SARL",
       items: [
         { id: "sarl", label: "Statuts SARL", available: true },
         { id: "sarlu", label: "Statuts SARLU", available: true },
-        { id: "sas", label: "Statuts SAS", available: true },
-        { id: "sasu", label: "Statuts SASU", available: true },
-        { id: "sa-ag", label: "Statuts SA (AG)", available: true },
-        { id: "sa-ca", label: "Statuts SA (CA)", available: true },
-        { id: "sa-uni", label: "Statuts SA Uni.", available: true },
-        { id: "gie", label: "Convention GIE", available: true },
-        { id: "ste-part", label: "Sté en Participation", available: true },
-        { id: "snc", label: "Statuts SNC", available: true },
-        { id: "scs", label: "Statuts SCS", available: true },
-        { id: "drc", label: "DRC (art. 73)", available: true },
-        { id: "bulletin-souscription-constitution", label: "Bulletin souscription (constitution)", available: true },
       ],
     },
     {
-      title: "GÉREZ VOTRE ENTREPRISE",
+      title: "SA",
       items: [
-        { id: "dec-associe-unique-gerant", label: "Décisions associé unique gérant", available: true },
-        { id: "dec-associe-unique-non-gerant", label: "Décisions associé unique non gérant", available: true },
-        { id: "dec-actionnaire-unique-ag", label: "Décisions actionnaire unique AG", available: true },
-        { id: "dec-actionnaire-unique-non-ag", label: "Décisions actionnaire unique non AG", available: true },
+        { id: "sa-ag", label: "SA (Administrateur Général)", available: true },
+        { id: "sa-ca", label: "SA (Conseil d'Administration)", available: true },
+        { id: "sa-uni", label: "SA Unipersonnelle", available: true },
+      ],
+    },
+    {
+      title: "SAS",
+      items: [
+        { id: "sas", label: "Statuts SAS", available: true },
+        { id: "sasu", label: "Statuts SASU", available: true },
+      ],
+    },
+    {
+      title: "AUTRES FORMES",
+      items: [
+        { id: "snc", label: "SNC (Nom Collectif)", available: true },
+        { id: "scs", label: "SCS (Commandite Simple)", available: true },
+        { id: "gie", label: "Convention GIE", available: true },
+        { id: "ste-part", label: "Société en Participation", available: true },
+      ],
+    },
+    {
+      title: "FORMALITÉS",
+      items: [
+        { id: "drc", label: "DRC (art. 73)", available: true },
+        { id: "bulletin-souscription-constitution", label: "Bulletin souscription", available: true },
+      ],
+    },
+  ],
+  gerer: [
+    {
+      title: "DÉCISIONS (SARL)",
+      items: [
+        { id: "dec-associe-unique-gerant", label: "Associé unique gérant", available: true },
+        { id: "dec-associe-unique-non-gerant", label: "Associé unique non gérant", available: true },
+        { id: "pv-consultation-ecrite", label: "PV consultation écrite", available: true },
+      ],
+    },
+    {
+      title: "DÉCISIONS (SA/SAS)",
+      items: [
+        { id: "dec-actionnaire-unique-ag", label: "Actionnaire unique AG", available: true },
+        { id: "dec-actionnaire-unique-non-ag", label: "Actionnaire unique non AG", available: true },
+        { id: "pv-reunion-ca", label: "PV réunion CA", available: true },
+      ],
+    },
+    {
+      title: "ASSEMBLÉES GÉNÉRALES",
+      items: [
         { id: "pv-ago-sa", label: "PV AGO (SA/SAS)", available: true },
         { id: "pv-age-sa", label: "PV AGE (SA/SAS)", available: true },
-        { id: "pv-reunion-ca", label: "PV réunion CA (SA)", available: true },
-        { id: "pv-consultation-ecrite", label: "PV consultation écrite (SARL)", available: true },
         { id: "pv-carence-ago", label: "PV carence AGO", available: true },
         { id: "pv-carence-age", label: "PV carence AGE", available: true },
+      ],
+    },
+    {
+      title: "CESSIONS & PACTES",
+      items: [
         { id: "acte-cession-parts", label: "Cession de parts (SARL)", available: true },
         { id: "pacte-actionnaires", label: "Pacte d'actionnaires", available: true },
       ],
     },
     {
-      title: "CONVOCATIONS & ASSEMBLÉES",
+      title: "CONVENTIONS",
+      items: [
+        { id: "avis-cac-conventions-sa", label: "Avis CAC (SA)", available: true },
+        { id: "avis-cac-conventions-sarl", label: "Avis CAC (SARL)", available: true },
+        { id: "lettre-info-ca-conventions", label: "Lettre info CA", available: true },
+      ],
+    },
+  ],
+  convoquer: [
+    {
+      title: "CONVOCATIONS",
       items: [
         { id: "avis-convocation-ag-sa", label: "Avis convocation AG (SA)", available: true },
         { id: "convocation-actionnaires-sa", label: "Convocation actionnaires (SA)", available: true },
         { id: "lettre-consultation-gerance", label: "Consultation gérance (SARL)", available: true },
-        { id: "pouvoir-ca", label: "Pouvoir CA (SA)", available: true },
+      ],
+    },
+    {
+      title: "POUVOIRS",
+      items: [
         { id: "pouvoir-ag-sa", label: "Pouvoir AG (SA)", available: true },
-        { id: "lettre-notification-representant", label: "Notification représentant permanent", available: true },
+        { id: "pouvoir-ca", label: "Pouvoir CA (SA)", available: true },
+      ],
+    },
+    {
+      title: "PRÉSENCES",
+      items: [
+        { id: "feuille-presence-ag-sa", label: "Feuille présence AG", available: true },
         { id: "feuille-presence-ca", label: "Feuille présence CA", available: true },
-        { id: "feuille-presence-ag-sa", label: "Feuille présence AG (SA)", available: true },
+        { id: "lettre-notification-representant", label: "Notification représentant", available: true },
+      ],
+    },
+  ],
+  capital: [
+    {
+      title: "AUGMENTATION",
+      items: [
+        { id: "bulletin-souscription-augmentation", label: "Bulletin souscription", available: true },
+        { id: "renonciation-droits-souscription", label: "Renonciation droits", available: true },
       ],
     },
     {
-      title: "CONVENTIONS RÉGLEMENTÉES",
+      title: "APPELS DE FONDS",
       items: [
-        { id: "avis-cac-conventions-sa", label: "Avis CAC conventions (SA)", available: true },
-        { id: "avis-cac-conventions-sarl", label: "Avis CAC conventions (SARL)", available: true },
-        { id: "lettre-info-ca-conventions", label: "Lettre info CA conventions", available: true },
-      ],
-    },
-    {
-      title: "CAPITAL & SOUSCRIPTION",
-      items: [
-        { id: "bulletin-souscription-augmentation", label: "Bulletin souscription (augmentation)", available: true },
-        { id: "renonciation-droits-souscription", label: "Renonciation droits souscription", available: true },
         { id: "lettre-appel-fonds", label: "Lettre appel de fonds", available: true },
-        { id: "mise-en-demeure-defaillant", label: "Mise en demeure défaillant", available: true },
+        { id: "mise-en-demeure-defaillant", label: "Mise en demeure", available: true },
       ],
     },
     {
-      title: "DISSOLUTION & LIQUIDATION",
+      title: "FUSION",
       items: [
-        { id: "pv-ca-dissolution", label: "PV CA dissolution", available: true },
-        { id: "rapport-ca-dissolution", label: "Rapport CA dissolution", available: true },
-        { id: "projet-resolutions-dissolution", label: "Projet résolutions dissolution", available: true },
-        { id: "pv-age-dissolution", label: "PV AGE dissolution", available: true },
-        { id: "pv-dissolution-liquidation", label: "PV 1ère AG liquidateur", available: true },
-        { id: "publication-nomination-liquidateur", label: "Publication liquidateur", available: true },
-      ],
-    },
-    {
-      title: "FUSION & OPÉRATIONS",
-      items: [
-        { id: "projet-fusion", label: "Fusion par absorption (SA)", available: true },
-        { id: "projet-fusion-participation", label: "Fusion avec participation (SA)", available: true },
-        { id: "projet-fusion-societe-nouvelle", label: "Fusion par société nouvelle (SA)", available: true },
+        { id: "projet-fusion", label: "Fusion par absorption", available: true },
+        { id: "projet-fusion-participation", label: "Fusion avec participation", available: true },
+        { id: "projet-fusion-societe-nouvelle", label: "Fusion société nouvelle", available: true },
         { id: "requete-designation-cac", label: "Requête commissaire apports", available: true },
       ],
     },
   ],
-  travail: [
+  dissoudre: [
     {
-      title: "RECRUTEZ",
+      title: "PRÉPARATION",
       items: [
-        { id: "cdi", label: "Contrat CDI", available: false },
-        { id: "cdd", label: "Contrat CDD", available: false },
-        { id: "stage", label: "Convention de stage", available: false },
+        { id: "pv-ca-dissolution", label: "PV CA dissolution", available: true },
+        { id: "rapport-ca-dissolution", label: "Rapport CA dissolution", available: true },
+        { id: "projet-resolutions-dissolution", label: "Projet résolutions", available: true },
       ],
     },
     {
-      title: "GEREZ VOTRE EQUIPE",
+      title: "ASSEMBLÉE",
       items: [
-        { id: "avenant", label: "Avenant", available: false },
-        { id: "attestation", label: "Attestation de travail", available: false },
-      ],
-    },
-  ],
-  immobilier: [
-    {
-      title: "IMMOBILIER COMMERCIAL",
-      items: [
-        { id: "bail-com", label: "Bail commercial", available: false },
-        { id: "bail-pro", label: "Bail professionnel", available: false },
-        { id: "resil-bail", label: "Resiliation de bail", available: false },
+        { id: "pv-age-dissolution", label: "PV AGE dissolution", available: true },
       ],
     },
     {
-      title: "PATRIMOINE RESIDENTIEL",
+      title: "LIQUIDATION",
       items: [
-        { id: "bail-hab", label: "Bail d'habitation", available: false },
-        { id: "sci", label: "Statuts SCI", available: false },
-        { id: "etat-lieux", label: "Etat des lieux", available: false },
-        { id: "quittance", label: "Quittance de loyer", available: false },
-      ],
-    },
-  ],
-  famille: [
-    {
-      title: "SUCCESSION & PATRIMOINE",
-      items: [
-        { id: "testament", label: "Testament", available: false },
-        { id: "donation", label: "Acte de donation", available: false },
-        { id: "procuration", label: "Procuration", available: false },
-        { id: "dette", label: "Reconnaissance de dette", available: false },
-      ],
-    },
-    {
-      title: "ASSOCIATIONS",
-      items: [
-        { id: "statuts-asso", label: "Statuts d'association", available: false },
-        { id: "pv-asso", label: "PV d'AG association", available: false },
+        { id: "pv-dissolution-liquidation", label: "PV 1ère AG liquidateur", available: true },
+        { id: "publication-nomination-liquidateur", label: "Publication liquidateur", available: true },
       ],
     },
   ],
