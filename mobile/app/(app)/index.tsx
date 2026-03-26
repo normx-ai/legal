@@ -99,23 +99,9 @@ export default function DashboardScreen() {
         <Text style={{ fontFamily: fonts.bold, fontWeight: fontWeights.bold, fontSize: 26, color: "#ffffff", marginBottom: 6 }}>
           Bonjour, {user?.prenom}
         </Text>
-        <Text style={{ fontFamily: fonts.regular, fontSize: 15, color: "rgba(255,255,255,0.7)", marginBottom: 20 }}>
+        <Text style={{ fontFamily: fonts.regular, fontSize: 15, color: "rgba(255,255,255,0.7)" }}>
           Créez vos documents juridiques conformes OHADA en quelques clics.
         </Text>
-
-        {/* Bouton principal */}
-        <TouchableOpacity
-          onPress={() => router.navigate("/(app)/generate")}
-          style={{
-            backgroundColor: colors.primary, paddingVertical: 16, paddingHorizontal: 24,
-            borderRadius: 8, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 10,
-          }}
-        >
-          <Ionicons name="add-circle" size={22} color="#ffffff" />
-          <Text style={{ fontFamily: fonts.bold, fontWeight: fontWeights.bold, fontSize: 16, color: "#ffffff" }}>
-            Nouveau document
-          </Text>
-        </TouchableOpacity>
       </View>
 
       <ScrollView style={{ flex: 1 }} contentContainerStyle={{ maxWidth: 900, alignSelf: "center", width: "100%", padding: isMobile ? 16 : 24 }}>
