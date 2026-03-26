@@ -51,3 +51,8 @@ export { preparePvCaDissolutionData } from "./generators/pv-ca-dissolution";
 export { prepareProjetResolutionsDissolutionData } from "./generators/projet-resolutions-dissolution";
 export { preparePvAgeDissolutionData } from "./generators/pv-age-dissolution";
 export { preparePublicationNominationLiquidateurData } from "./generators/publication-nomination-liquidateur";
+export { prepareLettreNotificationRepresentantData } from "./generators/lettre-notification-representant";
+export { prepareProjetFusionParticipationData } from "./generators/projet-fusion-participation";
+export { prepareProjetFusionSocieteNouvelleData } from "./generators/projet-fusion-societe-nouvelle";
+export { prepareSncData } from "./generators/snc";
+export { prepareScsData } from "./generators/scs";

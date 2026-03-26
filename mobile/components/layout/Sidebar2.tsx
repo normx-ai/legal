@@ -57,6 +57,11 @@ const ROUTES: Record<string, string> = {
   "pv-age-dissolution": "/(app)/generate/pv-age-dissolution",
   "publication-nomination-liquidateur": "/(app)/generate/publication-nomination-liquidateur",
   "projet-fusion": "/(app)/generate/projet-fusion",
+  "lettre-notification-representant": "/(app)/generate/lettre-notification-representant",
+  "projet-fusion-participation": "/(app)/generate/projet-fusion-participation",
+  "projet-fusion-societe-nouvelle": "/(app)/generate/projet-fusion-societe-nouvelle",
+  snc: "/(app)/generate/snc",
+  scs: "/(app)/generate/scs",
 };
 
 // ── Sidebar 2 data by section ──
@@ -74,6 +79,8 @@ const SIDEBAR2_DATA: Record<string, SubSection[]> = {
         { id: "sa-uni", label: "Statuts SA Uni.", available: true },
         { id: "gie", label: "Convention GIE", available: true },
         { id: "ste-part", label: "Sté en Participation", available: true },
+        { id: "snc", label: "Statuts SNC", available: true },
+        { id: "scs", label: "Statuts SCS", available: true },
         { id: "drc", label: "DRC (art. 73)", available: true },
         { id: "bulletin-souscription-constitution", label: "Bulletin souscription (constitution)", available: true },
       ],
@@ -103,6 +110,7 @@ const SIDEBAR2_DATA: Record<string, SubSection[]> = {
         { id: "lettre-consultation-gerance", label: "Consultation gérance (SARL)", available: true },
         { id: "pouvoir-ca", label: "Pouvoir CA (SA)", available: true },
         { id: "pouvoir-ag-sa", label: "Pouvoir AG (SA)", available: true },
+        { id: "lettre-notification-representant", label: "Notification représentant permanent", available: true },
         { id: "feuille-presence-ca", label: "Feuille présence CA", available: true },
         { id: "feuille-presence-ag-sa", label: "Feuille présence AG (SA)", available: true },
       ],
@@ -138,7 +146,9 @@ const SIDEBAR2_DATA: Record<string, SubSection[]> = {
     {
       title: "FUSION & OPÉRATIONS",
       items: [
-        { id: "projet-fusion", label: "Projet de fusion (SA)", available: true },
+        { id: "projet-fusion", label: "Fusion par absorption (SA)", available: true },
+        { id: "projet-fusion-participation", label: "Fusion avec participation (SA)", available: true },
+        { id: "projet-fusion-societe-nouvelle", label: "Fusion par société nouvelle (SA)", available: true },
         { id: "requete-designation-cac", label: "Requête commissaire apports", available: true },
       ],
     },

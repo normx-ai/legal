@@ -51,6 +51,11 @@ import { pvCaDissolutionRoute } from "./pv-ca-dissolution";
 import { projetResolutionsDissolutionRoute } from "./projet-resolutions-dissolution";
 import { pvAgeDissolutionRoute } from "./pv-age-dissolution";
 import { publicationNominationLiquidateurRoute } from "./publication-nomination-liquidateur";
+import { lettreNotificationRepresentantRoute } from "./lettre-notification-representant";
+import { projetFusionParticipationRoute } from "./projet-fusion-participation";
+import { projetFusionSocieteNouvelleRoute } from "./projet-fusion-societe-nouvelle";
+import { sncRoute } from "./snc";
+import { scsRoute } from "./scs";
 
 export const generateRoutes = Router();
 
@@ -106,3 +111,8 @@ generateRoutes.use(pvCaDissolutionRoute);
 generateRoutes.use(projetResolutionsDissolutionRoute);
 generateRoutes.use(pvAgeDissolutionRoute);
 generateRoutes.use(publicationNominationLiquidateurRoute);
+generateRoutes.use(lettreNotificationRepresentantRoute);
+generateRoutes.use(projetFusionParticipationRoute);
+generateRoutes.use(projetFusionSocieteNouvelleRoute);
+generateRoutes.use(sncRoute);
+generateRoutes.use(scsRoute);

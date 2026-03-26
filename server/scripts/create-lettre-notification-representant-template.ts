@@ -1,7 +1,7 @@
 /**
- * Script pour créer le template DOCX de l'Avis de Convocation à l'AG — SA OHADA
- * Modèle 27 du Guide Pratique des Sociétés Commerciales et du GIE - OHADA
- * Usage : npx tsx scripts/create-avis-convocation-ag-sa-template.ts
+ * Script pour cr\u00e9er le template DOCX de la Lettre de notification du repr\u00e9sentant permanent \u2014 SA OHADA
+ * Mod\u00e8le 26 du Guide Pratique des Soci\u00e9t\u00e9s Commerciales et du GIE - OHADA
+ * Usage : npx tsx scripts/create-lettre-notification-representant-template.ts
  */
 
 import PizZip from "pizzip";
@@ -35,9 +35,11 @@ function createEmptyDocx(): PizZip {
     `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <w:hdr xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
   <w:p><w:pPr><w:jc w:val="center"/><w:spacing w:after="0"/></w:pPr>
-    <w:r><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:b/><w:sz w:val="20"/></w:rPr><w:t xml:space="preserve">{denomination}</w:t></w:r></w:p>
+    <w:r><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:b/><w:sz w:val="20"/></w:rPr><w:t xml:space="preserve">{denomination_administrateur}</w:t></w:r></w:p>
+  <w:p><w:pPr><w:jc w:val="center"/><w:spacing w:after="0"/></w:pPr>
+    <w:r><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:sz w:val="18"/></w:rPr><w:t xml:space="preserve">{forme_administrateur} au capital de {capital_administrateur} FCFA</w:t></w:r></w:p>
   <w:p><w:pPr><w:jc w:val="center"/><w:spacing w:after="120"/><w:pBdr><w:bottom w:val="single" w:sz="4" w:space="1" w:color="999999"/></w:pBdr></w:pPr>
-    <w:r><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:sz w:val="18"/></w:rPr><w:t xml:space="preserve">Si\u00E8ge social : {siege_social}</w:t></w:r></w:p>
+    <w:r><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:sz w:val="18"/></w:rPr><w:t xml:space="preserve">Si\u00E8ge social : {siege_administrateur}</w:t></w:r></w:p>
 </w:hdr>`);
 
   zip.file("word/footer1.xml",
@@ -45,7 +47,7 @@ function createEmptyDocx(): PizZip {
 <w:ftr xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
   <w:p><w:pPr><w:pBdr><w:top w:val="single" w:sz="4" w:space="1" w:color="999999"/></w:pBdr></w:pPr></w:p>
   <w:p><w:pPr><w:tabs><w:tab w:val="center" w:pos="4536"/><w:tab w:val="right" w:pos="9072"/></w:tabs></w:pPr>
-    <w:r><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:sz w:val="18"/></w:rPr><w:t xml:space="preserve">Avis de convocation AG \u2014 {denomination}</w:t></w:r>
+    <w:r><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:sz w:val="18"/></w:rPr><w:t xml:space="preserve">Notification repr\u00E9sentant permanent \u2014 {denomination_administrateur}</w:t></w:r>
     <w:r><w:rPr><w:sz w:val="18"/></w:rPr><w:tab/></w:r>
     <w:r><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:sz w:val="18"/></w:rPr><w:t xml:space="preserve">Page </w:t></w:r>
     <w:r><w:fldChar w:fldCharType="begin"/></w:r><w:r><w:instrText> PAGE </w:instrText></w:r><w:r><w:fldChar w:fldCharType="separate"/></w:r><w:r><w:t>1</w:t></w:r><w:r><w:fldChar w:fldCharType="end"/></w:r>
@@ -83,36 +85,44 @@ function createTemplate() {
   const zip = createEmptyDocx();
 
   const body = [
-    // ===== MENTION INSERTION =====
-    it("\u00ab \u00e0 ins\u00e9rer dans un journal d\u2019annonces l\u00e9gales \u00bb"),
+    // ===== EN-T\u00caTE =====
+    t("Soci\u00e9t\u00e9 administr\u00e9e : {denomination_societe}"),
     t(""),
 
     // ===== TITRE =====
-    c("CONVOCATION"),
+    c("LETTRE DE NOTIFICATION"),
+    c("DU REPR\u00c9SENTANT PERMANENT"),
     t(""),
 
     // ===== CORPS =====
-    t("Mesdames, Messieurs les actionnaires de la soci\u00e9t\u00e9 {denomination},"),
-    t(""),
-    t("sont convoqu\u00e9s \u00e0 la r\u00e9union de l\u2019assembl\u00e9e g\u00e9n\u00e9rale {type_ag_label} qui se tiendra \u00e0 {lieu_ag} le {date_ag} \u00e0 {heure_ag} \u00e0 l\u2019effet de d\u00e9lib\u00e9rer sur l\u2019ordre du jour suivant :"),
-    t(""),
-    t("{ordre_du_jour}"),
-    t(""),
-    t("Les actionnaires pourront assister personnellement \u00e0 l\u2019assembl\u00e9e ou se faire repr\u00e9senter par un mandataire de leur choix."),
-    t(""),
-    t("A cet effet des formules de pouvoir sont \u00e0 leur disposition au si\u00e8ge social."),
-    t(""),
-    t("Le droit de participer \u00e0 l\u2019assembl\u00e9e sera subordonn\u00e9 \u00e0 l\u2019inscription des actions au nom de l\u2019actionnaire au jour de l\u2019assembl\u00e9e g\u00e9n\u00e9rale dans le registre des titres nominatifs tenus par la soci\u00e9t\u00e9."),
-    t(""),
-    it("Pour les soci\u00e9t\u00e9s faisant appel public \u00e0 l\u2019\u00e9pargne, le droit de participer \u00e0 l\u2019assembl\u00e9e sera subordonn\u00e9 \u00e0 l\u2019enregistrement comptable des actions au nom de l\u2019actionnaire, au jour de l\u2019assembl\u00e9e g\u00e9n\u00e9rale, dans les comptes de titres nominatifs tenus par la soci\u00e9t\u00e9 ou dans les comptes de titres au porteur tenus par un interm\u00e9diaire financier habilit\u00e9."),
-    t(""),
+    t("Mesdames, Messieurs,"),
     t(""),
 
+    // ===== CAS DE D\u00c9SIGNATION =====
+    t("{#is_designation}"),
+    b("En cas de d\u00e9signation :"),
+    t(""),
+    t("Nous avons l\u2019honneur de vous informer que le conseil d\u2019administration de notre soci\u00e9t\u00e9 {denomination_administrateur}, {forme_administrateur} au capital de {capital_administrateur} FCFA, dont le si\u00e8ge social est \u00e0 {siege_administrateur}, en sa s\u00e9ance du {date_seance}, a d\u00e9sign\u00e9 {representant_civilite} {representant_prenom} {representant_nom}, demeurant \u00e0 {representant_adresse}, en qualit\u00e9 de repr\u00e9sentant permanent pour exercer le mandat d\u2019administrateur qui nous a \u00e9t\u00e9 confi\u00e9 par votre soci\u00e9t\u00e9 (dans ses statuts, ou lors de son assembl\u00e9e g\u00e9n\u00e9rale du ...)."),
+    t(""),
+    t("{/is_designation}"),
+
+    // ===== CAS DE R\u00c9VOCATION =====
+    t("{#is_revocation}"),
+    b("En cas de r\u00e9vocation, d\u00e9mission et de remplacement d\u2019un repr\u00e9sentant permanent on indiquera :"),
+    t(""),
+    t("Nous avons l\u2019honneur de vous informer que le conseil d\u2019administration de notre soci\u00e9t\u00e9 {denomination_administrateur}, {forme_administrateur} au capital de {capital_administrateur} FCFA, dont le si\u00e8ge social est \u00e0 {siege_administrateur}, en sa s\u00e9ance du {date_seance}, a r\u00e9voqu\u00e9 (ou a pris acte de la d\u00e9mission, du d\u00e9c\u00e8s de ...) le mandat de repr\u00e9sentant permanent que notre soci\u00e9t\u00e9, en sa qualit\u00e9 d\u2019administrateur, avait confi\u00e9 \u00e0 {representant_civilite} {ancien_representant_nom} et qu\u2019il a confi\u00e9 ce mandat \u00e0 {representant_civilite} {nouveau_representant_nom} qui l\u2019exercera \u00e0 compter de ce jour."),
+    t(""),
+    t("{/is_revocation}"),
+
     // ===== SIGNATURE =====
+    t(""),
     t("Fait \u00e0 {lieu_signature}, le {date_signature}."),
     t(""),
     t(""),
-    t("{signataire_fonction}"),
+    t("Pour le conseil d\u2019administration de {denomination_administrateur}"),
+    t(""),
+    t(""),
+    t("Signature"),
     t(""),
   ];
 
@@ -140,11 +150,11 @@ function createTemplate() {
 
   zip.file("word/document.xml", documentXml);
 
-  const outputDir = path.join(__dirname, "../templates/avis-convocation-ag-sa");
+  const outputDir = path.join(__dirname, "../templates/lettre-notification-representant");
   if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });
   }
-  const outputPath = path.join(outputDir, "avis.docx");
+  const outputPath = path.join(outputDir, "lettre.docx");
   const buffer = zip.generate({ type: "nodebuffer", compression: "DEFLATE" });
   fs.writeFileSync(outputPath, buffer);
   console.log(`Template cr\u00e9\u00e9 : ${outputPath}`);

@@ -51,3 +51,8 @@ export { validatePvCaDissolution } from "./validators/pv-ca-dissolution";
 export { validateProjetResolutionsDissolution } from "./validators/projet-resolutions-dissolution";
 export { validatePvAgeDissolution } from "./validators/pv-age-dissolution";
 export { validatePublicationNominationLiquidateur } from "./validators/publication-nomination-liquidateur";
+export { validateLettreNotificationRepresentant } from "./validators/lettre-notification-representant";
+export { validateProjetFusionParticipation } from "./validators/projet-fusion-participation";
+export { validateProjetFusionSocieteNouvelle } from "./validators/projet-fusion-societe-nouvelle";
+export { validateSnc } from "./validators/snc";
+export { validateScs } from "./validators/scs";

@@ -40,6 +40,8 @@ const TAB_CONTENT: Record<string, TabContent> = {
           { id: "sa-uni", label: "Statuts SA Unipersonnelle", available: true },
           { id: "gie", label: "Convention GIE", available: true },
           { id: "ste-part", label: "Statuts Société en Participation", available: true },
+          { id: "snc", label: "Statuts SNC (Société en Nom Collectif)", available: true },
+          { id: "scs", label: "Statuts SCS (Société en Commandite Simple)", available: true },
         ],
       },
       {
@@ -104,8 +106,11 @@ const TAB_CONTENT: Record<string, TabContent> = {
       {
         title: "Fusion & Opérations",
         docs: [
-          { id: "projet-fusion", label: "Projet de fusion SA (absorption)", available: true },
+          { id: "projet-fusion", label: "Fusion par absorption (SA)", available: true },
+          { id: "projet-fusion-participation", label: "Fusion avec participation (SA)", available: true },
+          { id: "projet-fusion-societe-nouvelle", label: "Fusion par société nouvelle (SA)", available: true },
           { id: "requete-designation-cac", label: "Requête désignation commissaire apports", available: true },
+          { id: "lettre-notification-representant", label: "Notification représentant permanent (SA)", available: true },
         ],
       },
     ],
@@ -250,6 +255,11 @@ const ROUTES: Record<string, string> = {
   "pv-age-dissolution": "/(app)/generate/pv-age-dissolution",
   "publication-nomination-liquidateur": "/(app)/generate/publication-nomination-liquidateur",
   "projet-fusion": "/(app)/generate/projet-fusion",
+  "projet-fusion-participation": "/(app)/generate/projet-fusion-participation",
+  "projet-fusion-societe-nouvelle": "/(app)/generate/projet-fusion-societe-nouvelle",
+  "lettre-notification-representant": "/(app)/generate/lettre-notification-representant",
+  snc: "/(app)/generate/snc",
+  scs: "/(app)/generate/scs",
 };
 
 export default function GenerateIndexScreen() {
