@@ -85,12 +85,12 @@ export function AppLayout({ children }: AppLayoutProps) {
   // ── Desktop: topbar + sidebar + sidebar2 + content ──
   return (
     <LayoutContext.Provider value={contextValue}>
-      <View style={{ flex: 1 }}>
+      <View style={{ height: "100vh" as any, width: "100vw" as any, overflow: "hidden" }}>
         {/* Topbar */}
         <Topbar />
 
         {/* Below topbar */}
-        <View style={{ flex: 1, flexDirection: "row", marginTop: 54 }}>
+        <View style={{ flex: 1, flexDirection: "row" }}>
           {/* Sidebar 1 */}
           <Sidebar
             collapsed={collapsed}
@@ -109,8 +109,8 @@ export function AppLayout({ children }: AppLayoutProps) {
             />
           )}
 
-          {/* Main content */}
-          <View style={{ flex: 1, backgroundColor: "#f3f4f6" }}>
+          {/* Main content — occupe tout l'espace restant */}
+          <View style={{ flex: 1, backgroundColor: "#f3f4f6", overflow: "auto" as any }}>
             {children}
           </View>
         </View>

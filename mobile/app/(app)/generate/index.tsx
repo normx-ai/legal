@@ -233,7 +233,7 @@ export default function GenerateIndexScreen() {
         </ScrollView>
       </View>
 
-      <ScrollView style={{ flex: 1 }} contentContainerStyle={{ maxWidth: 900, alignSelf: "center", width: "100%", padding: isMobile ? 16 : 24 }}>
+      <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: isMobile ? 16 : 24 }}>
 
         {/* Services populaires */}
         {content.popular.length > 0 && (

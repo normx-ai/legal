@@ -218,7 +218,7 @@ export default function DashboardScreen() {
   // ── Desktop dashboard (sidebar handles navigation) ──
   if (isDesktop) {
     return (
-      <ScrollView style={{ flex: 1 }} contentContainerStyle={{ maxWidth: 960, padding: 32 }}>
+      <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: 32 }}>
         {/* Welcome */}
         <View style={{
           backgroundColor: colors.headerBg, padding: 32, borderRadius: 12, marginBottom: 28,

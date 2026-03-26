@@ -17,9 +17,7 @@ export function Topbar() {
         alignItems: "center",
         justifyContent: "space-between",
         paddingHorizontal: 20,
-        ...(Platform.OS === "web"
-          ? { position: "fixed" as any, top: 0, left: 0, right: 0, zIndex: 1000 }
-          : {}),
+        // Pas de position:fixed — le conteneur AppLayout gère le 100vh
       }}
     >
       {/* Logo — style Playfair Display comme normx */}
