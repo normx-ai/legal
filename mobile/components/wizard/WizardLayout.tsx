@@ -41,10 +41,10 @@ export function WizardLayout({
 
   const fontSize = (size?: string) => {
     switch (size) {
-      case "xl": return 20;
-      case "lg": return 16;
-      case "sm": return 11;
-      default: return 13;
+      case "xl": return 24;
+      case "lg": return 18;
+      case "sm": return 13;
+      default: return 15;
     }
   };
 
@@ -65,15 +65,15 @@ export function WizardLayout({
           <Text
             key={i}
             style={{
-              fontFamily: line.bold ? fonts.bold : line.italic ? fonts.regular : fonts.regular,
-              fontWeight: line.bold ? fontWeights.bold : fontWeights.regular,
+              fontFamily: "Times New Roman, Times, serif",
+              fontWeight: line.bold ? "bold" : "normal",
               fontStyle: line.italic ? "italic" : "normal",
               fontSize: fontSize(line.size),
               color: line.text.startsWith("{") || line.text.includes("...") ? "#9ca3af" : "#1f2937",
-              textAlign: line.center ? "center" : "left",
+              textAlign: line.center ? "center" : "justify",
               marginTop: line.spaceBefore ? 16 : 2,
               marginBottom: 2,
-              lineHeight: fontSize(line.size) * 1.5,
+              lineHeight: fontSize(line.size) * 1.6,
             }}
           >
             {line.text}
@@ -92,8 +92,8 @@ export function WizardLayout({
             <Ionicons name="arrow-back" size={24} color="#ffffff" />
           </TouchableOpacity>
           <View style={{ flex: 1 }}>
-            <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 17, color: "#ffffff" }}>{title}</Text>
-            <Text style={{ fontFamily: fonts.regular, fontSize: 12, color: "rgba(255,255,255,0.7)" }}>
+            <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 19, color: "#ffffff" }}>{title}</Text>
+            <Text style={{ fontFamily: fonts.regular, fontSize: 14, color: "rgba(255,255,255,0.7)" }}>
               Étape {currentStep + 1} / {steps.length} — {steps[currentStep]}
             </Text>
           </View>
@@ -109,7 +109,7 @@ export function WizardLayout({
       <ScrollView style={{ flex: 1, padding: 20 }} contentContainerStyle={{ paddingBottom: 100 }}>
         {error ? (
           <View style={{ backgroundColor: "#fef2f2", padding: 14, marginBottom: 16, borderRadius: 6, borderLeftWidth: 4, borderLeftColor: colors.danger }}>
-            <Text style={{ fontFamily: fonts.medium, fontSize: 13, color: "#991b1b" }}>{error}</Text>
+            <Text style={{ fontFamily: fonts.medium, fontSize: 15, color: "#991b1b" }}>{error}</Text>
           </View>
         ) : null}
         {children}
@@ -129,7 +129,7 @@ export function WizardLayout({
                 borderWidth: 1, borderColor: "#e2e8f0", borderRadius: 8,
               }}
             >
-              <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 14, color: colors.text }}>Précédent</Text>
+              <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 16, color: colors.text }}>Précédent</Text>
             </TouchableOpacity>
           )}
           <TouchableOpacity
@@ -140,9 +140,10 @@ export function WizardLayout({
               backgroundColor: isGenerating ? colors.disabled : colors.primary, borderRadius: 8,
             }}
           >
-            <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 14, color: "#ffffff" }}>
+            <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 16, color: "#ffffff" }}>
               {isGenerating ? "Génération..." : isLastDataStep ? "Générer le document" : "Suivant"}
             </Text>
+
           </TouchableOpacity>
         </View>
       )}
@@ -161,10 +162,10 @@ export function WizardLayout({
         {/* En-tête aperçu */}
         <View style={{ backgroundColor: "#f1f5f9", paddingVertical: 10, paddingHorizontal: 20, borderBottomWidth: 1, borderBottomColor: "#e2e8f0", flexDirection: "row", alignItems: "center", gap: 8 }}>
           <Ionicons name="eye-outline" size={16} color={colors.textSecondary} />
-          <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 13, color: colors.textSecondary }}>
+          <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 15, color: colors.textSecondary }}>
             Aperçu du document
           </Text>
-          <Text style={{ fontFamily: fonts.regular, fontSize: 12, color: colors.textMuted, marginLeft: "auto" }}>
+          <Text style={{ fontFamily: fonts.regular, fontSize: 13, color: colors.textMuted, marginLeft: "auto" }}>
             Les données se mettent à jour en temps réel
           </Text>
         </View>
