@@ -9,6 +9,13 @@ import { sasRoute } from "./sas";
 import { gieRoute } from "./gie";
 import { stePartRoute } from "./ste-part";
 import { drcRoute } from "./drc";
+import { pvAgoRoute } from "./pv-ago";
+import { pvAgeRoute } from "./pv-age";
+import { convAgoRoute } from "./conv-ago";
+import { convAgeRoute } from "./conv-age";
+import { pouvoirAgRoute } from "./pouvoir-ag";
+import { feuillePresenceRoute } from "./feuille-presence";
+import { rapportGestionRoute } from "./rapport-gestion";
 
 export const generateRoutes = Router();
 
@@ -22,3 +29,10 @@ generateRoutes.use(sasRoute);
 generateRoutes.use(gieRoute);
 generateRoutes.use(stePartRoute);
 generateRoutes.use(drcRoute);
+generateRoutes.use(pvAgoRoute);
+generateRoutes.use(pvAgeRoute);
+generateRoutes.use(convAgoRoute);
+generateRoutes.use(convAgeRoute);
+generateRoutes.use(pouvoirAgRoute);
+generateRoutes.use(feuillePresenceRoute);
+generateRoutes.use(rapportGestionRoute);
