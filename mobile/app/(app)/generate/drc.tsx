@@ -1,10 +1,11 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import { View, Text, ScrollView, TouchableOpacity, Platform } from "react-native";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/lib/theme/ThemeContext";
 import { fonts, fontWeights } from "@/lib/theme/fonts";
 import { Field, Choice, ToggleRow, SectionTitle } from "@/components/wizard/FormComponents";
+import { WizardLayout } from "@/components/wizard/WizardLayout";
 import { documentsApi } from "@/lib/api/documents";
 import { useDocumentsStore } from "@/lib/store/documents";
 import { create } from "zustand";
@@ -279,32 +280,76 @@ export default function DrcWizardScreen() {
   const isLastDataStep = w.currentStep === 4;
   const isDownloadStep = w.currentStep === 5;
 
-  return (
-    <View style={{ flex: 1, backgroundColor: colors.background }}>
-      {/* Header */}
-      <View style={{ backgroundColor: colors.headerBg, paddingTop: 50, paddingBottom: 16, paddingHorizontal: 20 }}>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 12, marginBottom: 12 }}>
-          <TouchableOpacity onPress={() => { if (w.currentStep === 0) router.back(); else w.prevStep(); }}>
-            <Ionicons name="arrow-back" size={24} color="#ffffff" />
-          </TouchableOpacity>
-          <View style={{ flex: 1 }}>
-            <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 18, color: "#ffffff" }}>
-              Déclaration de Régularité et de Conformité
-            </Text>
-            <Text style={{ fontFamily: fonts.regular, fontSize: 13, color: "rgba(255,255,255,0.7)" }}>
-              Étape {w.currentStep + 1} / {STEPS.length} — {STEPS[w.currentStep]}
-            </Text>
-          </View>
-        </View>
-        <View style={{ flexDirection: "row", gap: 4 }}>
-          {STEPS.map((_, i) => (
-            <View key={i} style={{ flex: 1, height: 4, backgroundColor: i <= w.currentStep ? colors.primary : "rgba(255,255,255,0.2)" }} />
-          ))}
-        </View>
-      </View>
+  // ── Aperçu document temps réel ──
+  const previewLines = useMemo(() => {
+    const v = (s: string) => s || "...";
+    const nombreTitres = w.valeur_nominale > 0 ? Math.floor(w.capital / w.valeur_nominale) : 0;
+    const lines = [
+      { text: v(w.denomination), bold: true, center: true, size: "xl" as const, spaceBefore: true },
+      { text: `${v(w.forme_juridique)} au capital de ${w.capital.toLocaleString("fr-FR")} FCFA`, center: true, size: "md" as const },
+      { text: `Siège social : ${v(w.siege_social)}`, center: true, size: "sm" as const },
+      { text: "━━━━━━━━━━━━━━━━━━━━━━", center: true },
+      { text: "DÉCLARATION DE RÉGULARITÉ ET DE CONFORMITÉ", bold: true, center: true, size: "lg" as const },
+      { text: "━━━━━━━━━━━━━━━━━━━━━━", center: true },
+      { text: "", spaceBefore: true },
+      { text: `Les soussignés, agissant en qualité de ${v(w.qualite_signataires)} de la société ${v(w.denomination)}, ${v(w.forme_juridique)}, déclarent :`, spaceBefore: true },
+      { text: "", spaceBefore: true },
+    ];
+    w.signataires.forEach((s, i) => {
+      const nom = s.nom && s.prenom ? `${s.civilite} ${s.prenom} ${s.nom}` : `Signataire ${i + 1} (à compléter)`;
+      lines.push({ text: `- ${nom}${s.adresse ? ", demeurant à " + s.adresse : ""} ;` });
+    });
+    lines.push(
+      { text: "", spaceBefore: true },
+      { text: "1. Constitution", bold: true, spaceBefore: true },
+      { text: `La société a été constituée suivant acte sous seing privé en date du ${v(w.date_statuts)}, avec un capital de ${w.capital.toLocaleString("fr-FR")} FCFA, divisé en ${nombreTitres} ${w.type_titres} de ${w.valeur_nominale.toLocaleString("fr-FR")} FCFA chacune.` },
+      { text: "", spaceBefore: true },
+      { text: "2. Libération du capital", bold: true, spaceBefore: true },
+      { text: `Les ${w.type_titres} ont été ${w.liberation_fractionnee ? `libérées à concurrence de ${w.quotite_liberee}` : "intégralement libérées"} et les fonds ont été déposés auprès de ${v(w.nom_banque)}.` },
+      { text: "", spaceBefore: true },
+      { text: "3. Organes désignés", bold: true, spaceBefore: true },
+    );
+    if (w.has_president_ca) lines.push({ text: `Président du CA : ${w.president_ca_civilite} ${v(w.president_ca_prenom)} ${v(w.president_ca_nom)}` });
+    if (w.has_dg) lines.push({ text: `Directeur Général : ${w.dg_civilite} ${v(w.dg_prenom)} ${v(w.dg_nom)}` });
+    if (w.has_ag) lines.push({ text: `Administrateur Général : ${w.ag_civilite} ${v(w.ag_prenom)} ${v(w.ag_nom)}` });
+    if (w.has_president_sas) lines.push({ text: `Président SAS : ${w.president_sas_civilite} ${v(w.president_sas_prenom)} ${v(w.president_sas_nom)}` });
+    if (w.has_gerant) lines.push({ text: `Gérant : ${w.gerant_civilite} ${v(w.gerant_prenom)} ${v(w.gerant_nom)}` });
+    if (w.has_cac) lines.push({ text: `CAC : ${w.cac_civilite} ${v(w.cac_prenom)} ${v(w.cac_nom)}` });
+    if (w.has_cac_suppleant) lines.push({ text: `CAC suppléant : ${w.cac_suppleant_civilite} ${v(w.cac_suppleant_prenom)} ${v(w.cac_suppleant_nom)}` });
+    lines.push(
+      { text: "", spaceBefore: true },
+      { text: "[ ... document complet dans le fichier DOCX ... ]", italic: true, center: true },
+      { text: "", spaceBefore: true },
+      { text: `Fait à ${v(w.lieu_signature)}, le ${w.date_signature || new Date().toLocaleDateString("fr-FR")}`, center: true, spaceBefore: true },
+    );
+    if (w.nombre_exemplaires) lines.push({ text: `En ${w.nombre_exemplaires} exemplaires originaux.`, center: true });
+    return lines.filter(l => l.text !== undefined);
+  }, [w.denomination, w.forme_juridique, w.siege_social, w.date_statuts, w.signataires,
+      w.qualite_signataires, w.capital, w.valeur_nominale, w.type_titres,
+      w.liberation_fractionnee, w.quotite_liberee, w.nom_banque,
+      w.has_president_ca, w.president_ca_civilite, w.president_ca_prenom, w.president_ca_nom,
+      w.has_dg, w.dg_civilite, w.dg_prenom, w.dg_nom,
+      w.has_ag, w.ag_civilite, w.ag_prenom, w.ag_nom,
+      w.has_president_sas, w.president_sas_civilite, w.president_sas_prenom, w.president_sas_nom,
+      w.has_gerant, w.gerant_civilite, w.gerant_prenom, w.gerant_nom,
+      w.has_cac, w.cac_civilite, w.cac_prenom, w.cac_nom,
+      w.has_cac_suppleant, w.cac_suppleant_civilite, w.cac_suppleant_prenom, w.cac_suppleant_nom,
+      w.lieu_signature, w.date_signature, w.nombre_exemplaires]);
 
-      {/* Content */}
-      <ScrollView style={{ flex: 1, padding: 20 }} contentContainerStyle={{ maxWidth: 640, alignSelf: "center", width: "100%" }}>
+  return (
+    <WizardLayout
+      title="Déclaration de Régularité et de Conformité"
+      steps={STEPS}
+      currentStep={w.currentStep}
+      onBack={() => { if (w.currentStep === 0) router.back(); else w.prevStep(); }}
+      onPrev={w.prevStep}
+      onNext={isLastDataStep ? handleGenerate : w.nextStep}
+      isLastDataStep={isLastDataStep}
+      isDownloadStep={isDownloadStep}
+      isGenerating={isGenerating}
+      error={error}
+      previewLines={previewLines}
+    >
 
         {/* ── Étape 0 : Société ── */}
         {w.currentStep === 0 && (
@@ -630,25 +675,6 @@ export default function DrcWizardScreen() {
           );
         })()}
 
-        {error ? <Text style={{ color: colors.danger, fontFamily: fonts.regular, fontSize: 14, marginTop: 8 }}>{error}</Text> : null}
-      </ScrollView>
-
-      {/* Footer */}
-      {!isDownloadStep && (
-        <View style={{ flexDirection: "row", padding: 16, gap: 12, backgroundColor: colors.card, borderTopWidth: 1, borderTopColor: colors.border }}>
-          {w.currentStep > 0 && (
-            <TouchableOpacity onPress={w.prevStep} style={{ flex: 1, padding: 14, borderWidth: 1, borderColor: colors.border, alignItems: "center" }}>
-              <Text style={{ fontFamily: fonts.medium, fontSize: 15, color: colors.text }}>Précédent</Text>
-            </TouchableOpacity>
-          )}
-          <TouchableOpacity onPress={isLastDataStep ? handleGenerate : w.nextStep} disabled={isGenerating}
-            style={{ flex: 1, padding: 14, backgroundColor: isGenerating ? colors.disabled : colors.primary, alignItems: "center" }}>
-            <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 15, color: "#ffffff" }}>
-              {isGenerating ? "Génération..." : isLastDataStep ? "Générer le document" : "Suivant"}
-            </Text>
-          </TouchableOpacity>
-        </View>
-      )}
-    </View>
+    </WizardLayout>
   );
 }

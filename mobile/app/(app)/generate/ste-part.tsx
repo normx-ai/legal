@@ -1,10 +1,11 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import { View, Text, ScrollView, TouchableOpacity, Platform } from "react-native";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/lib/theme/ThemeContext";
 import { fonts, fontWeights } from "@/lib/theme/fonts";
 import { Field, Choice, ToggleRow, SectionTitle } from "@/components/wizard/FormComponents";
+import { WizardLayout } from "@/components/wizard/WizardLayout";
 import { documentsApi } from "@/lib/api/documents";
 import { useDocumentsStore } from "@/lib/store/documents";
 import { create } from "zustand";
@@ -144,25 +145,71 @@ export default function StePartWizardScreen() {
   const isLastDataStep = w.currentStep === 5;
   const isDownloadStep = w.currentStep === 6;
 
-  return (
-    <View style={{ flex: 1, backgroundColor: "#f8fafc" }}>
-      {/* Header */}
-      <View style={{ backgroundColor: colors.headerBg, paddingTop: 50, paddingBottom: 16, paddingHorizontal: 20 }}>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 12, marginBottom: 12 }}>
-          <TouchableOpacity onPress={() => { if (w.currentStep === 0) router.back(); else w.prevStep(); }}>
-            <Ionicons name="arrow-back" size={24} color="#ffffff" />
-          </TouchableOpacity>
-          <View style={{ flex: 1 }}>
-            <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 18, color: "#ffffff" }}>Statuts Soci\u00e9t\u00e9 en Participation</Text>
-            <Text style={{ fontFamily: fonts.regular, fontSize: 13, color: "rgba(255,255,255,0.7)" }}>\u00c9tape {w.currentStep + 1} / {STEPS.length} \u2014 {STEPS[w.currentStep]}</Text>
-          </View>
-        </View>
-        <View style={{ flexDirection: "row", gap: 4 }}>
-          {STEPS.map((_, i) => (<View key={i} style={{ flex: 1, height: 4, backgroundColor: i <= w.currentStep ? colors.primary : "rgba(255,255,255,0.2)" }} />))}
-        </View>
-      </View>
+  // ── Aperçu document temps réel ──
+  const previewLines = useMemo(() => {
+    const v = (s: string) => s || "...";
+    const totalApports = w.associes.reduce((s, a) => s + a.apport, 0);
+    const totalParts = w.valeur_part > 0 ? Math.floor(totalApports / w.valeur_part) : 0;
+    const lines = [
+      { text: v(w.denomination), bold: true, center: true, size: "xl" as const, spaceBefore: true },
+      { text: "Soci\u00e9t\u00e9 en Participation", center: true, size: "md" as const },
+      { text: `Apports totaux : ${totalApports.toLocaleString("fr-FR")} FCFA`, center: true, size: "sm" as const },
+      { text: `Domicile : ${v(w.domicile)}`, center: true, size: "sm" as const },
+      { text: "\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501", center: true },
+      { text: "STATUTS", bold: true, center: true, size: "lg" as const },
+      { text: "\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501", center: true },
+      { text: "", spaceBefore: true },
+      { text: "Entre les soussign\u00e9s :", spaceBefore: true },
+    ];
+    w.associes.forEach((a, i) => {
+      const nom = a.nom && a.prenom ? `${a.civilite} ${a.prenom} ${a.nom}` : `Associ\u00e9 ${i + 1} (\u00e0 compl\u00e9ter)`;
+      lines.push({ text: `- ${nom}${a.adresse ? ", demeurant \u00e0 " + a.adresse : ""} ;` });
+    });
+    lines.push(
+      { text: "", spaceBefore: true },
+      { text: "Article premier : Forme", bold: true, spaceBefore: true },
+      { text: "Les soussign\u00e9s d\u00e9cident de constituer entre eux une soci\u00e9t\u00e9 en participation r\u00e9gie par les dispositions de l'Acte Uniforme OHADA." },
+      { text: "", spaceBefore: true },
+      { text: "Article 2 : D\u00e9nomination", bold: true, spaceBefore: true },
+      { text: `La soci\u00e9t\u00e9 a pour d\u00e9nomination \u00ab ${v(w.denomination)} \u00bb.` },
+      { text: "", spaceBefore: true },
+      { text: "Article 3 : Objet", bold: true, spaceBefore: true },
+      { text: v(w.objet_social) },
+      { text: "", spaceBefore: true },
+      { text: "Article 4 : Domicile", bold: true, spaceBefore: true },
+      { text: `Le domicile de la soci\u00e9t\u00e9 est fix\u00e9 \u00e0 ${v(w.domicile)}.` },
+      { text: "", spaceBefore: true },
+      { text: "Article 5 : Dur\u00e9e", bold: true, spaceBefore: true },
+      { text: w.duree_indeterminee ? `La soci\u00e9t\u00e9 est constitu\u00e9e pour une dur\u00e9e ind\u00e9termin\u00e9e (pr\u00e9avis de ${w.delai_preavis} mois).` : `La soci\u00e9t\u00e9 est constitu\u00e9e pour une dur\u00e9e de ${w.duree} ann\u00e9es.` },
+      { text: "", spaceBefore: true },
+      { text: "Article 7 : Apports", bold: true, spaceBefore: true },
+      { text: `Total des apports : ${totalApports.toLocaleString("fr-FR")} FCFA, soit ${totalParts} parts de ${w.valeur_part.toLocaleString("fr-FR")} FCFA.` },
+      { text: "", spaceBefore: true },
+      { text: "Article 10 : G\u00e9rance", bold: true, spaceBefore: true },
+      { text: `Est nomm\u00e9 g\u00e9rant : ${v(w.gerant.prenom)} ${v(w.gerant.nom)}.` },
+      { text: "", spaceBefore: true },
+      { text: "[ ... articles complets dans le document DOCX ... ]", italic: true, center: true },
+      { text: "", spaceBefore: true },
+      { text: `Fait \u00e0 ${v(w.lieu_signature)}, le ${w.date_signature || new Date().toLocaleDateString("fr-FR")}`, center: true, spaceBefore: true },
+    );
+    return lines.filter(l => l.text !== undefined);
+  }, [w.denomination, w.objet_social, w.domicile, w.duree, w.duree_indeterminee,
+      w.delai_preavis, w.associes, w.valeur_part, w.gerant, w.lieu_signature, w.date_signature]);
 
-      <ScrollView style={{ flex: 1, padding: 20 }} contentContainerStyle={{ maxWidth: 640, alignSelf: "center", width: "100%" }}>
+  return (
+    <WizardLayout
+      title="Statuts Soci\u00e9t\u00e9 en Participation"
+      steps={STEPS}
+      currentStep={w.currentStep}
+      onBack={() => { if (w.currentStep === 0) router.back(); else w.prevStep(); }}
+      onPrev={w.prevStep}
+      onNext={isLastDataStep ? handleGenerate : w.nextStep}
+      isLastDataStep={isLastDataStep}
+      isDownloadStep={isDownloadStep}
+      isGenerating={isGenerating}
+      error={error}
+      previewLines={previewLines}
+    >
 
         {/* \u00c9tape 0 : Soci\u00e9t\u00e9 */}
         {w.currentStep === 0 && (<>
@@ -361,25 +408,6 @@ export default function StePartWizardScreen() {
           </View>
         </>)}
 
-        {error ? <Text style={{ color: colors.danger, fontFamily: fonts.regular, fontSize: 14, marginTop: 8 }}>{error}</Text> : null}
-      </ScrollView>
-
-      {/* Footer */}
-      {!isDownloadStep && (
-        <View style={{ flexDirection: "row", padding: 16, gap: 12, backgroundColor: "#ffffff", borderTopWidth: 1, borderTopColor: "#e2e8f0" }}>
-          {w.currentStep > 0 && (
-            <TouchableOpacity onPress={w.prevStep} style={{ flex: 1, padding: 14, borderWidth: 1, borderColor: "#e2e8f0", alignItems: "center" }}>
-              <Text style={{ fontFamily: fonts.medium, fontSize: 15, color: colors.text }}>Pr\u00e9c\u00e9dent</Text>
-            </TouchableOpacity>
-          )}
-          <TouchableOpacity onPress={isLastDataStep ? handleGenerate : w.nextStep} disabled={isGenerating}
-            style={{ flex: 1, padding: 14, backgroundColor: isGenerating ? colors.disabled : colors.primary, alignItems: "center" }}>
-            <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 15, color: "#ffffff" }}>
-              {isGenerating ? "G\u00e9n\u00e9ration..." : isLastDataStep ? "G\u00e9n\u00e9rer le document" : "Suivant"}
-            </Text>
-          </TouchableOpacity>
-        </View>
-      )}
-    </View>
+    </WizardLayout>
   );
 }

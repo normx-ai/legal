@@ -1,9 +1,10 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import { View, Text, ScrollView, TouchableOpacity, TextInput, Platform } from "react-native";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/lib/theme/ThemeContext";
 import { fonts, fontWeights } from "@/lib/theme/fonts";
+import { WizardLayout } from "@/components/wizard/WizardLayout";
 import { documentsApi } from "@/lib/api/documents";
 import { useDocumentsStore } from "@/lib/store/documents";
 import { create } from "zustand";
@@ -252,25 +253,72 @@ export default function SaCaWizardScreen() {
   const isLastDataStep = w.currentStep === 7;
   const isDownloadStep = w.currentStep === 8;
 
-  return (
-    <View style={{ flex: 1, backgroundColor: "#f8fafc" }}>
-      {/* Header */}
-      <View style={{ backgroundColor: colors.headerBg, paddingTop: 50, paddingBottom: 16, paddingHorizontal: 20 }}>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 12, marginBottom: 12 }}>
-          <TouchableOpacity onPress={() => { if (w.currentStep === 0) router.back(); else w.prevStep(); }}>
-            <Ionicons name="arrow-back" size={24} color="#ffffff" />
-          </TouchableOpacity>
-          <View style={{ flex: 1 }}>
-            <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 18, color: "#ffffff" }}>Statuts SA — Conseil d'Administration</Text>
-            <Text style={{ fontFamily: fonts.regular, fontSize: 13, color: "rgba(255,255,255,0.7)" }}>Etape {w.currentStep + 1} / {STEPS.length} — {STEPS[w.currentStep]}</Text>
-          </View>
-        </View>
-        <View style={{ flexDirection: "row", gap: 4 }}>
-          {STEPS.map((_, i) => (<View key={i} style={{ flex: 1, height: 4, backgroundColor: i <= w.currentStep ? colors.primary : "rgba(255,255,255,0.2)" }} />))}
-        </View>
-      </View>
+  // ── Aperçu document temps réel ──
+  const previewLines = useMemo(() => {
+    const v = (s: string) => s || "...";
+    const nbActions = w.valeur_nominale > 0 ? Math.floor(w.capital / w.valeur_nominale) : 0;
+    const lines = [
+      { text: v(w.denomination), bold: true, center: true, size: "xl" as const, spaceBefore: true },
+      { text: "SA avec Conseil d'Administration", center: true, size: "md" as const },
+      { text: `Au capital de ${w.capital.toLocaleString("fr-FR")} FCFA`, center: true, size: "sm" as const },
+      { text: `Siège social : ${v(w.siege_social)}, ${v(w.ville)}, ${v(w.pays)}`, center: true, size: "sm" as const },
+      { text: "━━━━━━━━━━━━━━━━━━━━━━", center: true },
+      { text: "STATUTS", bold: true, center: true, size: "lg" as const },
+      { text: "━━━━━━━━━━━━━━━━━━━━━━", center: true },
+      { text: "", spaceBefore: true },
+      { text: "Entre les soussignés :", spaceBefore: true },
+    ];
+    w.associes.forEach((a, i) => {
+      const nom = a.nom && a.prenom ? `${a.civilite} ${a.prenom} ${a.nom}` : `Actionnaire ${i + 1} (à compléter)`;
+      lines.push({ text: `- ${nom}${a.adresse ? ", demeurant à " + a.adresse : ""} ;` });
+    });
+    lines.push(
+      { text: "", spaceBefore: true },
+      { text: "Article premier : Forme", bold: true, spaceBefore: true },
+      { text: "Il est formé entre les soussignés une société anonyme avec conseil d'administration régie par l'Acte Uniforme OHADA." },
+      { text: "", spaceBefore: true },
+      { text: "Article 2 : Dénomination", bold: true, spaceBefore: true },
+      { text: `La société a pour dénomination sociale « ${v(w.denomination)} ».${w.sigle ? ` Son sigle est : « ${w.sigle} ».` : ""}` },
+      { text: "", spaceBefore: true },
+      { text: "Article 3 : Objet", bold: true, spaceBefore: true },
+      { text: v(w.objet_social) },
+      { text: "", spaceBefore: true },
+      { text: "Article 4 : Siège social", bold: true, spaceBefore: true },
+      { text: `Le siège social est fixé à ${v(w.siege_social)}, ${v(w.ville)}, ${v(w.pays)}.` },
+      { text: "", spaceBefore: true },
+      { text: "Article 8 : Capital social", bold: true, spaceBefore: true },
+      { text: `Le capital social est fixé à ${w.capital.toLocaleString("fr-FR")} FCFA, divisé en ${nbActions} actions de ${w.valeur_nominale.toLocaleString("fr-FR")} FCFA chacune.` },
+      { text: "", spaceBefore: true },
+      { text: "Article 14 : Conseil d'Administration", bold: true, spaceBefore: true },
+      { text: `Le conseil d'administration est composé de ${w.conseil_administration.length} membres.` },
+      { text: `Président du CA : ${v(w.president_ca.prenom)} ${v(w.president_ca.nom)}.` },
+      { text: w.direction_generale === "variante_pdg"
+        ? "Le Président du CA cumule les fonctions de Directeur Général (PDG)."
+        : `Directeur Général : ${v(w.dg.prenom)} ${v(w.dg.nom)}.` },
+      { text: "", spaceBefore: true },
+      { text: "[ ... articles complets dans le document DOCX ... ]", italic: true, center: true },
+      { text: "", spaceBefore: true },
+      { text: `Fait à ${v(w.lieu_signature)}, le ${w.date_signature || new Date().toLocaleDateString("fr-FR")}`, center: true, spaceBefore: true },
+    );
+    return lines.filter(l => l.text !== undefined);
+  }, [w.denomination, w.sigle, w.objet_social, w.siege_social, w.ville, w.pays,
+      w.capital, w.valeur_nominale, w.associes, w.conseil_administration, w.president_ca,
+      w.direction_generale, w.dg, w.lieu_signature, w.date_signature]);
 
-      <ScrollView style={{ flex: 1, padding: 20 }} contentContainerStyle={{ maxWidth: 640, alignSelf: "center", width: "100%" }}>
+  return (
+    <WizardLayout
+      title="Statuts SA — Conseil d'Administration"
+      steps={STEPS}
+      currentStep={w.currentStep}
+      onBack={() => { if (w.currentStep === 0) router.back(); else w.prevStep(); }}
+      onPrev={w.prevStep}
+      onNext={isLastDataStep ? handleGenerate : w.nextStep}
+      isLastDataStep={isLastDataStep}
+      isDownloadStep={isDownloadStep}
+      isGenerating={isGenerating}
+      error={error}
+      previewLines={previewLines}
+    >
 
         {/* Etape 0 : Societe */}
         {w.currentStep === 0 && (<>
@@ -577,25 +625,6 @@ export default function SaCaWizardScreen() {
           </View>
         </>)}
 
-        {error ? <Text style={{ color: colors.danger, fontFamily: fonts.regular, fontSize: 14, marginTop: 8 }}>{error}</Text> : null}
-      </ScrollView>
-
-      {/* Footer */}
-      {!isDownloadStep && (
-        <View style={{ flexDirection: "row", padding: 16, gap: 12, backgroundColor: "#ffffff", borderTopWidth: 1, borderTopColor: "#e2e8f0" }}>
-          {w.currentStep > 0 && (
-            <TouchableOpacity onPress={w.prevStep} style={{ flex: 1, padding: 14, borderWidth: 1, borderColor: "#e2e8f0", alignItems: "center" }}>
-              <Text style={{ fontFamily: fonts.medium, fontSize: 15, color: colors.text }}>Precedent</Text>
-            </TouchableOpacity>
-          )}
-          <TouchableOpacity onPress={isLastDataStep ? handleGenerate : w.nextStep} disabled={isGenerating}
-            style={{ flex: 1, padding: 14, backgroundColor: isGenerating ? colors.disabled : colors.primary, alignItems: "center" }}>
-            <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 15, color: "#ffffff" }}>
-              {isGenerating ? "Generation..." : isLastDataStep ? "Generer le document" : "Suivant"}
-            </Text>
-          </TouchableOpacity>
-        </View>
-      )}
-    </View>
+    </WizardLayout>
   );
 }
