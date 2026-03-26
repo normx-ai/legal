@@ -63,6 +63,11 @@ const ROUTES: Record<string, string> = {
   "pv-age-dissolution": "/(app)/generate/pv-age-dissolution",
   "publication-nomination-liquidateur": "/(app)/generate/publication-nomination-liquidateur",
   "projet-fusion": "/(app)/generate/projet-fusion",
+  "projet-fusion-participation": "/(app)/generate/projet-fusion-participation",
+  "projet-fusion-societe-nouvelle": "/(app)/generate/projet-fusion-societe-nouvelle",
+  "lettre-notification-representant": "/(app)/generate/lettre-notification-representant",
+  snc: "/(app)/generate/snc",
+  scs: "/(app)/generate/scs",
 };
 
 const TAB_SECTIONS: Record<string, { popular: DocItem[]; sections: Section[] }> = {
@@ -86,6 +91,8 @@ const TAB_SECTIONS: Record<string, { popular: DocItem[]; sections: Section[] }> 
           { id: "sa-uni", label: "Statuts SA Uni.", available: true },
           { id: "gie", label: "Convention GIE", available: true },
           { id: "ste-part", label: "Ste en Participation", available: true },
+          { id: "snc", label: "Statuts SNC", available: true },
+          { id: "scs", label: "Statuts SCS", available: true },
         ],
       },
       {
