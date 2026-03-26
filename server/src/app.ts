@@ -11,11 +11,11 @@ import { userRoutes } from "./routes/user.routes";
 
 export const app = express();
 
-// Middleware
-app.use(helmet());
-app.use(cors({
-  origin: process.env.CORS_ORIGIN || "http://localhost:8081",
-  credentials: true,
+// CORS est géré dans server.ts au niveau HTTP raw
+
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: "cross-origin" },
+  crossOriginOpenerPolicy: false,
 }));
 app.use(express.json({ limit: "1mb" }));
 app.use(cookieParser());

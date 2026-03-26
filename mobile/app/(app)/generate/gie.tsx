@@ -1,10 +1,11 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import { View, Text, ScrollView, TouchableOpacity, Platform } from "react-native";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/lib/theme/ThemeContext";
 import { fonts, fontWeights } from "@/lib/theme/fonts";
 import { Field, Choice, ToggleRow, SectionTitle } from "@/components/wizard/FormComponents";
+import { WizardLayout } from "@/components/wizard/WizardLayout";
 import { documentsApi } from "@/lib/api/documents";
 import { useDocumentsStore } from "@/lib/store/documents";
 import { create } from "zustand";
@@ -189,25 +190,78 @@ export default function GieWizardScreen() {
   const isLastDataStep = w.currentStep === 6;
   const isDownloadStep = w.currentStep === 7;
 
-  return (
-    <View style={{ flex: 1, backgroundColor: "#f8fafc" }}>
-      {/* Header */}
-      <View style={{ backgroundColor: colors.headerBg, paddingTop: 50, paddingBottom: 16, paddingHorizontal: 20 }}>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 12, marginBottom: 12 }}>
-          <TouchableOpacity onPress={() => { if (w.currentStep === 0) router.back(); else w.prevStep(); }}>
-            <Ionicons name="arrow-back" size={24} color="#ffffff" />
-          </TouchableOpacity>
-          <View style={{ flex: 1 }}>
-            <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 18, color: "#ffffff" }}>Convention GIE</Text>
-            <Text style={{ fontFamily: fonts.regular, fontSize: 13, color: "rgba(255,255,255,0.7)" }}>Étape {w.currentStep + 1} / {STEPS.length} — {STEPS[w.currentStep]}</Text>
-          </View>
-        </View>
-        <View style={{ flexDirection: "row", gap: 4 }}>
-          {STEPS.map((_, i) => (<View key={i} style={{ flex: 1, height: 4, backgroundColor: i <= w.currentStep ? colors.primary : "rgba(255,255,255,0.2)" }} />))}
-        </View>
-      </View>
+  // ── Aperçu document temps réel ──
+  const previewLines = useMemo(() => {
+    const v = (s: string) => s || "...";
+    const lines = [
+      { text: v(w.denomination), bold: true, center: true, size: "xl" as const, spaceBefore: true },
+      { text: "Groupement d'Intérêt Économique", center: true, size: "md" as const },
+      { text: `Au capital de ${w.has_capital ? w.capital.toLocaleString("fr-FR") + " FCFA" : "sans capital"}`, center: true, size: "sm" as const },
+      { text: `Siège social : ${v(w.siege_social)}, ${v(w.ville)}, ${v(w.pays)}`, center: true, size: "sm" as const },
+      { text: "━━━━━━━━━━━━━━━━━━━━━━", center: true },
+      { text: "CONVENTION CONSTITUTIVE", bold: true, center: true, size: "lg" as const },
+      { text: "━━━━━━━━━━━━━━━━━━━━━━", center: true },
+      { text: "", spaceBefore: true },
+      { text: "Entre les soussignés :", spaceBefore: true },
+    ];
+    w.membres.forEach((m, i) => {
+      const nom = m.nom && m.prenom ? `${m.civilite} ${m.prenom} ${m.nom}` : `Membre ${i + 1} (à compléter)`;
+      lines.push({ text: `- ${nom}${m.adresse ? ", demeurant à " + m.adresse : ""} ;` });
+    });
+    lines.push(
+      { text: "", spaceBefore: true },
+      { text: "Article premier : Forme du groupement", bold: true, spaceBefore: true },
+      { text: "Les soussignés décident de créer un groupement d'intérêt économique (GIE) régi par les dispositions de l'Acte Uniforme de l'OHADA relatif au droit des sociétés commerciales et du GIE." },
+      { text: "", spaceBefore: true },
+      { text: "Article 2 : Dénomination", bold: true, spaceBefore: true },
+      { text: `Le GIE a pour dénomination « ${v(w.denomination)} ».` },
+      { text: w.sigle ? `Son sigle est : « ${w.sigle} ».` : "", italic: true },
+      { text: "", spaceBefore: true },
+      { text: "Article 3 : Objet", bold: true, spaceBefore: true },
+      { text: v(w.objet_social) },
+      { text: "", spaceBefore: true },
+      { text: "Article 4 : Siège du GIE", bold: true, spaceBefore: true },
+      { text: `Le siège du groupement est fixé à ${v(w.siege_social)}, ${v(w.ville)}, ${v(w.pays)}.` },
+      { text: "", spaceBefore: true },
+      { text: "Article 5 : Exercice", bold: true, spaceBefore: true },
+      { text: `L'exercice commence le 1er janvier et finit le 31 décembre.` },
+      { text: "", spaceBefore: true },
+      { text: "Article 6 : Durée", bold: true, spaceBefore: true },
+      { text: `Le GIE est constitué pour une durée de ${w.duree} années.` },
+      { text: "", spaceBefore: true },
+      { text: "Article 7 : Capital", bold: true, spaceBefore: true },
+      { text: w.has_capital
+        ? `Le GIE a un capital de ${w.capital.toLocaleString("fr-FR")} FCFA divisé en ${w.valeur_nominale > 0 ? Math.floor(w.capital / w.valeur_nominale) : "..."} parts de ${w.valeur_nominale.toLocaleString("fr-FR")} FCFA chacune.`
+        : "Le GIE est constitué sans capital conformément à l'article 869 de l'Acte Uniforme." },
+      { text: "", spaceBefore: true },
+      { text: "Article 13 : Administration du GIE", bold: true, spaceBefore: true },
+      { text: w.mode_administration === "admin_unique"
+        ? `Le GIE est administré par un administrateur unique, ${v(w.administrateur?.prenom)} ${v(w.administrateur?.nom)}.`
+        : `Le GIE est administré par un conseil d'administration de ${w.nombre_administrateurs} membres.` },
+      { text: "", spaceBefore: true },
+      { text: "[ ... articles 8 à 22 ... ]", italic: true, center: true },
+      { text: "", spaceBefore: true },
+      { text: `Fait à ${v(w.lieu_signature)}, le ${w.date_signature || new Date().toLocaleDateString("fr-FR")}`, center: true, spaceBefore: true },
+    );
+    return lines.filter(l => l.text !== undefined);
+  }, [w.denomination, w.sigle, w.objet_social, w.siege_social, w.ville, w.pays, w.duree,
+      w.has_capital, w.capital, w.valeur_nominale, w.membres, w.mode_administration,
+      w.administrateur, w.nombre_administrateurs, w.lieu_signature, w.date_signature]);
 
-      <ScrollView style={{ flex: 1, padding: 20 }} contentContainerStyle={{ maxWidth: 640, alignSelf: "center", width: "100%" }}>
+  return (
+    <WizardLayout
+      title="Convention GIE"
+      steps={STEPS}
+      currentStep={w.currentStep}
+      onBack={() => { if (w.currentStep === 0) router.back(); else w.prevStep(); }}
+      onPrev={w.prevStep}
+      onNext={isLastDataStep ? handleGenerate : w.nextStep}
+      isLastDataStep={isLastDataStep}
+      isDownloadStep={isDownloadStep}
+      isGenerating={isGenerating}
+      error={error}
+      previewLines={previewLines}
+    >
 
         {/* Étape 0 : Groupement */}
         {w.currentStep === 0 && (<>
@@ -478,25 +532,6 @@ export default function GieWizardScreen() {
           </View>
         </>)}
 
-        {error ? <Text style={{ color: colors.danger, fontFamily: fonts.regular, fontSize: 14, marginTop: 8 }}>{error}</Text> : null}
-      </ScrollView>
-
-      {/* Footer */}
-      {!isDownloadStep && (
-        <View style={{ flexDirection: "row", padding: 16, gap: 12, backgroundColor: "#ffffff", borderTopWidth: 1, borderTopColor: "#e2e8f0" }}>
-          {w.currentStep > 0 && (
-            <TouchableOpacity onPress={w.prevStep} style={{ flex: 1, padding: 14, borderWidth: 1, borderColor: "#e2e8f0", alignItems: "center" }}>
-              <Text style={{ fontFamily: fonts.medium, fontSize: 15, color: colors.text }}>Précédent</Text>
-            </TouchableOpacity>
-          )}
-          <TouchableOpacity onPress={isLastDataStep ? handleGenerate : w.nextStep} disabled={isGenerating}
-            style={{ flex: 1, padding: 14, backgroundColor: isGenerating ? colors.disabled : colors.primary, alignItems: "center" }}>
-            <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 15, color: "#ffffff" }}>
-              {isGenerating ? "Génération..." : isLastDataStep ? "Générer le document" : "Suivant"}
-            </Text>
-          </TouchableOpacity>
-        </View>
-      )}
-    </View>
+    </WizardLayout>
   );
 }
