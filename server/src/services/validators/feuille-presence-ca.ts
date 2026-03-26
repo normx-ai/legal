@@ -1,0 +1,31 @@
+import { ValidationError } from "./types";
+
+export function validateFeuillePresenceCa(data: Record<string, unknown>): ValidationError[] {
+  const errors: ValidationError[] = [];
+
+  if (!(data.denomination as string)?.trim()) {
+    errors.push({ field: "denomination", message: "La dénomination sociale est obligatoire" });
+  }
+  if (!(data.siege_social as string)?.trim()) {
+    errors.push({ field: "siege_social", message: "Le siège social est obligatoire" });
+  }
+  const capital = data.capital as number;
+  if (!capital || capital <= 0) {
+    errors.push({ field: "capital", message: "Le capital social est obligatoire" });
+  }
+  if (!(data.date_reunion as string)?.trim()) {
+    errors.push({ field: "date_reunion", message: "La date de la réunion est obligatoire" });
+  }
+  if (!(data.lieu_reunion as string)?.trim()) {
+    errors.push({ field: "lieu_reunion", message: "Le lieu de la réunion est obligatoire" });
+  }
+  if (!(data.president_nom as string)?.trim()) {
+    errors.push({ field: "president_nom", message: "Le nom du président est obligatoire" });
+  }
+  const administrateurs = data.administrateurs as any[];
+  if (!administrateurs || administrateurs.length === 0) {
+    errors.push({ field: "administrateurs", message: "Au moins un administrateur est requis" });
+  }
+
+  return errors;
+}

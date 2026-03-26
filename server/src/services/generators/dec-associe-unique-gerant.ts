@@ -1,0 +1,96 @@
+import { formatNumber, numberToWords } from "./utils";
+
+export function prepareDecAssocieUniqueGerantData(formData: any): Record<string, any> {
+  const capital = formData.capital as number;
+  const valeurNominale = formData.valeur_nominale as number || 5000;
+  const nombreParts = capital / valeurNominale;
+  const resultatMontant = formData.resultat_montant as number || 0;
+  const decisions = formData.decisions_selectionnees || [];
+
+  return {
+    denomination: formData.denomination,
+    forme_juridique: formData.forme_juridique || "SARL",
+    siege_social: formData.siege_social,
+    capital: formatNumber(capital),
+    capital_lettres: numberToWords(capital),
+    devise: "FCFA",
+    valeur_nominale: formatNumber(valeurNominale),
+    nombre_parts: formatNumber(nombreParts),
+    associe_civilite: formData.associe_civilite || "Monsieur",
+    associe_nom: formData.associe_nom || "",
+    associe_prenom: formData.associe_prenom || "",
+    date_decisions: formData.date_decisions || "",
+    date_decisions_lettres: formData.date_decisions_lettres || "",
+    heure_decisions: formData.heure_decisions || "",
+    heure_decisions_lettres: formData.heure_decisions_lettres || "",
+    exercice_clos_le: formData.exercice_clos_le || "",
+    resultat_montant: formatNumber(resultatMontant),
+    resultat_montant_lettres: numberToWords(resultatMontant),
+    resultat_type: formData.resultat_type || "bénéficiaire",
+    is_beneficiaire: (formData.resultat_type || "bénéficiaire") === "bénéficiaire",
+    is_deficitaire: formData.resultat_type === "déficitaire",
+    affectation_details: formData.affectation_details || "",
+    has_conventions: !!formData.has_conventions,
+    convention_details: formData.convention_details || "",
+    has_commissaire: !!formData.has_commissaire,
+    commissaire_titulaire_nom: formData.commissaire_titulaire_nom || "",
+    commissaire_titulaire_adresse: formData.commissaire_titulaire_adresse || "",
+    commissaire_suppleant_nom: formData.commissaire_suppleant_nom || "",
+    commissaire_suppleant_adresse: formData.commissaire_suppleant_adresse || "",
+    commissaire_duree: formData.commissaire_duree || "trois exercices",
+    renouvellement_gerant: !!formData.renouvellement_gerant,
+    duree_gerant: formData.duree_gerant || "",
+    remuneration_gerant: formData.remuneration_gerant || "",
+    // Decisions conditionnelles existantes
+    has_approbation_comptes: decisions.includes("approbation_comptes"),
+    has_affectation_resultats: decisions.includes("affectation_resultats"),
+    has_conventions_decision: decisions.includes("conventions"),
+    has_renouvellement_gerant: decisions.includes("renouvellement_gerant"),
+    has_remuneration_gerant: decisions.includes("remuneration_gerant"),
+    has_nomination_cac: decisions.includes("nomination_cac"),
+    has_pouvoirs: decisions.includes("pouvoirs"),
+
+    // Nouvelles decisions conditionnelles
+    has_renouvellement_cac: decisions.includes("renouvellement_cac"),
+    has_changement_denomination: decisions.includes("changement_denomination"),
+    has_prorogation_duree: decisions.includes("prorogation_duree"),
+    has_modification_objet: decisions.includes("modification_objet"),
+    has_transfert_siege: decisions.includes("transfert_siege"),
+    has_continuation_perte: decisions.includes("continuation_perte"),
+    has_augmentation_capital_numeraire: decisions.includes("augmentation_capital_numeraire"),
+    has_augmentation_capital_nature: decisions.includes("augmentation_capital_nature"),
+    has_augmentation_capital_reserves: decisions.includes("augmentation_capital_reserves"),
+    has_augmentation_capital_majoration: decisions.includes("augmentation_capital_majoration"),
+    has_reduction_capital: decisions.includes("reduction_capital"),
+    has_transformation: decisions.includes("transformation"),
+    has_dissolution: decisions.includes("dissolution"),
+    has_mise_harmonie: decisions.includes("mise_harmonie"),
+
+    // Nouvelles variables de template
+    nouvelle_denomination: formData.nouvelle_denomination || "",
+    article_denomination: formData.article_denomination || "",
+    date_expiration: formData.date_expiration || "",
+    duree_prorogation: formData.duree_prorogation || "",
+    nouvelle_date_expiration: formData.nouvelle_date_expiration || "",
+    nouvel_objet_social: formData.nouvel_objet_social || "",
+    ancien_siege: formData.ancien_siege || "",
+    nouveau_siege: formData.nouveau_siege || "",
+    date_effet: formData.date_effet || "",
+    date_etats_financiers: formData.date_etats_financiers || "",
+    montant_capitaux_propres: formData.montant_capitaux_propres ? formatNumber(formData.montant_capitaux_propres as number) : "",
+    montant_augmentation: formData.montant_augmentation ? formatNumber(formData.montant_augmentation as number) : "",
+    nouveau_capital: formData.nouveau_capital ? formatNumber(formData.nouveau_capital as number) : "",
+    nouvelles_parts: formData.nouvelles_parts ? formatNumber(formData.nouvelles_parts as number) : "",
+    nouvelle_valeur_nominale: formData.nouvelle_valeur_nominale ? formatNumber(formData.nouvelle_valeur_nominale as number) : "",
+    commissaire_apports_nom: formData.commissaire_apports_nom || "",
+    date_designation_commissaire: formData.date_designation_commissaire || "",
+    montant_reduction: formData.montant_reduction ? formatNumber(formData.montant_reduction as number) : "",
+    ancienne_valeur: formData.ancienne_valeur ? formatNumber(formData.ancienne_valeur as number) : "",
+    nouvelle_valeur: formData.nouvelle_valeur ? formatNumber(formData.nouvelle_valeur as number) : "",
+    nouvelle_forme_juridique: formData.nouvelle_forme_juridique || "",
+    liquidateur_nom: formData.liquidateur_nom || "",
+
+    date_signature: formData.date_signature || new Date().toLocaleDateString("fr-FR"),
+    lieu_signature: formData.lieu_signature || "...",
+  };
+}

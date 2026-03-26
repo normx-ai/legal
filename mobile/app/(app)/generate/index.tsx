@@ -46,12 +46,34 @@ const TAB_CONTENT: Record<string, TabContent> = {
         title: "Gérez votre entreprise",
         docs: [
           { id: "drc", label: "Déclaration de Régularité et de Conformité", available: true },
+          { id: "dec-associe-unique-gerant", label: "Décisions associé unique gérant (SARL)", available: true },
+          { id: "dec-associe-unique-non-gerant", label: "Décisions associé unique non gérant (SARL)", available: true },
+          { id: "pv-reunion-ca", label: "PV réunion du Conseil d'Administration (SA)", available: true },
+          { id: "pv-consultation-ecrite", label: "PV de consultation écrite (SARL)", available: true },
           { id: "pv-ago", label: "PV d'Assemblée Générale Ordinaire", available: false },
           { id: "pv-age", label: "PV d'Assemblée Générale Extraordinaire", available: false },
           { id: "cession", label: "Cession de parts sociales", available: false },
           { id: "augmentation-capital", label: "Augmentation de capital", available: false },
           { id: "modification-statuts", label: "Modification de statuts", available: false },
           { id: "transfert-siege", label: "Transfert de siège social", available: false },
+        ],
+      },
+      {
+        title: "Convocations & Assemblées",
+        docs: [
+          { id: "avis-convocation-ag-sa", label: "Avis de convocation AG (SA - journal)", available: true },
+          { id: "convocation-actionnaires-sa", label: "Convocation actionnaires AG (SA - lettre)", available: true },
+          { id: "lettre-consultation-gerance", label: "Lettre de consultation gérance (SARL)", available: true },
+          { id: "pouvoir-ca", label: "Pouvoir au Conseil d'Administration (SA)", available: true },
+          { id: "feuille-presence-ca", label: "Feuille de présence CA (SA)", available: true },
+        ],
+      },
+      {
+        title: "Conventions réglementées",
+        docs: [
+          { id: "avis-cac-conventions-sa", label: "Avis CAC conventions (SA)", available: true },
+          { id: "avis-cac-conventions-sarl", label: "Avis CAC conventions (SARL)", available: true },
+          { id: "lettre-info-ca-conventions", label: "Lettre info CA conventions (SA)", available: true },
         ],
       },
       {
@@ -169,6 +191,18 @@ const ROUTES: Record<string, string> = {
   gie: "/(app)/generate/gie",
   "ste-part": "/(app)/generate/ste-part",
   drc: "/(app)/generate/drc",
+  "pouvoir-ca": "/(app)/generate/pouvoir-ca",
+  "avis-convocation-ag-sa": "/(app)/generate/avis-convocation-ag-sa",
+  "convocation-actionnaires-sa": "/(app)/generate/convocation-actionnaires-sa",
+  "lettre-info-ca-conventions": "/(app)/generate/lettre-info-ca-conventions",
+  "avis-cac-conventions-sa": "/(app)/generate/avis-cac-conventions-sa",
+  "avis-cac-conventions-sarl": "/(app)/generate/avis-cac-conventions-sarl",
+  "feuille-presence-ca": "/(app)/generate/feuille-presence-ca",
+  "lettre-consultation-gerance": "/(app)/generate/lettre-consultation-gerance",
+  "pv-consultation-ecrite": "/(app)/generate/pv-consultation-ecrite",
+  "dec-associe-unique-gerant": "/(app)/generate/dec-associe-unique-gerant",
+  "dec-associe-unique-non-gerant": "/(app)/generate/dec-associe-unique-non-gerant",
+  "pv-reunion-ca": "/(app)/generate/pv-reunion-ca",
 };
 
 export default function GenerateIndexScreen() {
