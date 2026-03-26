@@ -47,6 +47,10 @@ const DOCUMENT_TYPES = [
     icon: "git-compare-outline" as const, available: true, tag: "Disponible",
   },
   {
+    id: "drc", label: "DRC", desc: "Déclaration de Régularité et de Conformité (art. 73)",
+    icon: "checkmark-circle-outline" as const, available: true, tag: "Disponible",
+  },
+  {
     id: "pv-ago", label: "PV d'AGO", desc: "Assemblée Générale Ordinaire",
     icon: "document-text-outline" as const, available: false, tag: "Bientôt",
   },
@@ -105,6 +109,8 @@ export default function GenerateIndexScreen() {
                   router.navigate("/(app)/generate/gie");
                 } else if (docType.id === "ste-part") {
                   router.navigate("/(app)/generate/ste-part");
+                } else if (docType.id === "drc") {
+                  router.navigate("/(app)/generate/drc");
                 }
               }}
               style={{

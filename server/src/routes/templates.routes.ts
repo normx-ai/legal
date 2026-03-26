@@ -77,6 +77,14 @@ templatesRoutes.get("/", (_req, res: Response) => {
     available: true,
   });
 
+  // DRC (Déclaration de Régularité et de Conformité)
+  templates.push({
+    id: "drc",
+    forme: "Transversal",
+    label: "Déclaration de Régularité et de Conformité (art. 73 OHADA)",
+    available: true,
+  });
+
   // Templates transversaux
   for (const doc of ohadaRules.documents_transversaux) {
     templates.push({
