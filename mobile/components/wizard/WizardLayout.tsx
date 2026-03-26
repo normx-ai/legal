@@ -5,7 +5,6 @@ import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/lib/theme/ThemeContext";
 import { fonts, fontWeights } from "@/lib/theme/fonts";
 import { useResponsive } from "@/lib/hooks/useResponsive";
-import { MainHeader } from "@/components/layout/MainHeader";
 
 interface PreviewLine {
   text: string;
@@ -95,7 +94,7 @@ export function WizardLayout({
           <View style={{ flex: 1 }}>
             <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 19, color: "#ffffff" }}>{title}</Text>
             <Text style={{ fontFamily: fonts.regular, fontSize: 14, color: "rgba(255,255,255,0.7)" }}>
-              Étape {currentStep + 1} / {steps.length} — {steps[currentStep]}
+              Etape {currentStep + 1} / {steps.length} — {steps[currentStep]}
             </Text>
           </View>
         </View>
@@ -130,7 +129,7 @@ export function WizardLayout({
                 borderWidth: 1, borderColor: "#e2e8f0", borderRadius: 8,
               }}
             >
-              <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 16, color: colors.text }}>Précédent</Text>
+              <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 16, color: colors.text }}>Precedent</Text>
             </TouchableOpacity>
           )}
           <TouchableOpacity
@@ -142,7 +141,7 @@ export function WizardLayout({
             }}
           >
             <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 16, color: "#ffffff" }}>
-              {isGenerating ? "Génération..." : isLastDataStep ? "Générer le document" : "Suivant"}
+              {isGenerating ? "Generation..." : isLastDataStep ? "Generer le document" : "Suivant"}
             </Text>
 
           </TouchableOpacity>
@@ -156,30 +155,24 @@ export function WizardLayout({
     return form;
   }
 
-  // Desktop : header principal + split 65/35
+  // Desktop : split 65/35 (no MainHeader - Topbar is in AppLayout)
   return (
-    <View style={{ flex: 1 }}>
-      {/* Header principal toujours visible */}
-      <MainHeader compact />
-
-      {/* Split aperçu / formulaire */}
-      <View style={{ flex: 1, flexDirection: "row" }}>
-        <View style={{ width: "65%", borderRightWidth: 1, borderRightColor: "#e2e8f0" }}>
-          {/* En-tête aperçu */}
-          <View style={{ backgroundColor: "#f1f5f9", paddingVertical: 10, paddingHorizontal: 20, borderBottomWidth: 1, borderBottomColor: "#e2e8f0", flexDirection: "row", alignItems: "center", gap: 8 }}>
-            <Ionicons name="eye-outline" size={16} color={colors.textSecondary} />
-            <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 15, color: colors.textSecondary }}>
-              Aperçu du document
-            </Text>
-            <Text style={{ fontFamily: fonts.regular, fontSize: 13, color: colors.textMuted, marginLeft: "auto" }}>
-              Mise à jour en temps réel
-            </Text>
-          </View>
-          {preview}
+    <View style={{ flex: 1, flexDirection: "row" }}>
+      <View style={{ width: "65%", borderRightWidth: 1, borderRightColor: "#e2e8f0" }}>
+        {/* En-tete apercu */}
+        <View style={{ backgroundColor: "#f1f5f9", paddingVertical: 10, paddingHorizontal: 20, borderBottomWidth: 1, borderBottomColor: "#e2e8f0", flexDirection: "row", alignItems: "center", gap: 8 }}>
+          <Ionicons name="eye-outline" size={16} color={colors.textSecondary} />
+          <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 15, color: colors.textSecondary }}>
+            Apercu du document
+          </Text>
+          <Text style={{ fontFamily: fonts.regular, fontSize: 13, color: colors.textMuted, marginLeft: "auto" }}>
+            Mise a jour en temps reel
+          </Text>
         </View>
-        <View style={{ width: "35%" }}>
-          {form}
-        </View>
+        {preview}
+      </View>
+      <View style={{ width: "35%" }}>
+        {form}
       </View>
     </View>
   );

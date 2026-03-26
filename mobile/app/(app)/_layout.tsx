@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { Stack, router } from "expo-router";
 import { useAuthStore } from "@/lib/store/auth";
+import { AppLayout } from "@/components/layout/AppLayout";
 
-export default function AppLayout() {
+export default function AppLayoutScreen() {
   const { isAuthenticated } = useAuthStore();
 
   useEffect(() => {
@@ -14,9 +15,11 @@ export default function AppLayout() {
   if (!isAuthenticated) return null;
 
   return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="index" />
-      <Stack.Screen name="generate" />
-    </Stack>
+    <AppLayout>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="index" />
+        <Stack.Screen name="generate" />
+      </Stack>
+    </AppLayout>
   );
 }
