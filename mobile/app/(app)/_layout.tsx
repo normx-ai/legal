@@ -19,6 +19,7 @@ export default function AppLayoutScreen() {
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" />
         <Stack.Screen name="generate" />
+        <Stack.Screen name="chat" />
       </Stack>
     </AppLayout>
   );
