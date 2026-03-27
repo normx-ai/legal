@@ -14,6 +14,7 @@ const NAV_ITEMS = [
   { key: "capital", label: "Capital & Fusion", icon: "trending-up-outline" as const, hasDropdown: true },
   { key: "dissoudre", label: "Dissoudre", icon: "close-circle-outline" as const, hasDropdown: true },
   { key: "documents", label: "Mes documents", icon: "document-text-outline" as const },
+  { key: "chat", label: "Assistant IA", icon: "chatbubbles-outline" as const },
 ];
 
 interface Topbar2Props {
@@ -34,6 +35,7 @@ export function Topbar2({ activeSection, onSectionPress, activeSubItem, onItemPr
       onSectionPress(key);
       if (key === "accueil") router.navigate("/(app)");
       if (key === "documents") router.navigate("/(app)");
+      if (key === "chat") router.navigate("/(app)/chat" as never);
     }
   };
 

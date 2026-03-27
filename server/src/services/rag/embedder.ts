@@ -1,7 +1,6 @@
 /**
- * Service d'embedding et d'indexation dans Qdrant
- * Utilise l'API Anthropic pour les embeddings via Voyage AI
- * ou un modèle local si disponible
+ * Service d'embedding (Voyage AI) et d'indexation dans Qdrant
+ * Utilise voyage-multilingual-2 (1024 dims) - optimisé français
  *
  * Usage : npx tsx src/services/rag/embedder.ts
  */
@@ -9,14 +8,14 @@
 import fs from "fs";
 import path from "path";
 import { QdrantClient } from "@qdrant/js-client-rest";
-import Anthropic from "@anthropic-ai/sdk";
 
 const QDRANT_URL = process.env.QDRANT_URL || "http://localhost:6333";
 const COLLECTION_NAME = "ohada_guide";
-const EMBEDDING_DIM = 1024; // Dimension pour voyage-3
+const VOYAGE_API_URL = "https://api.voyageai.com/v1/embeddings";
+const VOYAGE_MODEL = "voyage-multilingual-2";
+const VECTOR_SIZE = 1024;
 
 const qdrant = new QdrantClient({ url: QDRANT_URL });
-const anthropic = new Anthropic();
 
 interface OhadaChunk {
   id: string;
@@ -31,42 +30,57 @@ interface OhadaChunk {
   source: string;
 }
 
+interface VoyageResponse {
+  data: { embedding: number[]; index: number }[];
+  usage: { total_tokens: number };
+}
+
 /**
- * Génère un embedding via Claude/Voyage
+ * Appelle l'API Voyage AI pour générer des embeddings
  */
-async function getEmbedding(text: string): Promise<number[]> {
-  // Utiliser l'API Anthropic messages pour créer un embedding approximatif
-  // En production, utiliser Voyage AI ou un modèle d'embedding dédié
-  // Pour l'instant, on utilise un hash déterministe comme placeholder
-
-  // Option 1 : Voyage AI (recommandé)
-  // const voyageResponse = await fetch("https://api.voyageai.com/v1/embeddings", { ... });
-
-  // Option 2 : Embedding simple basé sur le contenu (placeholder)
-  // On va utiliser une approche avec Claude pour extraire des features
-  const hash = simpleHash(text);
-  const embedding = new Array(EMBEDDING_DIM).fill(0);
-  for (let i = 0; i < EMBEDDING_DIM; i++) {
-    embedding[i] = Math.sin(hash * (i + 1) * 0.001) * Math.cos(hash * (i + 2) * 0.002);
+async function callVoyageApi(input: string[]): Promise<VoyageResponse> {
+  const apiKey = process.env.VOYAGE_API_KEY;
+  if (!apiKey) {
+    throw new Error("VOYAGE_API_KEY non configurée. Ajoutez-la dans server/.env");
   }
 
-  // Normaliser
-  const norm = Math.sqrt(embedding.reduce((s, v) => s + v * v, 0));
-  return embedding.map((v) => v / (norm || 1));
-}
+  const response = await fetch(VOYAGE_API_URL, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ input, model: VOYAGE_MODEL }),
+  });
 
-function simpleHash(text: string): number {
-  let hash = 0;
-  for (let i = 0; i < text.length; i++) {
-    const char = text.charCodeAt(i);
-    hash = (hash << 5) - hash + char;
-    hash |= 0;
+  if (!response.ok) {
+    const errorBody = await response.text();
+    throw new Error(`Voyage AI API error ${response.status}: ${errorBody}`);
   }
-  return Math.abs(hash);
+
+  return response.json() as Promise<VoyageResponse>;
 }
 
 /**
- * Créer la collection Qdrant si elle n'existe pas
+ * Génère un embedding pour un texte
+ */
+export async function generateEmbedding(text: string): Promise<number[]> {
+  const truncated = text.substring(0, 8000);
+  const result = await callVoyageApi([truncated]);
+  return result.data[0].embedding;
+}
+
+/**
+ * Génère des embeddings par lot (max 128 textes)
+ */
+async function generateEmbeddingsBatch(texts: string[]): Promise<number[][]> {
+  const truncated = texts.map((t) => t.substring(0, 8000));
+  const result = await callVoyageApi(truncated);
+  return result.data.sort((a, b) => a.index - b.index).map((d) => d.embedding);
+}
+
+/**
+ * Créer la collection Qdrant
  */
 async function ensureCollection() {
   try {
@@ -75,14 +89,9 @@ async function ensureCollection() {
   } catch {
     console.log(`📦 Création de la collection "${COLLECTION_NAME}"...`);
     await qdrant.createCollection(COLLECTION_NAME, {
-      vectors: {
-        size: EMBEDDING_DIM,
-        distance: "Cosine",
-      },
+      vectors: { size: VECTOR_SIZE, distance: "Cosine" },
     });
-    console.log(`✅ Collection créée`);
 
-    // Créer des index sur les métadonnées
     await qdrant.createPayloadIndex(COLLECTION_NAME, {
       field_name: "chapitre",
       field_schema: "keyword",
@@ -95,8 +104,20 @@ async function ensureCollection() {
       field_name: "paragraphe",
       field_schema: "keyword",
     });
-    console.log(`✅ Index créés`);
+    console.log(`✅ Collection + index créés`);
   }
+}
+
+/**
+ * Hash pour convertir chunk_id en entier positif pour Qdrant
+ */
+function hashId(str: string): number {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = (hash << 5) - hash + str.charCodeAt(i);
+    hash |= 0;
+  }
+  return Math.abs(hash) % 2147483647 || 1;
 }
 
 /**
@@ -108,20 +129,20 @@ async function indexChunks(chunksFile: string) {
 
   await ensureCollection();
 
-  // Indexer par lots de 50
-  const batchSize = 50;
+  const batchSize = 20; // Voyage AI supporte max 128 par appel
+  let totalTokens = 0;
+
   for (let i = 0; i < chunks.length; i += batchSize) {
     const batch = chunks.slice(i, i + batchSize);
-    const points = [];
+    const texts = batch.map((c) => `${c.titre}\n${c.contenu}`);
 
-    for (const chunk of batch) {
-      // Texte à embedder : titre + contenu pour un meilleur matching
-      const textToEmbed = `${chunk.titre}\n${chunk.contenu}`.substring(0, 8000);
-      const vector = await getEmbedding(textToEmbed);
+    try {
+      const embeddings = await generateEmbeddingsBatch(texts);
+      totalTokens += texts.reduce((s, t) => s + t.length, 0);
 
-      points.push({
-        id: simpleHash(chunk.id) % 2147483647, // Qdrant needs positive integer or UUID
-        vector,
+      const points = batch.map((chunk, idx) => ({
+        id: hashId(chunk.id),
+        vector: embeddings[idx],
         payload: {
           chunk_id: chunk.id,
           paragraphe: chunk.paragraphe,
@@ -134,14 +155,19 @@ async function indexChunks(chunksFile: string) {
           page: chunk.page,
           source: chunk.source,
         },
-      });
+      }));
+
+      await qdrant.upsert(COLLECTION_NAME, { points });
+      console.log(`   ✅ Lot ${Math.floor(i / batchSize) + 1}/${Math.ceil(chunks.length / batchSize)} (${batch.length} chunks)`);
+    } catch (err) {
+      console.error(`   ❌ Erreur lot ${Math.floor(i / batchSize) + 1}:`, (err as Error).message);
     }
 
-    await qdrant.upsert(COLLECTION_NAME, { points });
-    console.log(`   ✅ Lot ${Math.floor(i / batchSize) + 1}/${Math.ceil(chunks.length / batchSize)} indexé (${points.length} points)`);
+    // Rate limiting Voyage AI
+    await new Promise((r) => setTimeout(r, 500));
   }
 
-  console.log(`\n✅ ${chunks.length} chunks indexés dans Qdrant`);
+  console.log(`\n✅ ${chunks.length} chunks indexés (~${(totalTokens / 1000).toFixed(0)}k chars)`);
 }
 
 /**
@@ -152,9 +178,9 @@ export async function searchChunks(
   options: { limit?: number; formeJuridique?: string; chapitre?: string } = {}
 ): Promise<OhadaChunk[]> {
   const { limit = 5, formeJuridique, chapitre } = options;
-  const vector = await getEmbedding(query);
+  const vector = await generateEmbedding(query);
 
-  const filter: any = { must: [] };
+  const filter: { must: { key: string; match: { value: string } }[] } = { must: [] };
   if (formeJuridique) {
     filter.must.push({ key: "forme_juridique", match: { value: formeJuridique } });
   }
@@ -169,26 +195,28 @@ export async function searchChunks(
     with_payload: true,
   });
 
-  return results.map((r) => ({
-    id: (r.payload as any).chunk_id,
-    paragraphe: (r.payload as any).paragraphe,
-    chapitre: (r.payload as any).chapitre,
-    section: (r.payload as any).section,
-    titre: (r.payload as any).titre,
-    contenu: (r.payload as any).contenu,
-    articles_auscgie: (r.payload as any).articles_auscgie || [],
-    forme_juridique: (r.payload as any).forme_juridique,
-    page: (r.payload as any).page || 0,
-    source: (r.payload as any).source,
-  }));
+  return results.map((r) => {
+    const p = r.payload as Record<string, unknown>;
+    return {
+      id: p.chunk_id as string,
+      paragraphe: p.paragraphe as string,
+      chapitre: p.chapitre as string,
+      section: p.section as string,
+      titre: p.titre as string,
+      contenu: p.contenu as string,
+      articles_auscgie: (p.articles_auscgie as string[]) || [],
+      forme_juridique: p.forme_juridique as string,
+      page: (p.page as number) || 0,
+      source: p.source as string,
+    };
+  });
 }
 
 // ── CLI ──
 if (require.main === module) {
   const chunksFile = path.join(__dirname, "../../../data/chunks/all-chunks.json");
   if (!fs.existsSync(chunksFile)) {
-    console.error("❌ Fichier all-chunks.json introuvable. Lancez d'abord le parser :");
-    console.error("   npx tsx src/services/rag/pdf-parser.ts");
+    console.error("❌ all-chunks.json introuvable. Lancez d'abord le merge des chunks.");
     process.exit(1);
   }
   indexChunks(chunksFile).catch(console.error);
