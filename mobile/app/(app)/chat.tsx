@@ -151,18 +151,7 @@ export default function ChatScreen() {
           </View>
         )}
 
-        {sources.length > 0 && (
-          <View style={{ backgroundColor: "#f0f9ff", padding: 12, borderRadius: 8, marginTop: 8, borderLeftWidth: 3, borderLeftColor: "#0891b2" }}>
-            <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 12, color: "#164e63", marginBottom: 6 }}>
-              Sources consultées :
-            </Text>
-            {sources.map((s, i) => (
-              <Text key={i} style={{ fontFamily: fonts.regular, fontSize: 12, color: "#155e75" }}>
-                • §{s.paragraphe} - {s.chapitre} - {s.titre}
-              </Text>
-            ))}
-          </View>
-        )}
+        {/* Sources masquées - réponse naturelle uniquement */}
       </ScrollView>
 
       {/* Input */}
