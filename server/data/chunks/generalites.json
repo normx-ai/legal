@@ -1,0 +1,98 @@
+[
+  {
+    "id": "gen-1009-tableau-1",
+    "paragraphe": "1009",
+    "chapitre": "Généralités",
+    "section": "Tableau comparatif des formes juridiques",
+    "titre": "Capital minimum exigé par forme juridique",
+    "contenu": "CAPITAL (minimum exigé) :\n- SNC : Aucun minimum\n- SCS : Aucun minimum\n- SARL Unipersonnelle : 1.000.000 F sauf dispositions nationales contraires\n- SARL : 1.000.000 F sauf dispositions nationales contraires\n- SA Unipersonnelle : 10.000.000 F\n- SA : 10.000.000 F NAPE (Ne faisant pas Appel Public à l'Épargne) / 100.000.000 F APE (faisant Appel Public à l'Épargne)\n- SAS/SASU (si un seul associé) : Aucun minimum\n- Société de fait : Aucun minimum\n- Société en participation : Aucun minimum\n- GIE : Aucun minimum",
+    "articles_auscgie": ["5", "311", "387", "824-1"],
+    "forme_juridique": "TOUTES",
+    "page": 1,
+    "source": "1.pdf"
+  },
+  {
+    "id": "gen-1009-tableau-2",
+    "paragraphe": "1009",
+    "chapitre": "Généralités",
+    "section": "Tableau comparatif des formes juridiques",
+    "titre": "Droits sociaux et valeur minimale par forme juridique",
+    "contenu": "DROITS SOCIAUX (ou des membres) :\n- SNC : Parts sociales\n- SCS : Parts sociales\n- SARL Unipersonnelle : Parts sociales\n- SARL : Parts sociales\n- SA Unipersonnelle : Actions\n- SA : Actions\n- SAS/SASU : Actions\n- Société de fait : Parts sociales\n- Société en participation : Parts sociales\n- GIE : Parts du GIE\n\nVALEUR MINIMALE (droits sociaux et droit des membres) :\n- SNC : Aucune\n- SCS : Aucune\n- SARL Unipersonnelle : 5.000 F\n- SARL : 5.000 F\n- SA Unipersonnelle : fixée par les statuts\n- SA : fixée par les statuts\n- SAS/SASU : fixée par les statuts\n- Société de fait : Aucune\n- Société en participation : Aucune\n- GIE : Aucune",
+    "articles_auscgie": ["309", "387"],
+    "forme_juridique": "TOUTES",
+    "page": 1,
+    "source": "1.pdf"
+  },
+  {
+    "id": "gen-1009-tableau-3",
+    "paragraphe": "1009",
+    "chapitre": "Généralités",
+    "section": "Tableau comparatif des formes juridiques",
+    "titre": "Nombre d'associés par forme juridique",
+    "contenu": "NOMBRE (associés ou membres) :\n- SNC : 2 associés au minimum\n- SCS : 2 associés au minimum\n- SARL Unipersonnelle : 1 associé unique\n- SARL : 2 associés au minimum\n- SA Unipersonnelle : 1 actionnaire unique\n- SA : 2 actionnaires au minimum\n- SAS : 2 associés au minimum = SAS / 1 associé = SASU\n- Société de fait : 2 associés au minimum\n- Société en participation : 2 associés au minimum\n- GIE : 2 membres au minimum",
+    "articles_auscgie": ["4", "270", "309", "385", "824-1", "869"],
+    "forme_juridique": "TOUTES",
+    "page": 1,
+    "source": "1.pdf"
+  },
+  {
+    "id": "gen-1009-tableau-4",
+    "paragraphe": "1009",
+    "chapitre": "Généralités",
+    "section": "Tableau comparatif des formes juridiques",
+    "titre": "Responsabilité des associés par forme juridique",
+    "contenu": "RESPONSABILITÉ des associés et membres :\n- SNC : Indéfinie et solidaire\n- SCS : Commandité = responsabilité solidaire et indéfinie ; Commanditaire = responsabilité limitée aux apports\n- SARL Unipersonnelle : Responsabilité limitée aux apports\n- SARL : Responsabilité limitée aux apports\n- SA Unipersonnelle : Responsabilité limitée aux apports\n- SA : Responsabilité limitée aux apports\n- SAS/SASU : Responsabilité limitée aux apports\n- Société de fait : Si l'existence de la société est reconnue, responsabilité solidaire et indéfinie\n- Société en participation : Responsabilité solidaire et indéfinie des engagements des associés pour tous ceux qui y ont participé\n- GIE : Membres du GIE sont solidaires du paiement des dettes du GIE sauf convention contraire avec les tiers cocontractants",
+    "articles_auscgie": ["270", "293", "309", "385", "853-1", "869"],
+    "forme_juridique": "TOUTES",
+    "page": 1,
+    "source": "1.pdf"
+  },
+  {
+    "id": "gen-1009-tableau-5",
+    "paragraphe": "1009",
+    "chapitre": "Généralités",
+    "section": "Tableau comparatif des formes juridiques",
+    "titre": "Dirigeants par forme juridique",
+    "contenu": "DIRIGEANTS :\n- SNC : Gérant\n- SCS : Gérant\n- SARL Unipersonnelle : Gérant\n- SARL : Gérant\n- SA Unipersonnelle : Administrateur général\n- SA : SA avec CA : PDG ou PCA + DG ; SA sans CA : administrateur général\n- SAS/SASU : Président, Directeur Général, Directeur Général adjoint\n- Société de fait : Gérant (dès lors que l'existence de la société est prouvée)\n- Société en participation : Gérant\n- GIE : Administrateur",
+    "articles_auscgie": ["276", "298", "323", "462", "487", "498", "853-6"],
+    "forme_juridique": "TOUTES",
+    "page": 2,
+    "source": "1.pdf"
+  },
+  {
+    "id": "gen-1009-tableau-6",
+    "paragraphe": "1009",
+    "chapitre": "Généralités",
+    "section": "Tableau comparatif des formes juridiques",
+    "titre": "Apports possibles par forme juridique",
+    "contenu": "APPORTS POSSIBLES :\n- SNC : Numéraire, nature, industrie\n- SCS : Numéraire, nature, industrie (possible pour les commandités seulement)\n- SARL Unipersonnelle : Numéraire, nature, industrie\n- SARL : Numéraire, nature, industrie\n- SA Unipersonnelle : Numéraire, nature\n- SA : Numéraire, nature\n- SAS/SASU : Numéraire, nature, industrie\n- Société de fait : Numéraire, nature, industrie\n- Société en participation : Numéraire, nature, industrie\n- GIE : Numéraire, nature",
+    "articles_auscgie": ["37", "40", "50-1"],
+    "forme_juridique": "TOUTES",
+    "page": 2,
+    "source": "1.pdf"
+  },
+  {
+    "id": "gen-1009-tableau-7",
+    "paragraphe": "1009",
+    "chapitre": "Généralités",
+    "section": "Tableau comparatif des formes juridiques",
+    "titre": "Commissaires aux apports et aux comptes par forme juridique",
+    "contenu": "COMMISSAIRES AUX APPORTS (en cas d'apports en nature) :\n- SNC : Nomination obligatoire\n- SCS : Nomination obligatoire\n- SARL Unipersonnelle / SARL : Désignation si la valeur des apports et/ou avantages particuliers est supérieure à 5.000.000 F\n- SA Unipersonnelle : Désignation obligatoire\n- SA : Désignation obligatoire\n- SAS/SASU : Désignation obligatoire\n- Société de fait : Non prévu\n- Société en participation : Non prévu\n- GIE : Non obligatoire\n\nCOMMISSAIRES AUX COMPTES :\n- SNC : Obligatoire si 2 des conditions suivantes à la clôture de l'exercice : total bilan supérieur à 250.000.000 F, chiffre d'affaires annuel supérieur à 500.000.000 F, effectif permanent supérieur à 50 personnes\n- SCS : Idem SNC\n- SARL Unipersonnelle / SARL : Obligatoire si 2 des conditions suivantes : total bilan supérieur à 125.000.000 F, chiffre d'affaires annuel supérieur à 250.000.000 F, effectif permanent supérieur à 50 personnes\n- SA Unipersonnelle : Désignation obligatoire\n- SA : Désignation obligatoire\n- SAS/SASU : Obligatoire si 2 des conditions suivantes : total bilan supérieur à 125.000.000 F, chiffre d'affaires annuel supérieur à 250.000.000 F, effectif permanent supérieur à 50 personnes\n- Société de fait : Non prévu\n- Société en participation : Non prévu\n- GIE : Désignation obligatoire si le GIE émet des obligations\n\nEXPERT DE GESTION : Possible pour SNC, SCS, SARL, SA, SAS. Non prévu pour société de fait, société en participation. Non prévu pour GIE.",
+    "articles_auscgie": ["376", "694", "702", "853-13"],
+    "forme_juridique": "TOUTES",
+    "page": 2,
+    "source": "1.pdf"
+  },
+  {
+    "id": "gen-1010",
+    "paragraphe": "1010",
+    "chapitre": "Généralités",
+    "section": "Différentes formes de sociétés",
+    "titre": "1ère Partie - Différentes formes de sociétés commerciales et GIE",
+    "contenu": "Cette première partie de l'ouvrage est consacrée à l'étude :\n- des sociétés commerciales immatriculées :\n  - société en nom collectif (chapitre 1) ; §§ 1100 s.\n  - société en commandite simple (chapitre 2) ; §§ 1190 s.\n  - société à responsabilité limitée (chapitre 3) ; §§ 1280 s.\n  - société anonyme (chapitre 4) ; §§ 1500 s.\n  - société par actions simplifiée (chapitre 5) ; §§ 1795 s.\n- des sociétés commerciales non immatriculées (chapitre 5) :\n  - société en participation ; §§ 1800 s.\n  - société de fait §§ 1804 s.\n- du groupement d'intérêt économique (chapitre 6) §§ 1805 s.",
+    "articles_auscgie": [],
+    "forme_juridique": "TOUTES",
+    "page": 3,
+    "source": "1.pdf"
+  }
+]
