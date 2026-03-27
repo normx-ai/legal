@@ -5,8 +5,11 @@
  * Usage : npx tsx src/services/rag/embedder.ts
  */
 
-import fs from "fs";
 import path from "path";
+import dotenv from "dotenv";
+dotenv.config({ path: path.join(__dirname, "../../../.env") });
+
+import fs from "fs";
 import { QdrantClient } from "@qdrant/js-client-rest";
 
 const QDRANT_URL = process.env.QDRANT_URL || "http://localhost:6333";
