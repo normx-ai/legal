@@ -1,0 +1,110 @@
+[
+  {
+    "id": "sa-1545-3",
+    "paragraphe": "1545-1",
+    "chapitre": "SA",
+    "section": "Constitution - SA a capital variable",
+    "titre": "SA a capital variable - Soumission aux regles de constitution",
+    "contenu": "Les societes dont les statuts contiennent de telles clauses sont soumises a toutes les dispositions relatives a la constitution de la societe anonyme developpees ci-dessus aux §§ 1500 a 1541 (art. 269-1) sauf les modalites de souscription du capital, liberation du capital, de reprise des apports, organisees par les statuts (art. 269-2-1).",
+    "articles_auscgie": ["art. 269-1", "art. 269-2-1"],
+    "forme_juridique": "SA",
+    "page": 179,
+    "source": "sa.pdf"
+  },
+  {
+    "id": "sa-1545-4",
+    "paragraphe": "1545-1",
+    "chapitre": "SA",
+    "section": "Constitution - SA a capital variable",
+    "titre": "SA a capital variable - Capital plancher",
+    "contenu": "Les statuts determinent une somme au-dessous de laquelle le capital ne peut etre reduit par les reprises des apports. Ce capital plancher ne peut etre inferieur ni au dixieme du capital social stipule dans les statuts, ni au montant minimal du capital exige par l'Acte uniforme soit dix millions (10 000 000) de francs CFA. Toute reduction de capital au dela de la limite prescrite par les statuts est nulle (art. 269.5).",
+    "articles_auscgie": ["art. 269-5"],
+    "forme_juridique": "SA",
+    "page": 179,
+    "source": "sa.pdf"
+  },
+  {
+    "id": "sa-1545-5",
+    "paragraphe": "1545-1",
+    "chapitre": "SA",
+    "section": "Constitution - SA a capital variable",
+    "titre": "SA a capital variable - Dispense de formalites",
+    "contenu": "Ces societes ne sont pas assujetties aux formalites de depot et de publication les actes constatant les augmentations ou les diminutions du capital social (art. 269-3).",
+    "articles_auscgie": ["art. 269-3"],
+    "forme_juridique": "SA",
+    "page": 179,
+    "source": "sa.pdf"
+  },
+  {
+    "id": "sa-1546",
+    "paragraphe": "1546",
+    "chapitre": "SA",
+    "section": "Constitution - Dispositions penales",
+    "titre": "Emission irreguliere d'actions",
+    "contenu": "Infraction a la constitution de la societe anonyme. Emission irreguliere d'actions (art. 886). Personnes punissables : Fondateurs, president-directeur general, directeur general, administrateur general ou administrateur general adjoint. Elements constitutifs de l'infraction : Emission prematuree d'actions : le fait d'emettre des actions avant l'immatriculation de la societe ; Emission d'actions a n'importe quelle epoque lorsque l'immatriculation est obtenue par fraude ; Emission d'actions lorsque la societe est irregulierement constituee.",
+    "articles_auscgie": ["art. 886"],
+    "forme_juridique": "SA",
+    "page": 180,
+    "source": "sa.pdf"
+  },
+  {
+    "id": "sa-1546-1",
+    "paragraphe": "1546",
+    "chapitre": "SA",
+    "section": "Constitution - Dispositions penales",
+    "titre": "Declaration notariee de souscription mensongere",
+    "contenu": "Declaration notariee de souscription mensongere (art. 887). Personnes punissables : Ceux qui font la declaration des souscriptions et des versements : les fondateurs (pour la constitution). Elements constitutifs de l'infraction : Affirmation inexacte faite, sciemment dans la declaration notariee quant a la sincerite des souscriptions et quant a la realite des versements ; Remise au notaire ou au depositaire d'une liste erronee d'actionnaires ou des bulletins de souscription et versement.",
+    "articles_auscgie": ["art. 887"],
+    "forme_juridique": "SA",
+    "page": 180,
+    "source": "sa.pdf"
+  },
+  {
+    "id": "sa-1546-2",
+    "paragraphe": "1546",
+    "chapitre": "SA",
+    "section": "Constitution - Dispositions penales",
+    "titre": "Simulation de souscription et fausse publication",
+    "contenu": "Simulation de souscription et de versement et fausse publication de noms et de faits (art. 887). Personnes punissables : Fondateurs et tous ceux qui ont participe de mauvaise foi a la simulation et a la publication des faits ou des noms faux. Elements constitutifs de l'infraction : Obtenir ou tenter d'obtenir des souscriptions ou des versements en faisant sciemment : une simulation de souscription ou de versements ; ou une publication de faits faux ou de noms faux.",
+    "articles_auscgie": ["art. 887"],
+    "forme_juridique": "SA",
+    "page": 180,
+    "source": "sa.pdf"
+  },
+  {
+    "id": "sa-1546-3",
+    "paragraphe": "1546",
+    "chapitre": "SA",
+    "section": "Constitution - Dispositions penales",
+    "titre": "Majoration frauduleuse des apports en nature",
+    "contenu": "Majoration frauduleuse des apports en nature (art. 887). Personnes punissables : Apporteurs, fondateurs, dirigeants, commissaires aux apports et experts. D'une maniere generale tous ceux qui se sont rendus coupables de fraudes et ceux qui leur ont prete leur concours dans ce cadre. Elements constitutifs de l'infraction : Attribuer, frauduleusement, a un apport en nature, une evaluation superieure a sa valeur reelle.",
+    "articles_auscgie": ["art. 887"],
+    "forme_juridique": "SA",
+    "page": 181,
+    "source": "sa.pdf"
+  },
+  {
+    "id": "sa-1546-4",
+    "paragraphe": "1546",
+    "chapitre": "SA",
+    "section": "Constitution - Dispositions penales",
+    "titre": "Emission irreguliere de valeurs mobilieres offertes au public",
+    "contenu": "Emission irreguliere de valeurs mobilieres offertes au public (art. 905). Personnes punissables : Presidents, administrateurs ou directeurs generaux. Elements constitutifs de l'infraction : Emission de valeurs mobilieres offertes au public : sans qu'une notice soit inseree dans un journal d'annonces legales prealablement a toute mesure de publicite ; sans que les prospectus et circulaires reproduisent les mentions de la notice, et contiennent la mention de l'insertion de cette notice au journal dans lequel elle a ete publiee.",
+    "articles_auscgie": ["art. 905"],
+    "forme_juridique": "SA",
+    "page": 181,
+    "source": "sa.pdf"
+  },
+  {
+    "id": "sa-1546-5",
+    "paragraphe": "1546",
+    "chapitre": "SA",
+    "section": "Constitution - Dispositions penales",
+    "titre": "Negociations irregulieres des actions",
+    "contenu": "Negociations irregulieres des actions (art. 888). Personnes punissables : Les porteurs d'actions et tous ceux qui ont sciemment participe a ces negociations. Elements constitutifs de l'infraction : Negocier sciemment : des actions non entierement liberees ; des actions de numeraire pour lesquelles le versement du quart (1/4) du nominal n'a pas ete effectue.",
+    "articles_auscgie": ["art. 888"],
+    "forme_juridique": "SA",
+    "page": 181,
+    "source": "sa.pdf"
+  }
+]
