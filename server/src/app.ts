@@ -8,6 +8,7 @@ import { generateRoutes } from "./routes/generate.routes";
 import { documentsRoutes } from "./routes/documents.routes";
 import { templatesRoutes } from "./routes/templates.routes";
 import { userRoutes } from "./routes/user.routes";
+import { chatRoutes } from "./routes/chat";
 
 export const app = express();
 
@@ -29,6 +30,7 @@ app.use("/api/generate", generateRoutes);
 app.use("/api/documents", documentsRoutes);
 app.use("/api/templates", templatesRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/chat", chatRoutes);
 
 // Health check
 app.get("/health", (_req, res) => {

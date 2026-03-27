@@ -14,7 +14,9 @@
     "db:studio": "prisma studio"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.80.0",
     "@prisma/client": "^6.19.2",
+    "@qdrant/js-client-rest": "^1.17.0",
     "bcryptjs": "^3.0.3",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
@@ -26,6 +28,7 @@
     "jsonwebtoken": "^9.0.3",
     "libreoffice-convert": "^1.6.0",
     "nodemailer": "^8.0.1",
+    "pdf2json": "^4.0.2",
     "pizzip": "^3.1.7",
     "winston": "^3.19.0",
     "zod": "^4.3.6"
