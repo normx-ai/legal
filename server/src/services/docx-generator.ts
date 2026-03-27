@@ -60,3 +60,7 @@ export { prepareCertificatActionsNominativesData } from "./generators/certificat
 export { prepareConvocationCacData } from "./generators/convocation-cac";
 export { prepareConvocationCaData } from "./generators/convocation-ca";
 export { prepareRequeteProrogationAgoData } from "./generators/requete-prorogation-ago";
+export { prepareActeCessionActionsData } from "./generators/acte-cession-actions";
+export { prepareProjetFusionAbsorbeeAbsorbanteData } from "./generators/projet-fusion-absorbee-absorbante";
+export { prepareDeroulementAgSarlData } from "./generators/deroulement-ag-sarl";
+export { prepareDeroulementAgSaData } from "./generators/deroulement-ag-sa";

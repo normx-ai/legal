@@ -60,6 +60,10 @@ import { certificatActionsNominativesRoute } from "./certificat-actions-nominati
 import { convocationCacRoute } from "./convocation-cac";
 import { convocationCaRoute } from "./convocation-ca";
 import { requeteProrogationAgoRoute } from "./requete-prorogation-ago";
+import { acteCessionActionsRoute } from "./acte-cession-actions";
+import { projetFusionAbsorbeeAbsorbanteRoute } from "./projet-fusion-absorbee-absorbante";
+import { deroulementAgSarlRoute } from "./deroulement-ag-sarl";
+import { deroulementAgSaRoute } from "./deroulement-ag-sa";
 
 export const generateRoutes = Router();
 
@@ -124,3 +128,7 @@ generateRoutes.use(certificatActionsNominativesRoute);
 generateRoutes.use(convocationCacRoute);
 generateRoutes.use(convocationCaRoute);
 generateRoutes.use(requeteProrogationAgoRoute);
+generateRoutes.use(acteCessionActionsRoute);
+generateRoutes.use(projetFusionAbsorbeeAbsorbanteRoute);
+generateRoutes.use(deroulementAgSarlRoute);
+generateRoutes.use(deroulementAgSaRoute);

@@ -66,6 +66,10 @@ const ROUTES: Record<string, string> = {
   "convocation-cac": "/(app)/generate/convocation-cac",
   "convocation-ca": "/(app)/generate/convocation-ca",
   "requete-prorogation-ago": "/(app)/generate/requete-prorogation-ago",
+  "acte-cession-actions": "/(app)/generate/acte-cession-actions",
+  "projet-fusion-absorbee-absorbante": "/(app)/generate/projet-fusion-absorbee-absorbante",
+  "deroulement-ag-sarl": "/(app)/generate/deroulement-ag-sarl",
+  "deroulement-ag-sa": "/(app)/generate/deroulement-ag-sa",
 };
 
 // ── Sidebar 2 data by section ──
@@ -140,6 +144,7 @@ const SIDEBAR2_DATA: Record<string, SubSection[]> = {
       title: "CESSIONS & PACTES",
       items: [
         { id: "acte-cession-parts", label: "Cession de parts (SARL)", available: true },
+        { id: "acte-cession-actions", label: "Cession d'actions (SA)", available: true },
         { id: "pacte-actionnaires", label: "Pacte d'actionnaires", available: true },
       ],
     },
@@ -178,6 +183,8 @@ const SIDEBAR2_DATA: Record<string, SubSection[]> = {
         { id: "convocation-cac", label: "Convocation CAC", available: true },
         { id: "certificat-actions-nominatives", label: "Certificat d'actions", available: true },
         { id: "requete-prorogation-ago", label: "Requête prorogation AGO", available: true },
+        { id: "deroulement-ag-sarl", label: "Déroulement AG (SARL)", available: true },
+        { id: "deroulement-ag-sa", label: "Déroulement AG (SA)", available: true },
       ],
     },
   ],
@@ -202,6 +209,7 @@ const SIDEBAR2_DATA: Record<string, SubSection[]> = {
         { id: "projet-fusion", label: "Fusion par absorption", available: true },
         { id: "projet-fusion-participation", label: "Fusion avec participation", available: true },
         { id: "projet-fusion-societe-nouvelle", label: "Fusion société nouvelle", available: true },
+        { id: "projet-fusion-absorbee-absorbante", label: "Fusion absorbée/absorbante", available: true },
         { id: "requete-designation-cac", label: "Requête commissaire apports", available: true },
       ],
     },

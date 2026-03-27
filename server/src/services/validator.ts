@@ -60,3 +60,7 @@ export { validateCertificatActionsNominatives } from "./validators/certificat-ac
 export { validateConvocationCac } from "./validators/convocation-cac";
 export { validateConvocationCa } from "./validators/convocation-ca";
 export { validateRequeteProrogationAgo } from "./validators/requete-prorogation-ago";
+export { validateActeCessionActions } from "./validators/acte-cession-actions";
+export { validateProjetFusionAbsorbeeAbsorbante } from "./validators/projet-fusion-absorbee-absorbante";
+export { validateDeroulementAgSarl } from "./validators/deroulement-ag-sarl";
+export { validateDeroulementAgSa } from "./validators/deroulement-ag-sa";
