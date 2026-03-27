@@ -56,3 +56,7 @@ export { validateProjetFusionParticipation } from "./validators/projet-fusion-pa
 export { validateProjetFusionSocieteNouvelle } from "./validators/projet-fusion-societe-nouvelle";
 export { validateSnc } from "./validators/snc";
 export { validateScs } from "./validators/scs";
+export { validateCertificatActionsNominatives } from "./validators/certificat-actions-nominatives";
+export { validateConvocationCac } from "./validators/convocation-cac";
+export { validateConvocationCa } from "./validators/convocation-ca";
+export { validateRequeteProrogationAgo } from "./validators/requete-prorogation-ago";

@@ -56,6 +56,10 @@ import { projetFusionParticipationRoute } from "./projet-fusion-participation";
 import { projetFusionSocieteNouvelleRoute } from "./projet-fusion-societe-nouvelle";
 import { sncRoute } from "./snc";
 import { scsRoute } from "./scs";
+import { certificatActionsNominativesRoute } from "./certificat-actions-nominatives";
+import { convocationCacRoute } from "./convocation-cac";
+import { convocationCaRoute } from "./convocation-ca";
+import { requeteProrogationAgoRoute } from "./requete-prorogation-ago";
 
 export const generateRoutes = Router();
 
@@ -116,3 +120,7 @@ generateRoutes.use(projetFusionParticipationRoute);
 generateRoutes.use(projetFusionSocieteNouvelleRoute);
 generateRoutes.use(sncRoute);
 generateRoutes.use(scsRoute);
+generateRoutes.use(certificatActionsNominativesRoute);
+generateRoutes.use(convocationCacRoute);
+generateRoutes.use(convocationCaRoute);
+generateRoutes.use(requeteProrogationAgoRoute);

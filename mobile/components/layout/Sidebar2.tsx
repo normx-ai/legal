@@ -62,6 +62,10 @@ const ROUTES: Record<string, string> = {
   "projet-fusion-societe-nouvelle": "/(app)/generate/projet-fusion-societe-nouvelle",
   snc: "/(app)/generate/snc",
   scs: "/(app)/generate/scs",
+  "certificat-actions-nominatives": "/(app)/generate/certificat-actions-nominatives",
+  "convocation-cac": "/(app)/generate/convocation-cac",
+  "convocation-ca": "/(app)/generate/convocation-ca",
+  "requete-prorogation-ago": "/(app)/generate/requete-prorogation-ago",
 };
 
 // ── Sidebar 2 data by section ──
@@ -165,11 +169,15 @@ const SIDEBAR2_DATA: Record<string, SubSection[]> = {
       ],
     },
     {
-      title: "PRÉSENCES",
+      title: "PRÉSENCES & NOTIFICATIONS",
       items: [
         { id: "feuille-presence-ag-sa", label: "Feuille présence AG", available: true },
         { id: "feuille-presence-ca", label: "Feuille présence CA", available: true },
         { id: "lettre-notification-representant", label: "Notification représentant", available: true },
+        { id: "convocation-ca", label: "Convocation CA (SA)", available: true },
+        { id: "convocation-cac", label: "Convocation CAC", available: true },
+        { id: "certificat-actions-nominatives", label: "Certificat d'actions", available: true },
+        { id: "requete-prorogation-ago", label: "Requête prorogation AGO", available: true },
       ],
     },
   ],

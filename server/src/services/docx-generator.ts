@@ -56,3 +56,7 @@ export { prepareProjetFusionParticipationData } from "./generators/projet-fusion
 export { prepareProjetFusionSocieteNouvelleData } from "./generators/projet-fusion-societe-nouvelle";
 export { prepareSncData } from "./generators/snc";
 export { prepareScsData } from "./generators/scs";
+export { prepareCertificatActionsNominativesData } from "./generators/certificat-actions-nominatives";
+export { prepareConvocationCacData } from "./generators/convocation-cac";
+export { prepareConvocationCaData } from "./generators/convocation-ca";
+export { prepareRequeteProrogationAgoData } from "./generators/requete-prorogation-ago";
