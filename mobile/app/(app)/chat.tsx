@@ -79,7 +79,7 @@ export default function ChatScreen() {
               <Ionicons name="book" size={32} color="#D4A843" />
             </View>
             <Text style={{ fontFamily: fonts.bold, fontSize: 20, color: colors.text, marginBottom: 8, textAlign: "center" }}>
-              Guide Pratique OHADA
+              Assistant Juridique OHADA
             </Text>
             <Text style={{ fontFamily: fonts.regular, fontSize: 14, color: colors.textSecondary, textAlign: "center", marginBottom: 24, maxWidth: 400 }}>
               Je connais le droit des sociétés commerciales et du GIE OHADA. Posez-moi vos questions !
