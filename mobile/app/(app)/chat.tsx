@@ -147,7 +147,7 @@ export default function ChatScreen() {
         {isLoading && (
           <View style={{ flexDirection: "row", alignItems: "center", gap: 8, paddingVertical: 8 }}>
             <ActivityIndicator size="small" color="#D4A843" />
-            <Text style={{ fontFamily: fonts.regular, fontSize: 13, color: colors.textSecondary }}>Recherche dans le Guide OHADA...</Text>
+            <Text style={{ fontFamily: fonts.regular, fontSize: 13, color: colors.textSecondary }}>Recherche en cours...</Text>
           </View>
         )}
 
