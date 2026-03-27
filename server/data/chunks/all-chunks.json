@@ -2624,6 +2624,1036 @@
     "source": "sa.pdf"
   },
   {
+    "id": "sa-1600",
+    "paragraphe": "1600",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires",
+    "titre": "Organe souverain de la societe",
+    "contenu": "L'assemblee generale des actionnaires est l'organe souverain de la societe, et tout actionnaire a le droit d'y participer sauf disposition contraire de l'Acte Uniforme (art. 125).",
+    "articles_auscgie": [
+      "art. 125"
+    ],
+    "forme_juridique": "SA",
+    "page": 219,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1601",
+    "paragraphe": "1601",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires",
+    "titre": "Categories d'assemblees",
+    "contenu": "Il existe 4 categories d'assemblees ayant chacune une competence specifique. Il s'agit de : l'assemblee generale constitutive qui ne se reunit qu'a la constitution de la societe pour verifier un certain nombre d'operations et nommer eventuellement les premiers organes de gestion et de controle de la societe ; l'assemblee generale ordinaire qui prend toutes les decisions, autres que celles reservees au conseil d'administration et aux organes de direction et qui n'entrainent pas la modification des statuts ; l'assemblee generale extraordinaire qui est competente pour modifier les statuts ; l'assemblee speciale qui a pour competence de modifier eventuellement les droits des membres titulaires d'actions d'une categorie determinee.",
+    "articles_auscgie": [],
+    "forme_juridique": "SA",
+    "page": 219,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1602",
+    "paragraphe": "1602",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AG constitutive",
+    "titre": "Attributions de l'assemblee generale constitutive",
+    "contenu": "Cette assemblee n'est obligatoire qu'en cas d'apport en nature a la constitution de la societe et/ou d'appel public a l'epargne. L'assemblee generale constitutive qui se reunit lors de la constitution apres l'etablissement de la declaration notariee de souscription et de versement est competente pour : l'approbation ou la desapprobation du rapport du commissaire aux apports sur l'evaluation des apports en nature et l'octroi d'avantages particuliers (art. 408) ; l'assemblee ne peut modifier la valeur des apports en nature ou des avantages particuliers qu'a l'unanimite des souscripteurs et avec le consentement expres de l'apporteur ou du beneficiaire (art. 409) ; le consentement de l'apporteur ou du beneficiaire doit etre mentionne au proces-verbal lorsque la valeur attribuee aux biens apportes ou avantages particuliers stipules est differente de celle retenue par le commissaire aux apports (art. 409) ; la constatation de la souscription integrale du capital et de la liberation du 1/4 du capital (art. 410) ; l'adoption des statuts qui ne pourraient etre modifies qu'a l'unanimite de tous les souscripteurs (art. 410) ; la nomination eventuelle des premiers administrateurs et des organes de controle (commissaire aux comptes) (art. 410).",
+    "articles_auscgie": [
+      "art. 408",
+      "art. 409",
+      "art. 410"
+    ],
+    "forme_juridique": "SA",
+    "page": 220,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1602-1",
+    "paragraphe": "1602",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AG constitutive",
+    "titre": "Designation des premiers organes de gestion dans les statuts",
+    "contenu": "Il est a noter que les statuts (art. 397) et l'assemblee generale constitutive (art. 410) prevoient la designation des premiers organes de gestion (administrateurs ou administrateur general selon le cas) et de controle (commissaire aux comptes). Etant donne qu'il s'agit d'une mention obligatoire des statuts, il est plus prudent de les designer dans les statuts pour eviter que la responsabilite des fondateurs soit engagee du fait du prejudice cause par defaut d'une mention obligatoire dans les statuts (art. 78).",
+    "articles_auscgie": [
+      "art. 397",
+      "art. 410",
+      "art. 78"
+    ],
+    "forme_juridique": "SA",
+    "page": 220,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1602-2",
+    "paragraphe": "1602",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AG constitutive",
+    "titre": "Approbation des actes accomplis pour le compte de la societe en formation",
+    "contenu": "L'approbation, dans une resolution speciale, des actes accomplis pour le compte de la societe en formation (art. 106 et 107). Le rapport soumis a l'assemblee doit contenir : la nature, et la partie des obligations que les actes comportent pour la societe si elle les reprend. Si l'assemblee approuve ces actes et engagements, ils sont reputes avoir ete contractes par la societe des l'origine (art. 110).",
+    "articles_auscgie": [
+      "art. 106",
+      "art. 107",
+      "art. 110"
+    ],
+    "forme_juridique": "SA",
+    "page": 220,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1602-3",
+    "paragraphe": "1602",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AG constitutive",
+    "titre": "Refus d'approbation des actes et engagements",
+    "contenu": "Si l'assemblee generale refuse d'approuver les actes et engagements, les personnes intervenues au nom de la societe sont tenues responsables solidairement et indefiniment par les obligations qu'ils comportent (art. 110).",
+    "articles_auscgie": [
+      "art. 110"
+    ],
+    "forme_juridique": "SA",
+    "page": 221,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1602-4",
+    "paragraphe": "1602",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AG constitutive",
+    "titre": "Mandat pour engagements de la societe en formation",
+    "contenu": "L'assemblee peut donner mandat a un ou plusieurs membres du conseil d'administration ou a l'administrateur general de prendre des engagements pour le compte de la societe en formation. Ces engagements, a condition d'etre determines et que leurs modalites soient precisees dans le mandat, seront repris par la societe apres son immatriculation (art. 111). Les actes excedant les pouvoirs qui leur sont conferes par ces mandats, ou qui leur sont etrangers, ne peuvent etre repris par la societe que s'ils sont approuves par l'assemblee generale ordinaire (art. 112).",
+    "articles_auscgie": [
+      "art. 111",
+      "art. 112"
+    ],
+    "forme_juridique": "SA",
+    "page": 221,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1603",
+    "paragraphe": "1603",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AGO",
+    "titre": "Attributions de l'assemblee generale ordinaire",
+    "contenu": "L'assemblee generale prend connaissance des differents rapports et projets de resolution et, le cas echeant, le president du conseil d'administration rend compte des travaux du conseil d'administration.",
+    "articles_auscgie": [],
+    "forme_juridique": "SA",
+    "page": 221,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1603-1a",
+    "paragraphe": "1603",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AGO",
+    "titre": "Pouvoirs de l'AGO - Approbation des etats financiers",
+    "contenu": "Les pouvoirs de l'assemblee generale ordinaire sont : l'approbation des etats financiers de synthese de l'exercice (art. 546) etablis conformement aux dispositions de l'Acte uniforme OHADA portant organisation et harmonisation des comptabilites des entreprises (art. 137). Les etats financiers et le rapport de gestion sont adresses aux commissaires aux comptes 45 jours au moins avant la date de l'assemblee generale ordinaire qui doit se reunir dans les six mois de la cloture de l'exercice, sous reserve de la prorogation de ce delai par decision de justice.",
+    "articles_auscgie": [
+      "art. 546",
+      "art. 137"
+    ],
+    "forme_juridique": "SA",
+    "page": 221,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1603-1b",
+    "paragraphe": "1603",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AGO",
+    "titre": "Delai de reunion de l'AGO et saisine de la juridiction",
+    "contenu": "Si l'assemblee generale ordinaire n'a pas ete reunie dans le delai de 6 mois, le ministere public ou tout actionnaire peut saisir la juridiction competente statuant a bref delai afin d'enjoindre, le cas echeant sous astreinte, aux dirigeants de convoquer cette assemblee ou de designer un mandataire pour y proceder (art. 548).",
+    "articles_auscgie": [
+      "art. 548"
+    ],
+    "forme_juridique": "SA",
+    "page": 221,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1603-1c",
+    "paragraphe": "1603",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AGO",
+    "titre": "Pouvoirs de l'AGO - Affectation des resultats",
+    "contenu": "L'affectation des resultats (voir §§ 1785-1 et 1394-1).",
+    "articles_auscgie": [],
+    "forme_juridique": "SA",
+    "page": 221,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1603-1",
+    "paragraphe": "1603-1",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AGO",
+    "titre": "Benefice de l'exercice a affecter",
+    "contenu": "Le benefice de l'exercice a affecter est diminue, le cas echeant (art. 546) : des pertes anterieures ; d'une dotation egale a 10% au moins prelevee sur le benefice de l'exercice diminue, le cas echeant, des pertes anterieures, et affectee a la formation d'un fonds de reserve dit 'reserve legale'. Cette dotation cesse d'etre obligatoire lorsque la reserve atteint 20% du capital. Toutes les sommes affectees a la reserve legale, meme au dela du plafond obligatoire, sont indisponibles pour la distribution.",
+    "articles_auscgie": [
+      "art. 546"
+    ],
+    "forme_juridique": "SA",
+    "page": 221,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1603-1d",
+    "paragraphe": "1603-1",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AGO",
+    "titre": "Benefice distribuable",
+    "contenu": "Le benefice distribuable est ainsi determine (art. 143) : Resultat exercice + report a nouveau beneficiaire - pertes anterieures - reserves legales - reserves statutaires - dividendes partiels regulierement distribues.",
+    "articles_auscgie": [
+      "art. 143"
+    ],
+    "forme_juridique": "SA",
+    "page": 222,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1603-1e",
+    "paragraphe": "1603-1",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AGO",
+    "titre": "Determination des sommes distribuables par l'AGO",
+    "contenu": "Apres approbation des etats financiers de synthese et constatation de l'existence de sommes distribuables, l'assemblee generale determine : les dotations a des reserves, notamment facultatives, s'il y'a lieu ; la part de benefice a distribuer ; le montant du report a nouveau eventuel. La part de benefice revenant a chaque action est appelee dividende.",
+    "articles_auscgie": [],
+    "forme_juridique": "SA",
+    "page": 222,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1603-1f",
+    "paragraphe": "1603-1",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AGO",
+    "titre": "Dividende fictif",
+    "contenu": "Tout dividende distribue en violation des regles ci-dessus est un dividende fictif (art. 144). Cette distribution est sanctionnee penalement (art. 889).",
+    "articles_auscgie": [
+      "art. 144",
+      "art. 889"
+    ],
+    "forme_juridique": "SA",
+    "page": 222,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1603-1g",
+    "paragraphe": "1603-1",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AGO",
+    "titre": "Interdiction de distribution en cas de capitaux propres insuffisants",
+    "contenu": "Sauf en cas de reduction de capital, aucune distribution ne peut etre faite aux associes lorsque les capitaux propres sont ou deviendraient, a la suite de cette distribution, inferieurs au montant du capital augmente des reserves legales ou reserves statutaires non distribuables. Toute deliberation prise en violation de cette disposition est nulle (art. 143).",
+    "articles_auscgie": [
+      "art. 143"
+    ],
+    "forme_juridique": "SA",
+    "page": 222,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1603-1h",
+    "paragraphe": "1603-1",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AGO",
+    "titre": "Capitaux propres - Definition",
+    "contenu": "Par capitaux propres il faut entendre : capital nominal + ecarts de reevaluation + reserves + report a nouveau + resultat net de l'exercice + subventions d'investissement + provisions reglementees. Par capital il faut entendre le capital social nominal existant a la cloture de l'exercice, qu'il soit libere ou non, amorti ou non.",
+    "articles_auscgie": [],
+    "forme_juridique": "SA",
+    "page": 223,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1603-1i",
+    "paragraphe": "1603-1",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AGO",
+    "titre": "Dividende - Date de paiement",
+    "contenu": "La part du benefice revenant a chaque action est appelee dividende. La date de paiement est fixee par l'assemblee generale (art. 756). Mais en tout etat de cause, la mise en paiement des dividendes doit avoir lieu dans un delai maximum de 9 mois apres la cloture de l'exercice. La prolongation de ce delai peut etre accordee par le president de la juridiction competente (art. 146). Avec la nouvelle redaction de l'article 756 de l'Acte Uniforme, le paiement des dividendes peut etre fractionne sur une duree maximum de 9 mois apres la cloture de l'exercice.",
+    "articles_auscgie": [
+      "art. 756",
+      "art. 146"
+    ],
+    "forme_juridique": "SA",
+    "page": 223,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1603-2",
+    "paragraphe": "1603-2",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AGO",
+    "titre": "Acomptes sur dividendes",
+    "contenu": "Les acomptes sur dividendes sont des sommes versees aux actionnaires avant que l'assemblee generale n'approuve les comptes et ne constate l'existence d'un benefice distribuable. Il s'agit d'une repartition, par anticipation, des benefices. Une telle pratique n'est pas permise par l'Acte Uniforme (article 144). L'article 144 exclut toute distribution de dividende dont la decision ne serait pas prise par l'assemblee generale qui a approuve les comptes et constate l'existence de sommes distribuables tel que definies au § 1603-1. Tout dividende distribue sous forme d'acompte en violation de cette disposition, pourrait etre considere comme dividende fictif.",
+    "articles_auscgie": [
+      "art. 144"
+    ],
+    "forme_juridique": "SA",
+    "page": 223,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1603-2a",
+    "paragraphe": "1603-2",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AGO",
+    "titre": "Participation reciproque et dividendes",
+    "contenu": "En cas de participation reciproque de plus de 10%, les dividendes peuvent etre suspendus, voir § 1790.",
+    "articles_auscgie": [],
+    "forme_juridique": "SA",
+    "page": 223,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1603-3",
+    "paragraphe": "1603-3",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AGO",
+    "titre": "Nomination et revocation des membres du CA et du commissaire aux comptes",
+    "contenu": "La nomination (art. 546) et la revocation (art. 522) des membres du conseil d'administration, de l'administrateur general, de l'administrateur general adjoint ainsi que du commissaire aux comptes. L'organe competent pour revoquer un president-directeur general et son equipe dirigeante est l'assemblee generale ordinaire (et non l'assemblee generale extraordinaire) (Cour d'Appel d'Abidjan, Arret n° 1161 du 24/10/2003 - OHADATA J-04-96 ; J-03-317 ; J-03-66). Pour chaque candidat au poste d'administrateur, l'ordre du jour doit faire mention de son identite, ses references professionnelles et ses activites professionnelles au cours des 5 dernieres annees (art. 523).",
+    "articles_auscgie": [
+      "art. 546",
+      "art. 522",
+      "art. 523"
+    ],
+    "forme_juridique": "SA",
+    "page": 224,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1603-3a",
+    "paragraphe": "1603-3",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AGO",
+    "titre": "Ratification des administrateurs cooptes",
+    "contenu": "La ratification de la nomination provisoire des administrateurs cooptes par le conseil d'administration (art. 429).",
+    "articles_auscgie": [
+      "art. 429"
+    ],
+    "forme_juridique": "SA",
+    "page": 224,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1603-3b",
+    "paragraphe": "1603-3",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AGO",
+    "titre": "Approbation des conventions reglementees",
+    "contenu": "L'approbation ou le refus d'approbation des conventions conclues entre les dirigeants et la societe ou un actionnaire detenant une participation superieure a 10% du capital de la societe, apres lecture du rapport du commissaire aux comptes (art. 546). La nullite des conventions reglementees peut etre couverte sur rapport special du commissaire aux comptes exposant les circonstances en raison desquelles la procedure d'autorisation n'a pas ete suivie (art. 447). Les conventions approuvees ou desapprouvees par l'assemblee generale ordinaire produisent leurs effets a l'egard des cocontractants et des tiers sauf lorsqu'elles sont annulees pour fraude (art. 443).",
+    "articles_auscgie": [
+      "art. 546",
+      "art. 447",
+      "art. 443"
+    ],
+    "forme_juridique": "SA",
+    "page": 224,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1603-3c",
+    "paragraphe": "1603-3",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AGO",
+    "titre": "Emission d'obligations et ratification du deplacement du siege social",
+    "contenu": "L'emission d'obligations (art. 546). La ratification du deplacement du siege social dans les limites du territoire d'un meme Etat partie lorsqu'il a ete decide par le conseil d'administration (art. 451) ; voir § 1577.",
+    "articles_auscgie": [
+      "art. 546",
+      "art. 451"
+    ],
+    "forme_juridique": "SA",
+    "page": 224,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1603-3d",
+    "paragraphe": "1603-3",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AGO",
+    "titre": "Allocation aux administrateurs - Indemnite de fonction",
+    "contenu": "L'allocation aux administrateurs (art. 431) et a l'administrateur general (art. 501) d'une somme fixe annuelle a titre d'indemnite de fonction. Le conseil d'administration peut allouer aux administrateurs, membres des comites une part superieure a celle des autres administrateurs (art. 431). Cette indemnite remplace les jetons de presence qui etaient en vigueur dans certains Etats partie.",
+    "articles_auscgie": [
+      "art. 431",
+      "art. 501"
+    ],
+    "forme_juridique": "SA",
+    "page": 224,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1603-4",
+    "paragraphe": "1603-4",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AGO",
+    "titre": "Approbation du rapport du commissaire aux comptes sur acquisition de biens",
+    "contenu": "L'approbation du rapport du commissaire aux comptes relatif a l'acquisition par la societe, dans les deux ans suivant son immatriculation au registre du commerce, de biens appartenant a des actionnaires et dont la valeur est au moins egale a 5 000 000 FCFA (art. 547). La vente est nulle si l'assemblee generale ordinaire ne statue pas sur l'evaluation du bien qui fait l'objet du rapport du commissaire aux comptes dont l'approbation est soumise a l'assemblee. La deliberation peut aussi etre annulee lorsque le rapport ne contient pas toutes les indications suivantes : la description du bien acquis ; l'indication des criteres retenus pour la fixation du prix ; l'appreciation de la pertinence de ces criteres par le commissaire aux comptes.",
+    "articles_auscgie": [
+      "art. 547"
+    ],
+    "forme_juridique": "SA",
+    "page": 224,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1603-4a",
+    "paragraphe": "1603-4",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AGO",
+    "titre": "Vote du vendeur actionnaire",
+    "contenu": "Le vendeur ne prend pas part au vote de la resolution relative a la vente. Il n'y participe ni pour lui-meme, ni comme mandataire, et ses actions ne sont pas prises en compte pour le calcul du quorum et de la majorite. Toute deliberation prise en violation de cette disposition est nulle (art. 547).",
+    "articles_auscgie": [
+      "art. 547"
+    ],
+    "forme_juridique": "SA",
+    "page": 225,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1603-4b",
+    "paragraphe": "1603-4",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AGO",
+    "titre": "Exceptions a la procedure d'approbation",
+    "contenu": "La procedure de l'approbation par l'assemblee generale du rapport du commissaire aux comptes sur la valeur n'est pas requise : si la vente intervient plus de deux (2) ans apres l'immatriculation de la societe au registre du commerce et du credit mobilier ; si la valeur du bien est inferieure a FCFA 5 000 000.",
+    "articles_auscgie": [],
+    "forme_juridique": "SA",
+    "page": 225,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1603-4c",
+    "paragraphe": "1603-4",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AGO",
+    "titre": "Vendeur actionnaire dirigeant detenant moins de 10%",
+    "contenu": "Lorsque le vendeur, en plus de sa qualite d'actionnaire detenant moins de 10% du capital de la societe, est dirigeant, on appliquera les regles relatives aux conventions autorisees en plus de celles concernant la procedure ci-dessus.",
+    "articles_auscgie": [],
+    "forme_juridique": "SA",
+    "page": 225,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1603-4d",
+    "paragraphe": "1603-4",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AGO",
+    "titre": "Vente d'un bien par l'actionnaire unique",
+    "contenu": "L'article 547 ne fait pas reference a la vente d'un bien par l'actionnaire unique a sa societe. Une telle operation nous parait alors possible sans aucune restriction.",
+    "articles_auscgie": [
+      "art. 547"
+    ],
+    "forme_juridique": "SA",
+    "page": 225,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1603-4e",
+    "paragraphe": "1603-4",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AGO",
+    "titre": "Reprise des actes de la societe en formation par l'AGO",
+    "contenu": "Les actes et engagements accomplis pour le compte de la societe en formation peuvent egalement etre repris par la societe, posterieurement a sa constitution, a condition qu'ils soient approuves par l'assemblee generale ordinaire. Cette assemblee doit etre completement informee sur la nature et la portee de chacun des actes et engagements dont la reprise lui est proposee (art. 108).",
+    "articles_auscgie": [
+      "art. 108"
+    ],
+    "forme_juridique": "SA",
+    "page": 225,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1603-4f",
+    "paragraphe": "1603-4",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AGO",
+    "titre": "Contrat de travail et remuneration de l'administrateur general",
+    "contenu": "L'autorisation du contrat de travail et des avantages en nature de l'administrateur general. A defaut le contrat est nul (art. 499). Les modalites et le montant de la remuneration de l'administrateur general ainsi que les avantages en nature qui lui sont accordes. Toute decision prise en violation de cette disposition est nulle (art. 501) ; le remboursement des frais de voyages et depenses engages dans l'interet de la societe ne requierent plus une autorisation de l'assemblee generale.",
+    "articles_auscgie": [
+      "art. 499",
+      "art. 501"
+    ],
+    "forme_juridique": "SA",
+    "page": 225,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1603-4g",
+    "paragraphe": "1603-4",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AGO",
+    "titre": "Quitus aux administrateurs",
+    "contenu": "Le quitus aux administrateurs. Il s'agit d'une deliberation de l'assemblee generale ordinaire, statuant sur les comptes de l'exercice, par laquelle les actionnaires reconnaissent que les administrateurs se sont acquittes convenablement de leur mission. Contrairement a une croyance repandue, ce quitus n'empeche pas la recherche de la responsabilite des dirigeants en cas de necessite. En effet : le quitus n'est prevu par l'Acte uniforme que pour le liquidateur de la societe en ses articles 217 ; 219 ; 902. Il s'agit d'une pratique sans base legale, pour les administrateurs des societes, qui s'est generalisee avec le temps ; les articles 168, 169 et 742 excluent toute exoneration de responsabilite des dirigeants, que cette exoneration resulte des statuts ou des decisions de l'assemblee generale.",
+    "articles_auscgie": [
+      "art. 217",
+      "art. 219",
+      "art. 902",
+      "art. 168",
+      "art. 169",
+      "art. 742"
+    ],
+    "forme_juridique": "SA",
+    "page": 226,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1603-4h",
+    "paragraphe": "1603-4",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AGO",
+    "titre": "Limites du quitus - Action sociale et responsabilite",
+    "contenu": "Ainsi : les statuts ne peuvent subordonner l'exercice de l'action sociale a l'avis prealable ou a l'autorisation de l'assemblee, d'un organe de gestion, de direction ou d'administration ou comporter par avance renonciation a l'exercice de cette action (art. 168) ; aucune decision de l'assemblee generale, d'un organe de gestion, de direction ou d'administration ne peut avoir pour effet d'eteindre une action en responsabilite contre les dirigeants sociaux, notamment contre les administrateurs ou contre l'administrateur general, selon le cas, pour faute commise dans l'accomplissement de leur fonction. Toute decision contraire est nulle.",
+    "articles_auscgie": [
+      "art. 168"
+    ],
+    "forme_juridique": "SA",
+    "page": 226,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1604",
+    "paragraphe": "1604",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AGE",
+    "titre": "Attributions de l'assemblee generale extraordinaire",
+    "contenu": "L'assemblee generale extraordinaire est seule habilitee a modifier les statuts, dans toutes leurs dispositions. Toute clause contraire est reputee non ecrite (art. 551) voir § 1577. L'assemblee generale extraordinaire a egalement competence pour modifier, entre autres : la denomination sociale, la forme de la societe, le montant du capital, la duree de la societe, l'objet social, le nombre et la valeur des actions souscrites en numeraire, le nombre et la valeur des actions attribuees en remuneration de chaque apport en nature, les stipulations relatives a la constitution des reserves, a la repartition des benefices et du boni de liquidation, les conditions d'acces a l'assemblee d'actionnaires et d'exercice du droit de vote, les modalites de son fonctionnement (conseil d'administration ou administrateur general).",
+    "articles_auscgie": [
+      "art. 551"
+    ],
+    "forme_juridique": "SA",
+    "page": 226,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1604-1",
+    "paragraphe": "1604",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AGE",
+    "titre": "AGE - Autres attributions",
+    "contenu": "L'assemblee generale extraordinaire a aussi pour attribution : l'autorisation des fusion, scission, transformation et apports partiels d'actifs (art. 551) ; le transfert du siege social en toute autre ville de l'Etat partie ou il est situe ou sur le territoire d'un autre Etat partie (art. 551) ; voir § 1577 ; la dissolution par anticipation de la societe ou la prorogation de la duree de vie (art. 551) ; la mise en harmonie des statuts decidee aux conditions de validite des decisions de l'assemblee generale ordinaire.",
+    "articles_auscgie": [
+      "art. 551"
+    ],
+    "forme_juridique": "SA",
+    "page": 228,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1604-2",
+    "paragraphe": "1604",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AGE",
+    "titre": "AGE - Limites",
+    "contenu": "L'assemblee generale extraordinaire a aussi des limites en effet : elle ne peut priver un actionnaire de la participation a l'assemblee et ne peut opposer a un actionnaire la limitation de voix. Toute clause contraire est nulle (art. 552 et 557-1) ; elle ne peut augmenter les engagements des actionnaires au dela de leurs apports qu'avec l'accord de chaque actionnaire (art. 551), par exemple l'obligation de souscrire a une augmentation de capital par une augmentation de la valeur nominale des actions.",
+    "articles_auscgie": [
+      "art. 552",
+      "art. 557-1",
+      "art. 551"
+    ],
+    "forme_juridique": "SA",
+    "page": 228,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1604-3",
+    "paragraphe": "1604",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AGE",
+    "titre": "AGE - Perte de plus de la moitie du capital social",
+    "contenu": "Si du fait des pertes constatees dans les etats financiers de synthese, les capitaux propres de la societe deviennent inferieurs a la 1/2 du capital social, le conseil d'administration ou l'administrateur general, selon le cas, est tenu dans les 4 mois qui suivent l'approbation des comptes ayant fait apparaitre cette perte, de convoquer l'assemblee generale extraordinaire a l'effet de decider si la dissolution anticipee de la societe a lieu (art. 664). Si la dissolution n'est pas prononcee, la societe est tenue, au plus tard a la cloture du 2eme exercice suivant celui au cours duquel la constatation des pertes est intervenue, de reduire son capital social, d'un montant au moins egal a celui des pertes qui n'ont pu etre imputees sur les reserves a concurrence d'une valeur au moins egale a la moitie du capital social (art. 665), voir exemple § 1395-1.",
+    "articles_auscgie": [
+      "art. 664",
+      "art. 665"
+    ],
+    "forme_juridique": "SA",
+    "page": 227,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1604-4",
+    "paragraphe": "1604",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AGE",
+    "titre": "AGE - Depot et publication de la decision",
+    "contenu": "La decision de l'assemblee generale extraordinaire est deposee au greffe du tribunal charge des affaires commerciales du lieu du siege social et inscrite au registre du commerce et du credit mobilier. Elle est publiee dans un journal d'annonces legales du lieu du siege social (art. 666).",
+    "articles_auscgie": [
+      "art. 666"
+    ],
+    "forme_juridique": "SA",
+    "page": 227,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1604-5",
+    "paragraphe": "1604",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AGE",
+    "titre": "AGE - Demande de dissolution en justice",
+    "contenu": "A defaut de reunion de l'assemblee generale extraordinaire, comme dans le cas ou cette assemblee n'a pu deliberer valablement sur derniere convocation, tout interesse peut demander en justice la dissolution de la societe (art. 667). La juridiction competente saisie d'une demande de dissolution peut accorder a la societe un delai maximal de six (6) mois pour regulariser la situation. Elle ne peut prononcer la dissolution si, au jour ou elle statue sur le fond, cette regularisation a eu lieu (art. 668).",
+    "articles_auscgie": [
+      "art. 667",
+      "art. 668"
+    ],
+    "forme_juridique": "SA",
+    "page": 227,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1604-6",
+    "paragraphe": "1604",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AGE",
+    "titre": "AGE - Sanction penale en cas de perte de plus de la moitie du capital",
+    "contenu": "Encourent une sanction penale, les dirigeants sociaux qui, sciemment, lorsque les capitaux propres de la societe deviennent inferieurs a la 1/2 du capital social du fait des pertes constatees dans les etats financiers de synthese : 1° n'ont pas fait convoquer dans les 4 mois qui suivent l'approbation des etats financiers de synthese ayant fait apparaitre ces pertes, l'assemblee generale extraordinaire a l'effet de decider, s'il y a lieu, la dissolution anticipee de la societe ; 2° n'ont pas depose au registre du commerce et du credit mobilier et publie dans un journal habilite a recevoir les annonces legales, la dissolution anticipee de la societe (art. 901).",
+    "articles_auscgie": [
+      "art. 901"
+    ],
+    "forme_juridique": "SA",
+    "page": 227,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1605",
+    "paragraphe": "1605",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - Publicite",
+    "titre": "Publicite de la modification des statuts",
+    "contenu": "La modification des statuts est publiee par avis insere dans un journal habilite a recevoir les annonces legales dans l'Etat partie du siege social. Cet avis est signe par le notaire qui a recu ou dresse l'acte modifiant les statuts ou par l'associe unique ou les associes (art. 263). Les dispositions de l'Acte uniforme relatives a la modification des statuts ne fixent pas le delai de publicite. L'article 259 qui fixe, entre autres, la regularisation des manquements dans l'accomplissement des formalites de publicite, semble exclure les operations relatives a la constitution et a la modification des statuts. Mais, il serait judicieux de retenir le meme delai que pour la constitution a savoir dans les 15 jours a compter de la tenue de l'assemblee pour la publication de la decision dans un journal d'annonces legales.",
+    "articles_auscgie": [
+      "art. 263",
+      "art. 259"
+    ],
+    "forme_juridique": "SA",
+    "page": 228,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1606",
+    "paragraphe": "1606",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - AG speciale",
+    "titre": "Attributions de l'assemblee generale speciale",
+    "contenu": "L'assemblee speciale reunit les titulaires d'actions d'une categorie donnee pour en defendre les droits, par exemple les porteurs d'actions de preference. L'assemblee speciale approuve ou desapprouve les decisions des assemblees generales lorsque ces decisions modifient les droits de ses membres. La decision d'une assemblee generale de modifier les droits relatifs a une categorie d'actions, n'est definitive qu'apres approbation par l'assemblee speciale des actionnaires de cette categorie (art. 555).",
+    "articles_auscgie": [
+      "art. 555"
+    ],
+    "forme_juridique": "SA",
+    "page": 228,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1607",
+    "paragraphe": "1607",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - Convocation",
+    "titre": "Convocation de l'assemblee - Principe",
+    "contenu": "L'assemblee ne peut deliberer que si elle est convoquee par des personnes dument habilitees dans les formes et delais requis. Toute assemblee irregulierement convoquee peut etre annulee. Toutefois, l'action en nullite n'est pas recevable lorsque tous les actionnaires etaient presents ou representes (art. 412 et 519).",
+    "articles_auscgie": [
+      "art. 412",
+      "art. 519"
+    ],
+    "forme_juridique": "SA",
+    "page": 229,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1607-1",
+    "paragraphe": "1607",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - Convocation",
+    "titre": "Jurisprudence - Action en nullite irrecevable",
+    "contenu": "En application de l'article 519 de l'AUSCGIE, l'action en nullite des deliberations d'une assemblee generale irregulierement convoquee n'est pas recevable lorsque tous les actionnaires etaient presents ou representes. En l'espece, tous les actionnaires ayant ete presents ou representes a l'assemblee generale du 14 septembre 1998, il y a lieu de declarer irrecevable l'action en nullite exercee par certains actionnaires contre les deliberations de cette assemblee (Trib. 1ere instance d'Abidjan, jugement n° 1245 du 21 juin 2001, Encodroit n° 1 Juillet-aout 2001, p. 49 - OHADATA J-02-19).",
+    "articles_auscgie": [
+      "art. 519"
+    ],
+    "forme_juridique": "SA",
+    "page": 229,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1608",
+    "paragraphe": "1608",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - Convocation",
+    "titre": "Personne habilitee a convoquer l'assemblee",
+    "contenu": "L'assemblee generale est convoquee (art. 516) par : le conseil d'administration ou l'administrateur general ; a defaut elle peut etre convoquee par : le commissaire aux comptes qui doit respecter les procedures suivantes : il doit vainement requerir la convocation par le conseil d'administration ou par l'administrateur general selon le cas par lettre au porteur contre recepisse ou par lettre recommandee avec demande d'avis de reception.",
+    "articles_auscgie": [
+      "art. 516"
+    ],
+    "forme_juridique": "SA",
+    "page": 229,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1608-1",
+    "paragraphe": "1608",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - Convocation",
+    "titre": "Procedure du commissaire aux comptes pour convoquer",
+    "contenu": "Pour prouver que le commissaire aux comptes a vainement requis la convocation par les organes competents, la demarche suivante est suggeree : envoi d'une lettre de rappel des obligations de convocation de l'assemblee ; s'il ne recoit pas de reponse ou si la reponse n'est pas satisfaisante, dans un delai raisonnable, une lettre de mise en demeure en recommandee avec accuse de reception ou porteur contre recepisse sera envoye pour fixer un delai pour la convocation ; si a l'expiration du delai, les organes d'administration ne reagissent pas, le commissaire aux comptes peut proceder a la convocation de l'Assemblee Generale Ordinaire.",
+    "articles_auscgie": [],
+    "forme_juridique": "SA",
+    "page": 230,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1608-2",
+    "paragraphe": "1608",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - Convocation",
+    "titre": "Commissaire aux comptes - Ordre du jour et rapport",
+    "contenu": "Il fixe l'ordre du jour et peut, pour des motifs determinants, choisir un lieu de reunion autre que celui eventuellement prevu par les statuts ; il expose les motifs de convocation dans un rapport lu a l'assemblee. Lorsque le mandat du conseil d'administration ou de l'administrateur general est arrive a expiration et qu'aucune assemblee generale n'a ete tenue pour regulariser cette anomalie, le commissaire aux comptes ne peut suivre la procedure suggeree ci-dessus. Le commissaire aux comptes ne peut plus convoquer l'assemblee generale ordinaire. Est aussi irreguliere toute convocation faite par le commissaire aux comptes sur injonction d'un des actionnaires sans avoir respecte la procedure ci-dessus.",
+    "articles_auscgie": [],
+    "forme_juridique": "SA",
+    "page": 230,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1608-3",
+    "paragraphe": "1608",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - Convocation",
+    "titre": "Convocation par un mandataire de justice",
+    "contenu": "Un mandataire de justice designe par le president de la juridiction competente, statuant a bref delai (le juge des referes est plus indique), a la demande soit de : tout interesse (actionnaire) en cas d'urgence ; un ou plusieurs actionnaires representant au moins 10% du capital s'il s'agit d'une assemblee generale ou 10% des actions de la categorie interessee s'il s'agit d'une assemblee generale speciale.",
+    "articles_auscgie": [],
+    "forme_juridique": "SA",
+    "page": 230,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1608-4",
+    "paragraphe": "1608",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - Convocation",
+    "titre": "Jurisprudence - Nomination d'un mandataire pour convoquer l'AG",
+    "contenu": "Conformement aux dispositions de l'article 516 de l'AUSCGIE, la nomination d'un mandataire pour la tenue d'une assemblee generale se justifie dans les cas ou cette instance n'est pas tenue, sans autorisation, dans les delais reguliers. L'assemblee generale est convoquee par voie judiciaire avec insertion dans un journal d'annonces legales. Le demandeur n'ayant fourni aucune preuve que ses droits d'actionnaire ont ete meconnus par cette forme de convocation, qui outre qu'elle est legalement prevue, n'a pas fait un tort particulier a d'autres actionnaires. (Tribunal Regional Hors Classe de Dakar, ordonnance de refere n° 1729 du 31 decembre 2002, OHADATA J-03-182).",
+    "articles_auscgie": [
+      "art. 516"
+    ],
+    "forme_juridique": "SA",
+    "page": 230,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1608-5",
+    "paragraphe": "1608",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - Convocation",
+    "titre": "Convocation par le liquidateur et les fondateurs",
+    "contenu": "Le liquidateur ; les fondateurs apres l'etablissement de la declaration notariee de souscription et de versement des fonds (art. 404).",
+    "articles_auscgie": [
+      "art. 404"
+    ],
+    "forme_juridique": "SA",
+    "page": 231,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1608-6",
+    "paragraphe": "1608",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - Convocation",
+    "titre": "Jurisprudence - Actions dont les paiements ne sont pas effectues",
+    "contenu": "Selon l'article 775 de l'Acte Uniforme, les actions dont les paiements exigibles n'ont pas ete effectues dans les delais requis, cessent de donner droit a l'admission dans les assemblees d'actionnaires et elles sont deduites pour le calcul du quorum et des majorites. Vu donc que la loi sanctionne les actionnaires defaillants, ceux-ci sont mal fondes a convoquer une assemblee generale de la societe, que cette convocation cree un trouble manifestement illicite justifiant l'intervention du Juge des referes (Tribunal Regional de Niamey, Ordonnance de refere n° 070/TR/NY/2001 du 23/04/2001 - OHADATA J-02-35).",
+    "articles_auscgie": [
+      "art. 775"
+    ],
+    "forme_juridique": "SA",
+    "page": 231,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1608-7",
+    "paragraphe": "1608",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - Convocation",
+    "titre": "Jurisprudence - Annulation des deliberations pour convocation irreguliere",
+    "contenu": "La cour d'appel d'Abidjan a annule les deliberations prises en violation des dispositions relatives aux personnes habilitees a convoquer l'Assemblee voir § 1641.",
+    "articles_auscgie": [],
+    "forme_juridique": "SA",
+    "page": 231,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1609",
+    "paragraphe": "1609",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - Convocation",
+    "titre": "Forme de l'avis de convocation",
+    "contenu": "L'avis de convocation indique : la denomination de la societe suivie le cas echeant de son sigle, la forme de la societe, le montant du capital social, l'adresse du siege social, le numero d'immatriculation au registre de commerce et du credit mobilier, le jour, l'heure et le lieu de l'assemblee, la nature de l'assemblee (ordinaire, extraordinaire ou speciale), l'ordre du jour. Le cas echeant, l'avis indique le lieu ou doivent etre deposes les actions au porteur ou le certificat de depot de ces actions, pour ouvrir droit de participer a l'assemblee, ainsi que la date a laquelle ce depot doit etre fait. Les coproprietaires d'actions indivises, les nu-proprietaires et les usufruitiers d'actions sont convoques suivant les formes ci-dessus mentionnees (art. 519). Modele § 2046.",
+    "articles_auscgie": [
+      "art. 519"
+    ],
+    "forme_juridique": "SA",
+    "page": 231,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1610",
+    "paragraphe": "1610",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - Convocation",
+    "titre": "Delai de convocation",
+    "contenu": "L'avis de convocation doit etre insere dans un journal habilite a recevoir les annonces legales dans un delai de : 15 jours au moins avant la date de l'assemblee sur premiere convocation ; 6 jours au moins pour les convocations suivantes. Ce delai doit etre calcule sans tenir compte du jour de l'insertion ou de l'envoi de la convocation individuelle mais en comptant celui de la date de l'assemblee generale. Par exemple une assemblee devant se reunir le 30 Juin, le premier avis de convocation doit etre publie au plus tard le 15 Juin.",
+    "articles_auscgie": [],
+    "forme_juridique": "SA",
+    "page": 232,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1611",
+    "paragraphe": "1611",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - Convocation",
+    "titre": "Delai pour l'AG constitutive - 3eme convocation",
+    "contenu": "Pour l'assemblee generale constitutive, la 3eme convocation ne peut exceder 2 mois a compter de la date fixee par la 2eme convocation (art. 405).",
+    "articles_auscgie": [
+      "art. 405"
+    ],
+    "forme_juridique": "SA",
+    "page": 232,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1612",
+    "paragraphe": "1612",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - Convocation",
+    "titre": "Convocation par lettre en cas d'actions nominatives",
+    "contenu": "Si toutes les actions sont nominatives, l'insertion de l'avis de convocation dans un journal d'annonces legales peut etre remplacee par une convocation faite aux frais de la societe par lettre au porteur contre recepisse, ou par lettre recommandee avec demande d'avis de reception telecopie ou courrier electronique. Les convocations par telecopie et courrier electronique ne sont valables que si l'associe a prealablement donne son accord ecrit et communique son numero de telecopie ou son adresse electronique, selon le cas. Il peut a tout moment demander expressement a la societe par lettre recommandee avec demande d'avis de reception que le moyen de communication susmentionne soit remplace a l'avenir par un envoi postal (art. 518). Modele § 2047. Lorsque l'assemblee est convoquee par un mandataire de justice, le juge peut fixer un delai different (art. 518).",
+    "articles_auscgie": [
+      "art. 518"
+    ],
+    "forme_juridique": "SA",
+    "page": 232,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1612-1",
+    "paragraphe": "1612",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - Convocation",
+    "titre": "Jurisprudence - Annulation pour violation des conditions de forme et de delai",
+    "contenu": "La Cour d'Appel d'Abidjan a annule les deliberations prises en violation des conditions de forme et de delai de convocation de l'Assemblee generale voir § 1641.",
+    "articles_auscgie": [],
+    "forme_juridique": "SA",
+    "page": 232,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1613",
+    "paragraphe": "1613",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - Convocation",
+    "titre": "Convocation du commissaire aux comptes",
+    "contenu": "Le commissaire aux comptes est obligatoirement convoque a toute assemblee d'actionnaires, au plus tard lors de la convocation des actionnaires eux-memes par lettre au porteur contre recepisse ou par lettre recommandee avec demande d'avis de reception. A defaut de convocation du commissaire aux comptes, l'assemblee est nulle seulement s'il doit presenter un rapport. Dans tous les autres cas de convocation irreguliere, l'assemblee peut etre annulee. Toutefois, l'action en nullite n'est pas recevable lorsque le commissaire aux comptes etait present (art. 721).",
+    "articles_auscgie": [
+      "art. 721"
+    ],
+    "forme_juridique": "SA",
+    "page": 232,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1613-1",
+    "paragraphe": "1613",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - Convocation",
+    "titre": "Sanction penale pour non convocation du commissaire aux comptes",
+    "contenu": "La non convocation du commissaire aux comptes est en outre sanctionnee penalement. En effet, encourent une sanction penale les dirigeants sociaux qui n'ont pas convoque les commissaires aux comptes a l'assemblee generale (art. 897). La presence du commissaire aux comptes non convoque a l'assemblee generale n'efface pas l'infraction penale qui resulte de la violation de la loi. En consequence, il faut prendre soin d'adresser une convocation au commissaire aux comptes par lettre au porteur contre recepisse ou par lettre recommandee avec avis de reception.",
+    "articles_auscgie": [
+      "art. 897"
+    ],
+    "forme_juridique": "SA",
+    "page": 233,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1614",
+    "paragraphe": "1614",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - Convocation",
+    "titre": "Lieu de reunion",
+    "contenu": "Les assemblees d'actionnaires sont reunies au siege social ou en tout autre lieu du territoire de l'Etat partie ou se situe le siege social, sauf clause contraire des statuts (art. 517). Ainsi, si une societe a son siege social a Conakry, toutes les reunions ne peuvent se tenir qu'en Guinee, sauf dispositions contraires des statuts. Il faut noter que les dispositions statutaires s'imposent aux auteurs de la convocation. Dans la pratique, les actionnaires qui veulent tenir des reunions hors du territoire de l'Etat partie doivent inserer une clause statutaire qui delegue au conseil d'administration la possibilite de fixer le lieu de la reunion hors du territoire de l'Etat partie.",
+    "articles_auscgie": [
+      "art. 517"
+    ],
+    "forme_juridique": "SA",
+    "page": 233,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1615",
+    "paragraphe": "1615",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - Convocation",
+    "titre": "Ordre du jour",
+    "contenu": "L'ordre du jour est arrete par l'auteur de la convocation. Toutefois, lorsque l'assemblee est convoquee par un mandataire ad hoc, l'ordre du jour est fixe par la juridiction competente qui l'a designe (art. 520). L'assemblee ne peut deliberer sur une question qui n'est pas inscrite a l'ordre du jour. Toute deliberation prise en violation de cette disposition est nulle (art. 522). Neanmoins elle peut, si elle est reunie ordinairement, revoquer un ou plusieurs membres du conseil d'administration, le cas echeant l'administrateur general ou l'administrateur general adjoint, et proceder a leur remplacement sans que cette question soit inscrite a l'ordre du jour (Art. 522).",
+    "articles_auscgie": [
+      "art. 520",
+      "art. 522"
+    ],
+    "forme_juridique": "SA",
+    "page": 233,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1615-1",
+    "paragraphe": "1615",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - Convocation",
+    "titre": "Ordre du jour - Candidats au poste d'administrateur",
+    "contenu": "Lorsque l'ordre du jour de l'assemblee generale porte sur la presentation de candidats au poste d'administrateur ou d'administrateur general, selon le cas, il doit etre fait mention de : leur identite, leurs references professionnelles, leurs activites professionnelles, leurs mandats sociaux au cours des cinq dernieres annees (Art. 523). L'ordre du jour de l'assemblee ne peut etre modifie sur deuxieme convocation ou, le cas echeant, pour les assemblees generales extraordinaires, sur troisieme convocation. Toute deliberation prise en violation de cette disposition est nulle (art. 524).",
+    "articles_auscgie": [
+      "art. 523",
+      "art. 524"
+    ],
+    "forme_juridique": "SA",
+    "page": 234,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1616",
+    "paragraphe": "1616",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - Convocation",
+    "titre": "Inscription de projets de resolutions a l'ordre du jour par les actionnaires",
+    "contenu": "Un ou plusieurs actionnaires ont la faculte de requerir l'inscription a l'ordre du jour de l'assemblee generale d'un projet de resolutions lorsqu'ils representent : 5% du capital, si le capital est inferieur a FCFA 1 000 000 000 ; 3% du capital, si le capital est compris entre FCFA 1 000 000 000 et FCFA 2 000 000 000 ; 0,5% du capital, si le capital est superieur a FCFA 2 000 000 000. La demande est accompagnee du projet de resolutions auquel il est joint un bref expose des motifs et de la justification de la possession ou de la representation de la fraction de capital exigee pour presenter un projet de resolutions. Lorsque le projet de resolutions porte sur la presentation d'un candidat au poste d'administrateur ou d'administrateur general, les renseignements requis ci-dessus doivent etre mentionnes (art. 520).",
+    "articles_auscgie": [
+      "art. 520"
+    ],
+    "forme_juridique": "SA",
+    "page": 234,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1616-1",
+    "paragraphe": "1616",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - Convocation",
+    "titre": "Envoi et vote des projets de resolutions",
+    "contenu": "Les projets de resolutions sont adresses au siege social par lettre au porteur contre recepisse, par lettre recommandee avec demande d'avis de reception, ou par telecopie 10 jours au moins avant la tenue de l'assemblee generale pour pouvoir etre soumis au vote de l'assemblee. Le pouvoir de l'assemblee generale ordinaire ne consiste pas a approuver ou rejeter les projets de resolutions. L'Assemblee peut modifier tout ou partie des projets de resolutions pourvu que les questions traitees soient conformes a l'ordre du jour. Les deliberations de l'assemblee generale sont nulles si les projets de resolutions ne sont pas soumis au vote de l'assemblee (art. 521).",
+    "articles_auscgie": [
+      "art. 521"
+    ],
+    "forme_juridique": "SA",
+    "page": 234,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1617",
+    "paragraphe": "1617",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - Communication des documents sociaux",
+    "titre": "Droit de communication des documents sociaux",
+    "contenu": "Pour une meilleure information, l'actionnaire ou son mandataire a le droit de consulter un certain nombre de documents aussi bien avant l'assemblee qu'a toute epoque (art. 525 et 526). Ce droit de communication appartient aussi a chacun des coproprietaires d'actions indivises, au nu-proprietaire et a l'usufruitier d'actions (art. 527). Les documents mis a la disposition des actionnaires sont presentes aux §§ 1626 s.",
+    "articles_auscgie": [
+      "art. 525",
+      "art. 526",
+      "art. 527"
+    ],
+    "forme_juridique": "SA",
+    "page": 234,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1618",
+    "paragraphe": "1618",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - Communication des documents sociaux",
+    "titre": "Droit de prendre connaissance des documents avant l'assemblee",
+    "contenu": "Tout actionnaire a le droit, par lui-meme ou par le mandataire qu'il a nommement designe pour le representer a l'assemblee generale, de prendre connaissance au siege social dans un delai de 15 jours qui precedent la tenue de l'assemblee generale, des documents qui seront presentes a ladite assemblee (art. 525). Il peut aussi prendre connaissance a toute epoque des documents relatifs aux 3 derniers exercices (art. 526).",
+    "articles_auscgie": [
+      "art. 525",
+      "art. 526"
+    ],
+    "forme_juridique": "SA",
+    "page": 235,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1618-1",
+    "paragraphe": "1618",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - Communication des documents sociaux",
+    "titre": "Obligataires - Pas de droit de controle individuel",
+    "contenu": "Les obligataires ne peuvent exercer de controle individuel sur les operations de la societe ou obtenir communication des documents sociaux art (813). Le tableau des §§ 1626 et 1627 indique les documents a mettre a la disposition des actionnaires.",
+    "articles_auscgie": [
+      "art. 813"
+    ],
+    "forme_juridique": "SA",
+    "page": 235,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1619",
+    "paragraphe": "1619",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - Communication des documents sociaux",
+    "titre": "Documents et informations communiques au commissaire aux comptes",
+    "contenu": "Les etats financiers de synthese et le rapport de gestion sont adresses aux commissaires aux comptes 45 jours au moins avant la date de l'assemblee generale ordinaire (art. 140). Le president du conseil d'administration ou le president-directeur general avise le commissaire aux comptes, dans le delai d'un (1) mois a compter de leur conclusion, de toute convention autorisee par le conseil d'administration (art. 440). Lorsque l'execution de conventions conclues et autorisees au cours d'exercices anterieurs a ete poursuivie au cours du dernier exercice, le commissaire aux comptes est informe de cette situation dans le delai d'un (1) mois a compter de la cloture de l'exercice (art. 440).",
+    "articles_auscgie": [
+      "art. 140",
+      "art. 440"
+    ],
+    "forme_juridique": "SA",
+    "page": 235,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1620",
+    "paragraphe": "1620",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - Communication des documents sociaux",
+    "titre": "Questions ecrites de l'actionnaire",
+    "contenu": "Tout actionnaire peut, deux fois par exercice, poser des questions ecrites au president du conseil d'administration, au president-directeur general, au directeur general et a l'administrateur general selon le cas sur tout fait de nature a compromettre la continuite de l'exploitation (art. 526). Le president du conseil d'administration, le president-directeur general, le directeur general ou l'administrateur general, selon le cas, repond par ecrit, dans un delai d'un mois aux questions posees par ecrit par l'actionnaire. Dans le meme delai il adresse copie de la question et de la reponse au commissaire aux comptes (art. 158). L'actionnaire ne peut poser aucune question ecrite au commissaire aux comptes sur tout fait de nature a compromettre la continuite de l'exploitation. La demarche du commissaire aux comptes est presentee aux §§ 1902 s.",
+    "articles_auscgie": [
+      "art. 526",
+      "art. 158"
+    ],
+    "forme_juridique": "SA",
+    "page": 235,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1623",
+    "paragraphe": "1623",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - Communication des documents sociaux",
+    "titre": "Filiales Societes cotees en bourse",
+    "contenu": "Les societes qui ne sont pas inscrites en bourse dont la moitie des titres est detenue par une ou plusieurs societes cotees qui ont : un bilan superieur a FCFA 200 000 000 ; ou qui possedent un portefeuille titres dont la valeur d'inventaire ou la valeur boursiere excedent FCFA 80 000 000 ; doivent, dans les 45 jours qui suivent l'approbation des etats financiers par l'assemblee, publier au journal habilite a recevoir les annonces legales : les etats financiers de synthese approuves et revetus de l'attestation des commissaires aux comptes ; la decision d'affectation du resultat (art. 853).",
+    "articles_auscgie": [
+      "art. 853"
+    ],
+    "forme_juridique": "SA",
+    "page": 236,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1624",
+    "paragraphe": "1624",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - Communication des documents sociaux",
+    "titre": "Depot des etats financiers au greffe",
+    "contenu": "Les etats financiers de synthese de l'exercice ecoule doivent etre deposes au greffe dans le mois qui suit leur approbation par l'assemblee generale des actionnaires. En cas de refus d'approbation de ces documents, une copie des deliberations de l'assemblee est deposee au greffe dans le meme delai. Les etats financiers susvises peuvent faire l'objet d'un depot electronique au greffe de la juridiction competente ou de l'organe competent dans l'Etat partie. A la demande de tout interesse, la juridiction competente peut, statuant a bref delai, enjoindre sous astreinte au dirigeant de toute societe commerciale de proceder au depot des documents des etats financiers de synthese au greffe, des lors que la requete amiable du demandeur aupres de la societe est restee vaine pendant trente (30) jours (art. 269). Encourent une sanction penale, les dirigeants qui n'ont pas depose au greffe, dans le mois qui suit leur approbation les etats financiers de synthese (art. 890-1).",
+    "articles_auscgie": [
+      "art. 269",
+      "art. 890-1"
+    ],
+    "forme_juridique": "SA",
+    "page": 236,
+    "source": "sa2.pdf"
+  },
+  {
+    "id": "sa-1625",
+    "paragraphe": "1625",
+    "chapitre": "SA",
+    "section": "Assemblees d'actionnaires - Communication des documents sociaux",
+    "titre": "Recours en cas de refus de communication des documents",
+    "contenu": "En cas de refus de communication de tout ou partie des documents mentionnes aux §§ 1626 et 1627, l'actionnaire peut alors s'adresser a la juridiction competente statuant a bref delai. La juridiction competente peut ordonner a la societe, sous astreinte, de communiquer les documents a l'actionnaire (art. 528). Il n'existe aucune sanction penale relative a la non communication des documents vises ci-dessus.",
+    "articles_auscgie": [
+      "art. 528"
+    ],
+    "forme_juridique": "SA",
+    "page": 237,
+    "source": "sa2.pdf"
+  },
+  {
     "id": "sarl-1280",
     "paragraphe": "1280",
     "chapitre": "SARL",
