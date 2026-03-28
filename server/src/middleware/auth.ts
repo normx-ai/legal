@@ -68,8 +68,32 @@ export function requireAuth() {
       });
 
       req.keycloakSub = payload.sub;
-      // userId reste number pour compat Prisma — sera resolu par lookup ou auto-creation
-      req.userId = 1; // TODO: mapper keycloakSub -> userId Prisma
+
+      // Lookup ou auto-creation du user Prisma depuis le keycloakSub
+      const { PrismaClient } = require("@prisma/client");
+      const prisma = new PrismaClient();
+      try {
+        let user = await prisma.user.findUnique({ where: { keycloakSub: payload.sub } });
+        if (!user) {
+          // Auto-creation : premier login Keycloak → creer le user en base
+          const nameParts = (payload.name || "").split(" ");
+          user = await prisma.user.upsert({
+            where: { email: payload.email || payload.preferred_username || payload.sub },
+            update: { keycloakSub: payload.sub },
+            create: {
+              keycloakSub: payload.sub,
+              email: payload.email || payload.preferred_username || payload.sub,
+              nom: nameParts.slice(1).join(" ") || "",
+              prenom: nameParts[0] || "",
+              isEmailVerified: true,
+            },
+          });
+        }
+        req.userId = user.id;
+      } catch {
+        // Fallback si DB inaccessible — continuer avec keycloakSub
+        req.userId = 0;
+      }
       req.userEmail = payload.email || payload.preferred_username || "";
       req.userName = payload.name || "";
       req.userRoles = payload.realm_access?.roles || [];

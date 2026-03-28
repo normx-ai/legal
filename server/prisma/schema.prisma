@@ -11,8 +11,9 @@ datasource db {
 
 model User {
   id                   Int       @id @default(autoincrement())
+  keycloakSub          String?   @unique
   email                String    @unique
-  password             String
+  password             String    @default("")
   nom                  String
   prenom               String
   telephone            String?
