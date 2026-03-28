@@ -88,6 +88,8 @@ documentsRoutes.get("/:id/download", requireAuth(), async (req: AuthRequest, res
     : "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
 
   res.setHeader("Content-Type", contentType);
-  res.setHeader("Content-Disposition", `attachment; filename="${doc.denomination}-statuts.${ext}"`);
+  // Fix #4 — Echapper le nom pour eviter header injection
+  const safeName = (doc.denomination || "document").replace(/[^a-zA-Z0-9_-]/g, "_").substring(0, 50);
+  res.setHeader("Content-Disposition", `attachment; filename="${safeName}-statuts.${ext}"`);
   res.sendFile(filePath);
 });

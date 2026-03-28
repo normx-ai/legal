@@ -80,8 +80,7 @@ export function requireAuth() {
       }
 
       // Lookup ou auto-creation du user Prisma depuis le keycloakSub
-      const { PrismaClient } = require("@prisma/client");
-      const prisma = new PrismaClient();
+      const { prisma } = require("../server");
       try {
         let user = await prisma.user.findUnique({ where: { keycloakSub: payload.sub } });
         if (!user) {

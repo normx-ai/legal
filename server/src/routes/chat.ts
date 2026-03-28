@@ -1,9 +1,8 @@
 import { Router, Response } from "express";
 import { requireAuth, AuthRequest } from "../middleware/auth";
 import { chat, ChatMessage } from "../services/rag/chat";
-import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient();
+import { prisma } from '../server';
 export const chatRoutes = Router();
 
 interface ChatRequestBody {

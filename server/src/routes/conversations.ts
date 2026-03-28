@@ -1,8 +1,7 @@
 import { Router, Response } from "express";
 import { requireAuth, AuthRequest } from "../middleware/auth";
-import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient();
+import { prisma } from '../server';
 export const conversationRoutes = Router();
 
 // GET /api/conversations — Liste des conversations de l'utilisateur
