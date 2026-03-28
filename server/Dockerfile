@@ -25,4 +25,4 @@ RUN mkdir -p /app/generated
 
 EXPOSE 3004
 
-CMD ["sh", "-c", "npx prisma migrate deploy && node dist/server.js"]
+CMD ["sh", "-c", "sleep 5 && npx prisma migrate deploy && node dist/server.js"]
