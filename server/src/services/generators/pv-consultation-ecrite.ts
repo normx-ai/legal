@@ -1,4 +1,4 @@
-import type { FormData, TemplateData, Associe, Membre, Administrateur, Signataire } from "../../types/generator";
+import type { FormData, TemplateData, Associe, Membre, Administrateur, Signataire, Resolution } from "../../types/generator";
 import { formatNumber, numberToWords } from "./utils";
 
 export function preparePvConsultationEcriteData(formData: FormData): TemplateData {

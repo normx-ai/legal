@@ -5,8 +5,8 @@ import { formatNumber, numberToWords } from "./utils";
  * Prépare les données pour le template SASU (SAS Unipersonnelle, associé unique).
  */
 export function prepareSasuData(formData: Record<string, unknown>): Record<string, unknown> {
-  const capital = formData.capital as number;
-  const valeurNominale = formData.valeur_nominale as number;
+  const capital = (formData.capital as number) || 0;
+  const valeurNominale = (formData.valeur_nominale as number) || 0;
   const nombreActions = Math.floor(capital / valeurNominale);
 
   const rawAssocies = (formData.associes || []) as Array<Record<string, unknown>>;

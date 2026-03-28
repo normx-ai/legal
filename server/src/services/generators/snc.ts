@@ -30,8 +30,8 @@ export function prepareSncData(formData: FormData): TemplateData {
     };
   });
 
-  const totalApportsNumeraire = (formData.associes || []).filter((a: Associe) => a.type_apport !== "nature" && a.type_apport !== "industrie").reduce((sum: number, a: Associe) => sum + (a.apport || 0), 0);
-  const totalApportsNature = (formData.associes || []).filter((a: Associe) => a.type_apport === "nature").reduce((sum: number, a: Associe) => sum + (a.apport || 0), 0);
+  const totalApportsNumeraire = (formData.associes || []).filter((a: Associe) => a.type_apport !== "nature" && a.type_apport !== "industrie").reduce((sum: number, a: Associe) => sum + ((a.apport || 0) || 0), 0);
+  const totalApportsNature = (formData.associes || []).filter((a: Associe) => a.type_apport === "nature").reduce((sum: number, a: Associe) => sum + ((a.apport || 0) || 0), 0);
 
   return {
     denomination: formData.denomination,

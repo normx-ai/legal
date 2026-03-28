@@ -29,9 +29,9 @@ export function prepareFeuillePresenceData(formData: FormData): TemplateData {
     parts: a.parts || 0,
   }));
 
-  const totalPartsPresentes = formData.total_parts_presentes || associesPresents.reduce((s: number, a: Associe) => s + a.parts, 0);
-  const totalPartsRepresentees = formData.total_parts_representees || associesRepresentes.reduce((s: number, a: Associe) => s + a.parts, 0);
-  const totalPartsAbsentes = formData.total_parts_absentes || associesAbsents.reduce((s: number, a: Associe) => s + a.parts, 0);
+  const totalPartsPresentes = formData.total_parts_presentes || associesPresents.reduce((s: number, a: Associe) => s + (a.parts || 0), 0);
+  const totalPartsRepresentees = formData.total_parts_representees || associesRepresentes.reduce((s: number, a: Associe) => s + (a.parts || 0), 0);
+  const totalPartsAbsentes = formData.total_parts_absentes || associesAbsents.reduce((s: number, a: Associe) => s + (a.parts || 0), 0);
   const totalPartsCapital = formData.total_parts_capital as number;
   const totalPresRepres = totalPartsPresentes + totalPartsRepresentees;
   const pourcentagePresents = totalPartsCapital > 0 ? ((totalPresRepres / totalPartsCapital) * 100).toFixed(2) : "0";

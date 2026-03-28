@@ -28,8 +28,8 @@ export function prepareScsData(formData: FormData): TemplateData {
     return mapAssocie(a, i, allAssocies.slice(0, offset + i));
   });
 
-  const totalCommandites = (formData.commandites || []).reduce((s: number, a: Associe) => s + (a.apport || 0), 0);
-  const totalCommanditaires = (formData.commanditaires || []).reduce((s: number, a: Associe) => s + (a.apport || 0), 0);
+  const totalCommandites = (formData.commandites || []).reduce((s: number, a: Associe) => s + ((a.apport || 0) || 0), 0);
+  const totalCommanditaires = (formData.commanditaires || []).reduce((s: number, a: Associe) => s + ((a.apport || 0) || 0), 0);
 
   return {
     denomination: formData.denomination,

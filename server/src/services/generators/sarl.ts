@@ -37,8 +37,8 @@ export function prepareSarlData(formData: FormData): TemplateData {
   const associesNature = formData.associes.filter((a: Associe) => a.type_apport === "nature");
   const associesIndustrie = formData.associes.filter((a: Associe) => a.type_apport === "industrie");
 
-  const totalApportsNumeraire = associesNumeraire.reduce((sum: number, a: Associe) => sum + a.apport, 0);
-  const totalApportsNature = associesNature.reduce((sum: number, a: Associe) => sum + a.apport, 0);
+  const totalApportsNumeraire = associesNumeraire.reduce((sum: number, a: Associe) => sum + ((a.apport || 0) || 0), 0);
+  const totalApportsNature = associesNature.reduce((sum: number, a: Associe) => sum + ((a.apport || 0) || 0), 0);
 
   return {
     denomination: formData.denomination,
