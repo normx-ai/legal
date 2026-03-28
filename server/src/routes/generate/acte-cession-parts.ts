@@ -58,7 +58,7 @@ acteCessionPartsRoute.post("/acte-cession-parts", requireAuth(), async (req: Aut
       docx_url: `/files/${filename}`,
     });
   } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : "Erreur lors de la génération";
+    const message = err instanceof Error ? (err instanceof Error ? err.message : "Erreur inconnue") : "Erreur lors de la génération";
     console.error("[generate/acte-cession-parts]", err);
     res.status(500).json({ error: message });
   }

@@ -1,9 +1,10 @@
+import type { FormData, TemplateData, Associe, Membre, Administrateur, Signataire } from "../../types/generator";
 import { formatNumber, numberToWords } from "./utils";
 
 /**
  * Prépare les données pour le template Rapport de Gestion.
  */
-export function prepareRapportGestionData(formData: any): Record<string, any> {
+export function prepareRapportGestionData(formData: FormData): TemplateData {
   const capital = formData.capital as number;
   const chiffreAffaires = formData.chiffre_affaires as number;
   const resultatExploitation = formData.resultat_exploitation as number;

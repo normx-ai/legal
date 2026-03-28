@@ -1,3 +1,4 @@
+import type { FormData, Associe } from "../../types/generator";
 import { ValidationError, ohadaRules } from "./types";
 
 export function validateSaAg(data: Record<string, unknown>): ValidationError[] {

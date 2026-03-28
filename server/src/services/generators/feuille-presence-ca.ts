@@ -1,8 +1,9 @@
+import type { FormData, TemplateData, Associe, Membre, Administrateur, Signataire } from "../../types/generator";
 import { formatNumber, numberToWords } from "./utils";
 
-export function prepareFeuillePresenceCaData(formData: any): Record<string, any> {
+export function prepareFeuillePresenceCaData(formData: FormData): TemplateData {
   const capital = formData.capital as number;
-  const administrateurs = (formData.administrateurs || []).map((a: any) => ({
+  const administrateurs = (formData.administrateurs || []).map((a: Associe) => ({
     civilite: a.civilite || "M.",
     prenom: a.prenom || "",
     nom: a.nom || "",

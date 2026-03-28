@@ -1,6 +1,7 @@
+import type { FormData, TemplateData, Associe, Membre, Administrateur, Signataire } from "../../types/generator";
 import { formatNumber, numberToWords } from "./utils";
 
-export function prepareLettreConsultationGeranceData(formData: any): Record<string, any> {
+export function prepareLettreConsultationGeranceData(formData: FormData): TemplateData {
   const capital = formData.capital as number;
   const nombrePartsTotal = formData.nombre_parts_total as number;
   const seuilOrdinaire = Math.floor(nombrePartsTotal / 2) + 1;

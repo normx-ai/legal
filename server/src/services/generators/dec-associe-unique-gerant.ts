@@ -1,6 +1,7 @@
+import type { FormData, TemplateData, Associe, Membre, Administrateur, Signataire } from "../../types/generator";
 import { formatNumber, numberToWords } from "./utils";
 
-export function prepareDecAssocieUniqueGerantData(formData: any): Record<string, any> {
+export function prepareDecAssocieUniqueGerantData(formData: FormData): TemplateData {
   const capital = formData.capital as number;
   const valeurNominale = formData.valeur_nominale as number || 5000;
   const nombreParts = capital / valeurNominale;

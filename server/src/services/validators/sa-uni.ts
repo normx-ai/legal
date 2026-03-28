@@ -1,3 +1,4 @@
+import type { FormData, Associe } from "../../types/generator";
 import { ValidationError, ohadaRules } from "./types";
 
 export function validateSaUni(data: Record<string, unknown>): ValidationError[] {

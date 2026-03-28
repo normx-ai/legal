@@ -1,6 +1,7 @@
+import type { FormData, TemplateData, Associe, Membre, Administrateur, Signataire } from "../../types/generator";
 import { formatNumber, numberToWords } from "./utils";
 
-export function prepareProjetFusionSocieteNouvelleData(formData: any): Record<string, any> {
+export function prepareProjetFusionSocieteNouvelleData(formData: FormData): TemplateData {
   return {
     // Soci\u00e9t\u00e9 A
     denomination_a: formData.denomination_a || "",

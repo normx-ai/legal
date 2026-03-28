@@ -1,6 +1,7 @@
+import type { FormData, Associe } from "../../types/generator";
 import { ValidationError } from "./types";
 
-export function validateSnc(data: any): ValidationError[] {
+export function validateSnc(data: FormData): ValidationError[] {
   const errors: ValidationError[] = [];
 
   if (!data.denomination?.trim()) {
@@ -21,7 +22,7 @@ export function validateSnc(data: any): ValidationError[] {
     errors.push({ field: "associes", message: "Une SNC doit avoir au moins 2 associ\u00e9s" });
   }
 
-  associes.forEach((a: any, i: number) => {
+  associes.forEach((a: Associe, i: number) => {
     if (!a.nom?.trim()) errors.push({ field: `associes[${i}].nom`, message: `Nom de l'associ\u00e9 ${i + 1} obligatoire` });
     if (!a.prenom?.trim()) errors.push({ field: `associes[${i}].prenom`, message: `Pr\u00e9nom de l'associ\u00e9 ${i + 1} obligatoire` });
     if (!a.apport || a.apport <= 0) errors.push({ field: `associes[${i}].apport`, message: `Apport de l'associ\u00e9 ${i + 1} obligatoire` });

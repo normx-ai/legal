@@ -1,6 +1,7 @@
+import type { FormData, Associe } from "../../types/generator";
 import { ValidationError } from "./types";
 
-export function validateScs(data: any): ValidationError[] {
+export function validateScs(data: FormData): ValidationError[] {
   const errors: ValidationError[] = [];
 
   if (!data.denomination?.trim()) {
@@ -26,13 +27,13 @@ export function validateScs(data: any): ValidationError[] {
     errors.push({ field: "commanditaires", message: "Une SCS doit avoir au moins 1 commanditaire" });
   }
 
-  commandites.forEach((a: any, i: number) => {
+  commandites.forEach((a: Associe, i: number) => {
     if (!a.nom?.trim()) errors.push({ field: `commandites[${i}].nom`, message: `Nom du commandit\u00e9 ${i + 1} obligatoire` });
     if (!a.prenom?.trim()) errors.push({ field: `commandites[${i}].prenom`, message: `Pr\u00e9nom du commandit\u00e9 ${i + 1} obligatoire` });
     if (!a.apport || a.apport <= 0) errors.push({ field: `commandites[${i}].apport`, message: `Apport du commandit\u00e9 ${i + 1} obligatoire` });
   });
 
-  commanditaires.forEach((a: any, i: number) => {
+  commanditaires.forEach((a: Associe, i: number) => {
     if (!a.nom?.trim()) errors.push({ field: `commanditaires[${i}].nom`, message: `Nom du commanditaire ${i + 1} obligatoire` });
     if (!a.prenom?.trim()) errors.push({ field: `commanditaires[${i}].prenom`, message: `Pr\u00e9nom du commanditaire ${i + 1} obligatoire` });
     if (!a.apport || a.apport <= 0) errors.push({ field: `commanditaires[${i}].apport`, message: `Apport du commanditaire ${i + 1} obligatoire` });

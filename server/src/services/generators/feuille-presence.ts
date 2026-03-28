@@ -1,19 +1,20 @@
+import type { FormData, TemplateData, Associe, Membre, Administrateur, Signataire } from "../../types/generator";
 import { formatNumber } from "./utils";
 
 /**
  * Prépare les données pour le template Feuille de Présence AG.
  */
-export function prepareFeuillePresenceData(formData: any): Record<string, any> {
+export function prepareFeuillePresenceData(formData: FormData): TemplateData {
   const capital = formData.capital as number;
 
-  const associesPresents = (formData.associes_presents || []).map((a: any) => ({
+  const associesPresents = (formData.associes_presents || []).map((a: Associe) => ({
     civilite: a.civilite || "Monsieur",
     nom: a.nom,
     prenom: a.prenom,
     parts: a.parts || 0,
   }));
 
-  const associesRepresentes = (formData.associes_representes || []).map((a: any) => ({
+  const associesRepresentes = (formData.associes_representes || []).map((a: Associe) => ({
     civilite: a.civilite || "Monsieur",
     nom: a.nom,
     prenom: a.prenom,
@@ -21,16 +22,16 @@ export function prepareFeuillePresenceData(formData: any): Record<string, any> {
     mandataire_nom: a.mandataire_nom || "",
   }));
 
-  const associesAbsents = (formData.associes_absents || []).map((a: any) => ({
+  const associesAbsents = (formData.associes_absents || []).map((a: Associe) => ({
     civilite: a.civilite || "Monsieur",
     nom: a.nom,
     prenom: a.prenom,
     parts: a.parts || 0,
   }));
 
-  const totalPartsPresentes = formData.total_parts_presentes || associesPresents.reduce((s: number, a: any) => s + a.parts, 0);
-  const totalPartsRepresentees = formData.total_parts_representees || associesRepresentes.reduce((s: number, a: any) => s + a.parts, 0);
-  const totalPartsAbsentes = formData.total_parts_absentes || associesAbsents.reduce((s: number, a: any) => s + a.parts, 0);
+  const totalPartsPresentes = formData.total_parts_presentes || associesPresents.reduce((s: number, a: Associe) => s + a.parts, 0);
+  const totalPartsRepresentees = formData.total_parts_representees || associesRepresentes.reduce((s: number, a: Associe) => s + a.parts, 0);
+  const totalPartsAbsentes = formData.total_parts_absentes || associesAbsents.reduce((s: number, a: Associe) => s + a.parts, 0);
   const totalPartsCapital = formData.total_parts_capital as number;
   const totalPresRepres = totalPartsPresentes + totalPartsRepresentees;
   const pourcentagePresents = totalPartsCapital > 0 ? ((totalPresRepres / totalPartsCapital) * 100).toFixed(2) : "0";

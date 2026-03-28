@@ -54,7 +54,7 @@ projetFusionParticipationRoute.post("/projet-fusion-participation", requireAuth(
       docx_url: `/files/${filename}`,
     });
   } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : "Erreur lors de la g\u00e9n\u00e9ration";
+    const message = err instanceof Error ? (err instanceof Error ? err.message : "Erreur inconnue") : "Erreur lors de la g\u00e9n\u00e9ration";
     console.error("[generate/projet-fusion-participation]", err);
     res.status(500).json({ error: message });
   }

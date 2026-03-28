@@ -1,6 +1,7 @@
+import type { FormData, TemplateData, Associe, Membre, Administrateur, Signataire } from "../../types/generator";
 import { formatNumber, numberToWords } from "./utils";
 
-export function prepareMiseEnDemeureDefaillantData(formData: any): Record<string, any> {
+export function prepareMiseEnDemeureDefaillantData(formData: FormData): TemplateData {
   const capital = formData.capital as number;
   const montant_a_verser = formData.montant_a_verser as number || 0;
   const montant_appele = formData.montant_appele as number || 0;

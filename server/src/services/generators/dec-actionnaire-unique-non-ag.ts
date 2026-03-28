@@ -1,6 +1,7 @@
+import type { FormData, TemplateData, Associe, Membre, Administrateur, Signataire } from "../../types/generator";
 import { formatNumber, numberToWords } from "./utils";
 
-export function prepareDecActionnaireUniqueNonAgData(formData: any): Record<string, any> {
+export function prepareDecActionnaireUniqueNonAgData(formData: FormData): TemplateData {
   const capital = formData.capital as number;
   const valeurNominaleAction = formData.valeur_nominale_action as number || 10000;
   const nombreActions = capital / valeurNominaleAction;

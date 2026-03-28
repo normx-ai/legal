@@ -1,14 +1,15 @@
+import type { FormData, TemplateData, Associe, Membre, Administrateur, Signataire } from "../../types/generator";
 import { formatNumber, numberToWords } from "./utils";
 
 /**
  * Prépare les données du formulaire SARL pour injection dans le template docxtemplater.
  */
-export function prepareSarlData(formData: any): Record<string, any> {
+export function prepareSarlData(formData: FormData): TemplateData {
   const capital = formData.capital;
   const valeurNominale = formData.valeur_nominale;
   const nombreParts = Math.floor(capital / valeurNominale);
 
-  const associes = (formData.associes || []).map((a: any, i: number) => {
+  const associes = (formData.associes || []).map((a: Associe, i: number) => {
     const parts = Math.floor(a.apport / valeurNominale);
     const pourcentage = ((a.apport / capital) * 100).toFixed(2);
     return {
@@ -27,17 +28,17 @@ export function prepareSarlData(formData: any): Record<string, any> {
       parts,
       pourcentage,
       type_apport: a.type_apport === "numeraire" ? "numéraire" : a.type_apport === "nature" ? "nature" : "industrie",
-      numero_debut: i === 0 ? 1 : (formData.associes.slice(0, i).reduce((sum: number, prev: any) => sum + Math.floor(prev.apport / valeurNominale), 0) + 1),
-      numero_fin: formData.associes.slice(0, i + 1).reduce((sum: number, prev: any) => sum + Math.floor(prev.apport / valeurNominale), 0),
+      numero_debut: i === 0 ? 1 : (formData.associes.slice(0, i).reduce((sum: number, prev: Associe) => sum + Math.floor(prev.apport / valeurNominale), 0) + 1),
+      numero_fin: formData.associes.slice(0, i + 1).reduce((sum: number, prev: Associe) => sum + Math.floor(prev.apport / valeurNominale), 0),
     };
   });
 
-  const associesNumeraire = formData.associes.filter((a: any) => a.type_apport === "numeraire");
-  const associesNature = formData.associes.filter((a: any) => a.type_apport === "nature");
-  const associesIndustrie = formData.associes.filter((a: any) => a.type_apport === "industrie");
+  const associesNumeraire = formData.associes.filter((a: Associe) => a.type_apport === "numeraire");
+  const associesNature = formData.associes.filter((a: Associe) => a.type_apport === "nature");
+  const associesIndustrie = formData.associes.filter((a: Associe) => a.type_apport === "industrie");
 
-  const totalApportsNumeraire = associesNumeraire.reduce((sum: number, a: any) => sum + a.apport, 0);
-  const totalApportsNature = associesNature.reduce((sum: number, a: any) => sum + a.apport, 0);
+  const totalApportsNumeraire = associesNumeraire.reduce((sum: number, a: Associe) => sum + a.apport, 0);
+  const totalApportsNature = associesNature.reduce((sum: number, a: Associe) => sum + a.apport, 0);
 
   return {
     denomination: formData.denomination,
@@ -65,13 +66,13 @@ export function prepareSarlData(formData: any): Record<string, any> {
     has_apports_nature: totalApportsNature > 0,
     has_apports_industrie: associesIndustrie.length > 0,
     has_commissaire_apports: formData.has_commissaire_apports !== false && totalApportsNature > 0 &&
-      (associesNature.some((a: any) => a.apport > 5000000) || totalApportsNature > capital / 2),
+      (associesNature.some((a: Associe) => a.apport > 5000000) || totalApportsNature > capital / 2),
     sans_commissaire_apports: totalApportsNature > 0 &&
-      !associesNature.some((a: any) => a.apport > 5000000) && totalApportsNature <= capital / 2,
+      !associesNature.some((a: Associe) => a.apport > 5000000) && totalApportsNature <= capital / 2,
     ville_tribunal: formData.ville_tribunal || formData.ville || "...",
     date_ordonnance: formData.date_ordonnance || "...",
     requerant_nom: formData.requerant_nom || "...",
-    associes_nature: associesNature.map((a: any) => ({
+    associes_nature: associesNature.map((a: Associe) => ({
       civilite: a.civilite,
       prenom: a.prenom,
       nom: a.nom,
@@ -79,7 +80,7 @@ export function prepareSarlData(formData: any): Record<string, any> {
       montant_apport_nature: formatNumber(a.apport),
       parts_nature: Math.floor(a.apport / valeurNominale),
     })),
-    associes_industrie: associesIndustrie.map((a: any) => ({
+    associes_industrie: associesIndustrie.map((a: Associe) => ({
       civilite: a.civilite,
       prenom: a.prenom,
       nom: a.nom,

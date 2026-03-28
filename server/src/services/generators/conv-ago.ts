@@ -1,9 +1,10 @@
+import type { FormData, TemplateData, Associe, Membre, Administrateur, Signataire } from "../../types/generator";
 import { formatNumber, numberToWords } from "./utils";
 
 /**
  * Prépare les données pour le template Convocation AGO.
  */
-export function prepareConvAgoData(formData: any): Record<string, any> {
+export function prepareConvAgoData(formData: FormData): TemplateData {
   const capital = formData.capital as number;
 
   const defaultOdj = `1. Rapport de gestion du Gérant sur les opérations de l'exercice clos le ${formData.exercice_clos_le || "..."}

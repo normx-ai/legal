@@ -1,9 +1,10 @@
+import type { FormData, TemplateData, Associe, Membre, Administrateur, Signataire } from "../../types/generator";
 import { formatNumber, numberToWords } from "./utils";
 
 /**
  * Prépare les données pour le template SARLU (associé unique).
  */
-export function prepareSarluData(formData: any): Record<string, any> {
+export function prepareSarluData(formData: FormData): TemplateData {
   const capital = formData.capital;
   const valeurNominale = formData.valeur_nominale;
   const nombreParts = Math.floor(capital / valeurNominale);

@@ -1,12 +1,13 @@
+import type { FormData, TemplateData, Associe, Membre, Administrateur, Signataire } from "../../types/generator";
 import { formatNumber, numberToWords } from "./utils";
 
 /**
  * Prépare les données pour le template PV AGO (Procès-Verbal d'Assemblée Générale Ordinaire).
  */
-export function preparePvAgoData(formData: any): Record<string, any> {
+export function preparePvAgoData(formData: FormData): TemplateData {
   const capital = formData.capital as number;
 
-  const associesPresents = (formData.associes_presents || []).map((a: any) => ({
+  const associesPresents = (formData.associes_presents || []).map((a: Associe) => ({
     civilite: a.civilite || "Monsieur",
     nom: a.nom,
     prenom: a.prenom,
@@ -14,7 +15,7 @@ export function preparePvAgoData(formData: any): Record<string, any> {
     parts: a.parts || 0,
   }));
 
-  const associesRepresentes = (formData.associes_representes || []).map((a: any) => ({
+  const associesRepresentes = (formData.associes_representes || []).map((a: Associe) => ({
     civilite: a.civilite || "Monsieur",
     nom: a.nom,
     prenom: a.prenom,
@@ -23,7 +24,7 @@ export function preparePvAgoData(formData: any): Record<string, any> {
     mandataire_nom: a.mandataire_nom || "",
   }));
 
-  const associesAbsents = (formData.associes_absents || []).map((a: any) => ({
+  const associesAbsents = (formData.associes_absents || []).map((a: Associe) => ({
     civilite: a.civilite || "Monsieur",
     nom: a.nom,
     prenom: a.prenom,
@@ -31,8 +32,8 @@ export function preparePvAgoData(formData: any): Record<string, any> {
     parts: a.parts || 0,
   }));
 
-  const totalPartsPresentes = formData.total_parts_presentes || associesPresents.reduce((s: number, a: any) => s + a.parts, 0) + associesRepresentes.reduce((s: number, a: any) => s + a.parts, 0);
-  const totalParts = formData.total_parts || totalPartsPresentes + associesAbsents.reduce((s: number, a: any) => s + a.parts, 0);
+  const totalPartsPresentes = formData.total_parts_presentes || associesPresents.reduce((s: number, a: Associe) => s + a.parts, 0) + associesRepresentes.reduce((s: number, a: Associe) => s + a.parts, 0);
+  const totalParts = formData.total_parts || totalPartsPresentes + associesAbsents.reduce((s: number, a: Associe) => s + a.parts, 0);
   const pourcentagePresents = totalParts > 0 ? ((totalPartsPresentes / totalParts) * 100).toFixed(2) : "0";
 
   const resultatExercice = formData.resultat_exercice as number;

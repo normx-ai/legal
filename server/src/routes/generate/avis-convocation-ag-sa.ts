@@ -54,7 +54,7 @@ avisConvocationAgSaRoute.post("/avis-convocation-ag-sa", requireAuth(), async (r
       docx_url: `/files/${filename}`,
     });
   } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : "Erreur lors de la génération";
+    const message = err instanceof Error ? (err instanceof Error ? err.message : "Erreur inconnue") : "Erreur lors de la génération";
     console.error("[generate/avis-convocation-ag-sa]", err);
     res.status(500).json({ error: message });
   }

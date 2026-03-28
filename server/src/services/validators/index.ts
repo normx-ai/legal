@@ -1,3 +1,4 @@
+import type { FormData, Associe } from "../../types/generator";
 export { ValidationError } from "./types";
 export { validateSarl } from "./sarl";
 export { validateSarlu } from "./sarlu";

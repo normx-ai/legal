@@ -1,6 +1,7 @@
+import type { FormData, Associe } from "../../types/generator";
 import { ValidationError, ohadaRules } from "./types";
 
-export function validateSarl(data: any): ValidationError[] {
+export function validateSarl(data: FormData): ValidationError[] {
   const errors: ValidationError[] = [];
   const rules = ohadaRules.rules.sarl;
 
@@ -59,7 +60,7 @@ export function validateSarl(data: any): ValidationError[] {
   }
 
   // Verifier que la somme des apports = capital
-  const totalApports = associes.reduce((sum: number, a: any) => sum + (a.apport || 0), 0);
+  const totalApports = associes.reduce((sum: number, a: Associe) => sum + (a.apport || 0), 0);
   if (totalApports !== data.capital) {
     errors.push({
       field: "apports",
@@ -68,7 +69,7 @@ export function validateSarl(data: any): ValidationError[] {
   }
 
   // Chaque associe doit avoir des infos completes
-  associes.forEach((a: any, i: number) => {
+  associes.forEach((a: Associe, i: number) => {
     if (!a.nom?.trim()) errors.push({ field: `associes[${i}].nom`, message: `Nom de l'associé ${i + 1} obligatoire` });
     if (!a.prenom?.trim()) errors.push({ field: `associes[${i}].prenom`, message: `Prénom de l'associé ${i + 1} obligatoire` });
     if (!a.apport || a.apport <= 0) errors.push({ field: `associes[${i}].apport`, message: `Apport de l'associé ${i + 1} obligatoire` });

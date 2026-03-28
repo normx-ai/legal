@@ -1,14 +1,15 @@
+import type { FormData, TemplateData, Associe, Membre, Administrateur, Signataire } from "../../types/generator";
 import { formatNumber, numberToWords } from "./utils";
 
 /**
  * Prépare les données pour le template DRC (Déclaration de Régularité et de Conformité).
  */
-export function prepareDrcData(formData: any): Record<string, any> {
+export function prepareDrcData(formData: FormData): TemplateData {
   const capital = formData.capital as number;
   const valeurNominale = formData.valeur_nominale as number;
   const nombreTitres = valeurNominale > 0 ? Math.floor(capital / valeurNominale) : 0;
 
-  const signataires = (formData.signataires || []).map((s: any) => ({
+  const signataires = (formData.signataires || []).map((s: Signataire) => ({
     civilite: s.civilite || "Monsieur",
     nom: s.nom,
     prenom: s.prenom,

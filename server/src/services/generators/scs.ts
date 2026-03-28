@@ -1,14 +1,15 @@
+import type { FormData, TemplateData, Associe, Membre, Administrateur, Signataire } from "../../types/generator";
 import { formatNumber, numberToWords } from "./utils";
 
-export function prepareScsData(formData: any): Record<string, any> {
+export function prepareScsData(formData: FormData): TemplateData {
   const capital = formData.capital;
   const valeurNominale = formData.valeur_nominale || 10000;
   const nombreParts = Math.floor(capital / valeurNominale);
 
-  const mapAssocie = (a: any, i: number, allBefore: any[]) => {
+  const mapAssocie = (a: Associe, i: number, allBefore: Associe[]) => {
     const parts = Math.floor(a.apport / valeurNominale);
     const pourcentage = ((a.apport / capital) * 100).toFixed(2);
-    const partsBefore = allBefore.reduce((sum: number, prev: any) => sum + Math.floor(prev.apport / valeurNominale), 0);
+    const partsBefore = allBefore.reduce((sum: number, prev: Associe) => sum + Math.floor(prev.apport / valeurNominale), 0);
     return {
       rang: i + 1, civilite: a.civilite || "Monsieur", nom: a.nom, prenom: a.prenom,
       nom_complet: `${a.prenom} ${a.nom}`, date_naissance: a.date_naissance || "...",
@@ -21,14 +22,14 @@ export function prepareScsData(formData: any): Record<string, any> {
   };
 
   const allAssocies = [...(formData.commandites || []), ...(formData.commanditaires || [])];
-  const commandites = (formData.commandites || []).map((a: any, i: number) => mapAssocie(a, i, allAssocies.slice(0, i)));
-  const commanditaires = (formData.commanditaires || []).map((a: any, i: number) => {
+  const commandites = (formData.commandites || []).map((a: Associe, i: number) => mapAssocie(a, i, allAssocies.slice(0, i)));
+  const commanditaires = (formData.commanditaires || []).map((a: Associe, i: number) => {
     const offset = (formData.commandites || []).length;
     return mapAssocie(a, i, allAssocies.slice(0, offset + i));
   });
 
-  const totalCommandites = (formData.commandites || []).reduce((s: number, a: any) => s + (a.apport || 0), 0);
-  const totalCommanditaires = (formData.commanditaires || []).reduce((s: number, a: any) => s + (a.apport || 0), 0);
+  const totalCommandites = (formData.commandites || []).reduce((s: number, a: Associe) => s + (a.apport || 0), 0);
+  const totalCommanditaires = (formData.commanditaires || []).reduce((s: number, a: Associe) => s + (a.apport || 0), 0);
 
   return {
     denomination: formData.denomination,

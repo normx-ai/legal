@@ -1,6 +1,7 @@
+import type { FormData, Associe } from "../../types/generator";
 import { ValidationError, ohadaRules } from "./types";
 
-export function validateSarlu(data: any): ValidationError[] {
+export function validateSarlu(data: FormData): ValidationError[] {
   const errors: ValidationError[] = [];
   const rules = ohadaRules.rules.sarl;
 

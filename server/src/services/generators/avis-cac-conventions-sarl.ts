@@ -1,6 +1,7 @@
+import type { FormData, TemplateData, Associe, Membre, Administrateur, Signataire } from "../../types/generator";
 import { formatNumber, numberToWords } from "./utils";
 
-export function prepareAvisCacConventionsSarlData(formData: any): Record<string, any> {
+export function prepareAvisCacConventionsSarlData(formData: FormData): TemplateData {
   const capital = formData.capital as number;
   return {
     denomination: formData.denomination,

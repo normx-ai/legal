@@ -1,6 +1,7 @@
+import type { FormData, TemplateData, Associe, Membre, Administrateur, Signataire } from "../../types/generator";
 import { formatNumber, numberToWords } from "./utils";
 
-export function prepareBulletinSouscriptionAugmentationData(formData: any): Record<string, any> {
+export function prepareBulletinSouscriptionAugmentationData(formData: FormData): TemplateData {
   const capital = formData.capital as number;
   const augmentation_montant = formData.augmentation_montant as number || 0;
   const nouveau_capital = formData.nouveau_capital as number || 0;

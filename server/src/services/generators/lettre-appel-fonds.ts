@@ -1,6 +1,7 @@
+import type { FormData, TemplateData, Associe, Membre, Administrateur, Signataire } from "../../types/generator";
 import { formatNumber, numberToWords } from "./utils";
 
-export function prepareLettreAppelFondsData(formData: any): Record<string, any> {
+export function prepareLettreAppelFondsData(formData: FormData): TemplateData {
   const capital = formData.capital as number;
   const montant_a_liberer = formData.montant_a_liberer as number || 0;
   const montant_souscription = formData.montant_souscription as number || 0;

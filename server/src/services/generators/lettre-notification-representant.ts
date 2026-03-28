@@ -1,6 +1,7 @@
+import type { FormData, TemplateData, Associe, Membre, Administrateur, Signataire } from "../../types/generator";
 import { formatNumber, numberToWords } from "./utils";
 
-export function prepareLettreNotificationRepresentantData(formData: any): Record<string, any> {
+export function prepareLettreNotificationRepresentantData(formData: FormData): TemplateData {
   const capital_administrateur = formData.capital_administrateur as number;
   return {
     denomination_administrateur: formData.denomination_administrateur || "",

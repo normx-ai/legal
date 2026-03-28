@@ -1,6 +1,7 @@
+import type { FormData, TemplateData, Associe, Membre, Administrateur, Signataire } from "../../types/generator";
 import { formatNumber, numberToWords } from "./utils";
 
-export function prepareActeCessionPartsData(formData: any): Record<string, any> {
+export function prepareActeCessionPartsData(formData: FormData): TemplateData {
   const capital = formData.capital as number;
   const prix_cession = formData.prix_cession as number;
   const valeur_nominale = formData.valeur_nominale as number;

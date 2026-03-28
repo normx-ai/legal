@@ -64,8 +64,8 @@ sarlRoute.post("/sarl", requireAuth(), async (req: AuthRequest, res: Response) =
       },
       docx_url: `/files/${filename}`,
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("[generate/sarl]", err);
-    res.status(500).json({ error: err.message || "Erreur lors de la génération" });
+    res.status(500).json({ error: (err instanceof Error ? err.message : "Erreur inconnue") || "Erreur lors de la génération" });
   }
 });

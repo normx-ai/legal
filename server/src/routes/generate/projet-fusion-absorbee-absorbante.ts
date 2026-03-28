@@ -54,7 +54,7 @@ projetFusionAbsorbeeAbsorbanteRoute.post("/projet-fusion-absorbee-absorbante", r
       docx_url: `/files/${filename}`,
     });
   } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : "Erreur lors de la g\u00e9n\u00e9ration";
+    const message = err instanceof Error ? (err instanceof Error ? err.message : "Erreur inconnue") : "Erreur lors de la g\u00e9n\u00e9ration";
     console.error("[generate/projet-fusion-absorbee-absorbante]", err);
     res.status(500).json({ error: message });
   }

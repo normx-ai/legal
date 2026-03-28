@@ -58,7 +58,7 @@ convocationCaRoute.post("/convocation-ca", requireAuth(), async (req: AuthReques
       docx_url: `/files/${filename}`,
     });
   } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : "Erreur lors de la génération";
+    const message = err instanceof Error ? (err instanceof Error ? err.message : "Erreur inconnue") : "Erreur lors de la génération";
     console.error("[generate/convocation-ca]", err);
     res.status(500).json({ error: message });
   }

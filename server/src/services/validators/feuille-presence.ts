@@ -1,3 +1,4 @@
+import type { FormData, Associe } from "../../types/generator";
 import { ValidationError } from "./types";
 
 export function validateFeuillePresence(data: Record<string, unknown>): ValidationError[] {

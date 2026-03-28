@@ -52,7 +52,7 @@ interface ChatOptions {
 export async function chat(
   messages: ChatMessage[],
   options: ChatOptions = {}
-): Promise<{ response: string; sources: any[] }> {
+): Promise<{ response: string; sources: { title: string; content: string }[] }> {
   const lastUserMessage = messages.filter((m) => m.role === "user").pop();
   if (!lastUserMessage) throw new Error("Aucun message utilisateur");
 

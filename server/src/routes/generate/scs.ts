@@ -53,8 +53,8 @@ scsRoute.post("/scs", requireAuth(), async (req: AuthRequest, res: Response) => 
       },
       docx_url: `/files/${filename}`,
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("[generate/scs]", err);
-    res.status(500).json({ error: err.message || "Erreur lors de la g\u00e9n\u00e9ration" });
+    res.status(500).json({ error: (err instanceof Error ? err.message : "Erreur inconnue") || "Erreur lors de la g\u00e9n\u00e9ration" });
   }
 });

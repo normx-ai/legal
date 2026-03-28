@@ -58,7 +58,7 @@ certificatActionsNominativesRoute.post("/certificat-actions-nominatives", requir
       docx_url: `/files/${filename}`,
     });
   } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : "Erreur lors de la génération";
+    const message = err instanceof Error ? (err instanceof Error ? err.message : "Erreur inconnue") : "Erreur lors de la génération";
     console.error("[generate/certificat-actions-nominatives]", err);
     res.status(500).json({ error: message });
   }

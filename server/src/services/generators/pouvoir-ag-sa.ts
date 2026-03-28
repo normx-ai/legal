@@ -1,6 +1,7 @@
+import type { FormData, TemplateData, Associe, Membre, Administrateur, Signataire } from "../../types/generator";
 import { formatNumber, numberToWords } from "./utils";
 
-export function preparePouvoirAgSaData(formData: any): Record<string, any> {
+export function preparePouvoirAgSaData(formData: FormData): TemplateData {
   const capital = formData.capital as number;
   return {
     denomination: formData.denomination,

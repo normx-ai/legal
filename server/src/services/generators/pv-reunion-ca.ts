@@ -1,26 +1,27 @@
+import type { FormData, TemplateData, Associe, Membre, Administrateur, Signataire } from "../../types/generator";
 import { formatNumber, numberToWords } from "./utils";
 
-export function preparePvReunionCaData(formData: any): Record<string, any> {
+export function preparePvReunionCaData(formData: FormData): TemplateData {
   const capital = formData.capital as number;
   const decisions = formData.decisions_selectionnees || [];
 
-  const administrateurs_presents = (formData.administrateurs_presents || []).map((a: any) => ({
+  const administrateurs_presents = (formData.administrateurs_presents || []).map((a: Associe) => ({
     civilite: a.civilite || "M.",
     prenom: a.prenom || "",
     nom: a.nom || "",
   }));
-  const administrateurs_representes = (formData.administrateurs_representes || []).map((a: any) => ({
+  const administrateurs_representes = (formData.administrateurs_representes || []).map((a: Associe) => ({
     civilite: a.civilite || "M.",
     prenom: a.prenom || "",
     nom: a.nom || "",
     represente_par: a.represente_par || "",
   }));
-  const administrateurs_absents = (formData.administrateurs_absents || []).map((a: any) => ({
+  const administrateurs_absents = (formData.administrateurs_absents || []).map((a: Associe) => ({
     civilite: a.civilite || "M.",
     prenom: a.prenom || "",
     nom: a.nom || "",
   }));
-  const administrateurs_visio = (formData.administrateurs_visio || []).map((a: any) => ({
+  const administrateurs_visio = (formData.administrateurs_visio || []).map((a: Associe) => ({
     civilite: a.civilite || "M.",
     prenom: a.prenom || "",
     nom: a.nom || "",

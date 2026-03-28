@@ -1,9 +1,10 @@
+import type { FormData, TemplateData, Associe, Membre, Administrateur, Signataire } from "../../types/generator";
 import { formatNumber, numberToWords } from "./utils";
 
 /**
  * Prépare les données pour le template Convocation AGE.
  */
-export function prepareConvAgeData(formData: any): Record<string, any> {
+export function prepareConvAgeData(formData: FormData): TemplateData {
   const capital = formData.capital as number;
 
   const defaultOdj = `1. Augmentation du capital social

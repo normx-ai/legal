@@ -1,14 +1,15 @@
+import type { FormData, TemplateData, Associe, Membre, Administrateur, Signataire } from "../../types/generator";
 import { formatNumber, numberToWords } from "./utils";
 
 /**
  * Prépare les données pour le template Société en Participation.
  */
-export function prepareStePartData(formData: any): Record<string, any> {
-  const totalApports = (formData.associes || []).reduce((sum: number, a: any) => sum + (a.apport || 0), 0);
+export function prepareStePartData(formData: FormData): TemplateData {
+  const totalApports = (formData.associes || []).reduce((sum: number, a: Associe) => sum + (a.apport || 0), 0);
   const valeurPart = formData.valeur_part || 10000;
   const nombreParts = valeurPart > 0 ? Math.floor(totalApports / valeurPart) : 0;
 
-  const associes = (formData.associes || []).map((a: any, i: number) => {
+  const associes = (formData.associes || []).map((a: Associe, i: number) => {
     const parts = valeurPart > 0 ? Math.floor((a.apport || 0) / valeurPart) : 0;
     return {
       rang: i + 1,

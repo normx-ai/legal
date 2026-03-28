@@ -59,7 +59,7 @@ rapportGestionRoute.post("/rapport-gestion", requireAuth(), async (req: AuthRequ
       docx_url: `/files/${filename}`,
     });
   } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : "Erreur lors de la génération";
+    const message = err instanceof Error ? (err instanceof Error ? err.message : "Erreur inconnue") : "Erreur lors de la génération";
     console.error("[generate/rapport-gestion]", err);
     res.status(500).json({ error: message });
   }

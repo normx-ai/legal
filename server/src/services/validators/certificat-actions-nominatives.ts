@@ -1,3 +1,4 @@
+import type { FormData, Associe } from "../../types/generator";
 import { ValidationError } from "./types";
 
 export function validateCertificatActionsNominatives(data: Record<string, unknown>): ValidationError[] {

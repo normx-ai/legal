@@ -1,19 +1,20 @@
+import type { FormData, TemplateData, Associe, Membre, Administrateur, Signataire } from "../../types/generator";
 import { formatNumber, numberToWords } from "./utils";
 
-export function preparePvConsultationEcriteData(formData: any): Record<string, any> {
+export function preparePvConsultationEcriteData(formData: FormData): TemplateData {
   const capital = formData.capital as number;
   const nombrePartsTotal = formData.nombre_parts_total as number;
   const seuilOrdinaire = Math.floor(nombrePartsTotal / 2) + 1;
   const seuilExtraordinaire = Math.ceil((nombrePartsTotal * 3) / 4);
 
-  const associes = (formData.associes || []).map((a: any) => ({
+  const associes = (formData.associes || []).map((a: Associe) => ({
     civilite: a.civilite || "M.",
     prenom: a.prenom || "",
     nom: a.nom || "",
     nombre_parts: formatNumber(a.nombre_parts || 0),
   }));
 
-  const resolutions = (formData.resolutions || []).map((r: any, i: number) => ({
+  const resolutions = (formData.resolutions || []).map((r: Resolution, i: number) => ({
     numero: i + 1,
     numero_lettres: ["Première", "Deuxième", "Troisième", "Quatrième", "Cinquième", "Sixième", "Septième", "Huitième", "Neuvième", "Dixième"][i] || `${i + 1}ème`,
     texte: r.texte || "",

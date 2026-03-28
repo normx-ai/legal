@@ -1,15 +1,16 @@
+import type { FormData, TemplateData, Associe, Membre, Administrateur, Signataire } from "../../types/generator";
 import { formatNumber, numberToWords } from "./utils";
 
 /**
  * Prépare les données pour le template GIE (Groupement d'Intérêt Économique).
  */
-export function prepareGieData(formData: any): Record<string, any> {
+export function prepareGieData(formData: FormData): TemplateData {
   const hasCapital = !!formData.has_capital;
   const capital = hasCapital ? formData.capital : 0;
   const valeurNominale = hasCapital ? formData.valeur_nominale : 0;
   const nombreParts = hasCapital && valeurNominale > 0 ? Math.floor(capital / valeurNominale) : 0;
 
-  const membres = (formData.membres || []).map((m: any, i: number) => {
+  const membres = (formData.membres || []).map((m: Membre, i: number) => {
     const apport = m.apport || 0;
     const parts = hasCapital && valeurNominale > 0 ? Math.floor(apport / valeurNominale) : 0;
     return {
@@ -35,10 +36,10 @@ export function prepareGieData(formData: any): Record<string, any> {
     };
   });
 
-  const membresNumeraire = formData.membres?.filter((m: any) => m.type_apport === "numeraire" || !m.type_apport) || [];
-  const membresNature = formData.membres?.filter((m: any) => m.type_apport === "nature") || [];
-  const totalApportsNumeraire = membresNumeraire.reduce((sum: number, m: any) => sum + (m.apport || 0), 0);
-  const totalApportsNature = membresNature.reduce((sum: number, m: any) => sum + (m.apport || 0), 0);
+  const membresNumeraire = formData.membres?.filter((m: Membre) => m.type_apport === "numeraire" || !m.type_apport) || [];
+  const membresNature = formData.membres?.filter((m: Membre) => m.type_apport === "nature") || [];
+  const totalApportsNumeraire = membresNumeraire.reduce((sum: number, m: Membre) => sum + (m.apport || 0), 0);
+  const totalApportsNature = membresNature.reduce((sum: number, m: Membre) => sum + (m.apport || 0), 0);
 
   const modeAdmin = formData.mode_administration || "admin_unique";
 

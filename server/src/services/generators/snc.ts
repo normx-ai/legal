@@ -1,11 +1,12 @@
+import type { FormData, TemplateData, Associe, Membre, Administrateur, Signataire } from "../../types/generator";
 import { formatNumber, numberToWords } from "./utils";
 
-export function prepareSncData(formData: any): Record<string, any> {
+export function prepareSncData(formData: FormData): TemplateData {
   const capital = formData.capital;
   const valeurNominale = formData.valeur_nominale || 10000;
   const nombreParts = Math.floor(capital / valeurNominale);
 
-  const associes = (formData.associes || []).map((a: any, i: number) => {
+  const associes = (formData.associes || []).map((a: Associe, i: number) => {
     const parts = Math.floor(a.apport / valeurNominale);
     const pourcentage = ((a.apport / capital) * 100).toFixed(2);
     return {
@@ -24,13 +25,13 @@ export function prepareSncData(formData: any): Record<string, any> {
       parts,
       pourcentage,
       type_apport: a.type_apport === "nature" ? "nature" : a.type_apport === "industrie" ? "industrie" : "num\u00e9raire",
-      numero_debut: i === 0 ? 1 : (formData.associes.slice(0, i).reduce((sum: number, prev: any) => sum + Math.floor(prev.apport / valeurNominale), 0) + 1),
-      numero_fin: formData.associes.slice(0, i + 1).reduce((sum: number, prev: any) => sum + Math.floor(prev.apport / valeurNominale), 0),
+      numero_debut: i === 0 ? 1 : (formData.associes.slice(0, i).reduce((sum: number, prev: Associe) => sum + Math.floor(prev.apport / valeurNominale), 0) + 1),
+      numero_fin: formData.associes.slice(0, i + 1).reduce((sum: number, prev: Associe) => sum + Math.floor(prev.apport / valeurNominale), 0),
     };
   });
 
-  const totalApportsNumeraire = (formData.associes || []).filter((a: any) => a.type_apport !== "nature" && a.type_apport !== "industrie").reduce((sum: number, a: any) => sum + (a.apport || 0), 0);
-  const totalApportsNature = (formData.associes || []).filter((a: any) => a.type_apport === "nature").reduce((sum: number, a: any) => sum + (a.apport || 0), 0);
+  const totalApportsNumeraire = (formData.associes || []).filter((a: Associe) => a.type_apport !== "nature" && a.type_apport !== "industrie").reduce((sum: number, a: Associe) => sum + (a.apport || 0), 0);
+  const totalApportsNature = (formData.associes || []).filter((a: Associe) => a.type_apport === "nature").reduce((sum: number, a: Associe) => sum + (a.apport || 0), 0);
 
   return {
     denomination: formData.denomination,
@@ -54,7 +55,7 @@ export function prepareSncData(formData: any): Record<string, any> {
     total_apports_nature: formatNumber(totalApportsNature),
     total_apports: formatNumber(capital),
     has_apports_nature: totalApportsNature > 0,
-    has_apports_industrie: (formData.associes || []).some((a: any) => a.type_apport === "industrie"),
+    has_apports_industrie: (formData.associes || []).some((a: Associe) => a.type_apport === "industrie"),
     gerant_civilite: formData.gerant?.civilite || "Monsieur",
     gerant_nom: formData.gerant?.nom || "...",
     gerant_prenom: formData.gerant?.prenom || "...",

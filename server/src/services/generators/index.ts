@@ -1,3 +1,4 @@
+import type { FormData, TemplateData, Associe, Membre, Administrateur, Signataire } from "../../types/generator";
 export { generateDocx, formatNumber, numberToWords } from "./utils";
 export { prepareSarlData } from "./sarl";
 export { prepareSarluData } from "./sarlu";

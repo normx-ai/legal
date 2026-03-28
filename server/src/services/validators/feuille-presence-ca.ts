@@ -1,3 +1,4 @@
+import type { FormData, Associe } from "../../types/generator";
 import { ValidationError } from "./types";
 
 export function validateFeuillePresenceCa(data: Record<string, unknown>): ValidationError[] {
@@ -22,7 +23,7 @@ export function validateFeuillePresenceCa(data: Record<string, unknown>): Valida
   if (!(data.president_nom as string)?.trim()) {
     errors.push({ field: "president_nom", message: "Le nom du président est obligatoire" });
   }
-  const administrateurs = data.administrateurs as any[];
+  const administrateurs = data.administrateurs as Associe[];
   if (!administrateurs || administrateurs.length === 0) {
     errors.push({ field: "administrateurs", message: "Au moins un administrateur est requis" });
   }

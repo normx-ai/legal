@@ -1,3 +1,4 @@
+import type { FormData, Associe } from "../../types/generator";
 import { ValidationError } from "./types";
 
 export function validatePvConsultationEcrite(data: Record<string, unknown>): ValidationError[] {
@@ -22,7 +23,7 @@ export function validatePvConsultationEcrite(data: Record<string, unknown>): Val
   if (!(data.article_statuts as string)?.trim()) {
     errors.push({ field: "article_statuts", message: "L'article des statuts est obligatoire" });
   }
-  const associes = data.associes as any[];
+  const associes = data.associes as Associe[];
   if (!associes || associes.length === 0) {
     errors.push({ field: "associes", message: "Au moins un associé est requis" });
   }
