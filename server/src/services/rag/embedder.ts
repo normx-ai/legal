@@ -85,7 +85,13 @@ async function generateEmbeddingsBatch(texts: string[]): Promise<number[][]> {
 /**
  * Créer la collection Qdrant
  */
-async function ensureCollection() {
+async function ensureCollection(recreate = false) {
+  if (recreate) {
+    try {
+      await qdrant.deleteCollection(COLLECTION_NAME);
+      console.log(`🗑️  Collection "${COLLECTION_NAME}" supprimée`);
+    } catch { /* n'existait pas */ }
+  }
   try {
     await qdrant.getCollection(COLLECTION_NAME);
     console.log(`✅ Collection "${COLLECTION_NAME}" existe déjà`);
@@ -112,15 +118,19 @@ async function ensureCollection() {
 }
 
 /**
- * Hash pour convertir chunk_id en entier positif pour Qdrant
+ * Convertir un chunk_id string en UUID déterministe pour Qdrant (zéro collision)
+ * Utilise un hash SHA-256 tronqué formaté en UUID v4
  */
-function hashId(str: string): number {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    hash = (hash << 5) - hash + str.charCodeAt(i);
-    hash |= 0;
-  }
-  return Math.abs(hash) % 2147483647 || 1;
+function stringToUuid(str: string): string {
+  const crypto = require("crypto");
+  const hash = crypto.createHash("sha256").update(str).digest("hex");
+  return [
+    hash.slice(0, 8),
+    hash.slice(8, 12),
+    "4" + hash.slice(13, 16),
+    ((parseInt(hash.slice(16, 17), 16) & 0x3) | 0x8).toString(16) + hash.slice(17, 20),
+    hash.slice(20, 32),
+  ].join("-");
 }
 
 /**
@@ -130,7 +140,7 @@ async function indexChunks(chunksFile: string) {
   const chunks: OhadaChunk[] = JSON.parse(fs.readFileSync(chunksFile, "utf-8"));
   console.log(`\n📚 Indexation de ${chunks.length} chunks dans Qdrant...`);
 
-  await ensureCollection();
+  await ensureCollection(true); // Recréer pour IDs UUID
 
   const batchSize = 20; // Voyage AI supporte max 128 par appel
   let totalTokens = 0;
@@ -144,7 +154,7 @@ async function indexChunks(chunksFile: string) {
       totalTokens += texts.reduce((s, t) => s + t.length, 0);
 
       const points = batch.map((chunk, idx) => ({
-        id: hashId(chunk.id),
+        id: stringToUuid(chunk.id),
         vector: embeddings[idx],
         payload: {
           chunk_id: chunk.id,
