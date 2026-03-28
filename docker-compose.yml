@@ -67,7 +67,7 @@ services:
 
   # --- Qdrant (vector database for RAG) ---
   qdrant:
-    image: qdrant/qdrant:v1.12.5
+    image: qdrant/qdrant:v1.13.6
     container_name: normx-legal-qdrant
     restart: unless-stopped
     ports:
