@@ -12,11 +12,11 @@ export function prepareSaAgData(formData: Record<string, unknown>): Record<strin
   const rawAssocies = (formData.associes || []) as Array<Record<string, unknown>>;
 
   const associes = rawAssocies.map((a: Record<string, unknown>, i: number) => {
-    const apport = a.apport as number;
+    const apport = (a.apport || 0) as number;
     const actions = Math.floor(apport / valeurNominale);
     const pourcentage = ((apport / capital) * 100).toFixed(2);
     const previousActions = rawAssocies.slice(0, i).reduce(
-      (sum: number, prev: Record<string, unknown>) => sum + Math.floor((prev.apport as number) / valeurNominale), 0
+      (sum: number, prev: Record<string, unknown>) => sum + Math.floor(((prev.apport || 0) as number) / valeurNominale), 0
     );
     return {
       rang: i + 1,
@@ -42,8 +42,8 @@ export function prepareSaAgData(formData: Record<string, unknown>): Record<strin
   const associesNumeraire = rawAssocies.filter((a: Record<string, unknown>) => a.type_apport === "numeraire");
   const associesNature = rawAssocies.filter((a: Record<string, unknown>) => a.type_apport === "nature");
 
-  const totalApportsNumeraire = associesNumeraire.reduce((sum: number, a: Record<string, unknown>) => sum + (a.apport as number), 0);
-  const totalApportsNature = associesNature.reduce((sum: number, a: Record<string, unknown>) => sum + (a.apport as number), 0);
+  const totalApportsNumeraire = associesNumeraire.reduce((sum: number, a: Record<string, unknown>) => sum + ((a.apport || 0) as number), 0);
+  const totalApportsNature = associesNature.reduce((sum: number, a: Record<string, unknown>) => sum + ((a.apport || 0) as number), 0);
 
   const ag = (formData.ag || formData.administrateur_general || {}) as Record<string, unknown>;
   const cacTitulaire = (formData.cac_titulaire || {}) as Record<string, unknown>;
@@ -84,8 +84,8 @@ export function prepareSaAgData(formData: Record<string, unknown>): Record<strin
       prenom: a.prenom,
       nom: a.nom,
       description_apport_nature: a.description_apport || "...",
-      montant_apport_nature: formatNumber(a.apport as number),
-      actions_nature: Math.floor((a.apport as number) / valeurNominale),
+      montant_apport_nature: formatNumber((a.apport || 0) as number),
+      actions_nature: Math.floor(((a.apport || 0) as number) / valeurNominale),
     })),
 
     // Commissaire aux apports

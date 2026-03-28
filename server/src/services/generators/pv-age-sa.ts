@@ -55,8 +55,8 @@ export function preparePvAgeSaData(formData: FormData): TemplateData {
     prime_emission: formData.prime_emission ? formatNumber(formData.prime_emission as number) : "",
     commissaire_apports_nom: formData.commissaire_apports_nom || "",
     description_apport_nature: formData.description_apport_nature || "",
-    valeur_apport_nature: formData.valeur_apport_nature ? formatNumber(formData.valeur_apport_nature) : "",
-    montant_incorporation_reserves: formData.montant_incorporation_reserves ? formatNumber(formData.montant_incorporation_reserves) : "",
+    valeur_apport_nature: formData.valeur_apport_nature ? formatNumber(formData.valeur_apport_nature as number || 0) : "",
+    montant_incorporation_reserves: formData.montant_incorporation_reserves ? formatNumber(formData.montant_incorporation_reserves as number || 0) : "",
 
     // Réduction de capital
     montant_reduction: formData.montant_reduction ? formatNumber(formData.montant_reduction as number) : "",
@@ -86,7 +86,7 @@ export function preparePvAgeSaData(formData: FormData): TemplateData {
 
     // Continuation malgré pertes
     date_etats_financiers: formData.date_etats_financiers || "",
-    montant_capitaux_propres: formData.montant_capitaux_propres ? formatNumber(formData.montant_capitaux_propres) : "",
+    montant_capitaux_propres: formData.montant_capitaux_propres ? formatNumber(formData.montant_capitaux_propres as number || 0) : "",
 
     // Decisions conditionnelles
     has_augmentation_capital_numeraire: decisions.includes("augmentation_capital_numeraire"),

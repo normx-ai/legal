@@ -80,7 +80,7 @@ export function prepareGieData(formData: FormData): TemplateData {
     majorite_admission: formData.majorite_admission || "l'unanimité",
     droit_entree: !!formData.montant_droit_entree,
     sans_droit_entree: !formData.montant_droit_entree,
-    montant_droit_entree: formData.montant_droit_entree ? formatNumber(formData.montant_droit_entree) : "",
+    montant_droit_entree: formData.montant_droit_entree ? formatNumber(formData.montant_droit_entree as number || 0) : "",
 
     // Démission
     delai_preavis_retrait: formData.delai_preavis_retrait || "trois (3) mois",
@@ -114,7 +114,7 @@ export function prepareGieData(formData: FormData): TemplateData {
 
     // Résultats
     pourcentage_report: formData.pourcentage_report || "...",
-    plafond_report: formData.plafond_report ? formatNumber(formData.plafond_report) : "...",
+    plafond_report: formData.plafond_report ? formatNumber(formData.plafond_report as number || 0) : "...",
     pourcentage_plafond: formData.pourcentage_plafond || "...",
     date_disponibilite_report: formData.date_disponibilite_report || "...",
     cle_repartition: formData.cle_repartition || "parts égales entre les membres",

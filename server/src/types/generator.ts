@@ -81,4 +81,4 @@ export interface Resolution {
 
 // ══ Type de sortie — donnees pretes pour le template docx ══
 
-export type TemplateData = Record<string, string | number | boolean | undefined | TemplateData[] | TemplateData>;
+export type TemplateData = Record<string, string | number | boolean | undefined | Record<string, string | number | boolean | undefined>[] | Record<string, string | number | boolean | undefined>>;

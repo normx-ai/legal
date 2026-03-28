@@ -11,7 +11,7 @@ export function prepareSaUniData(formData: Record<string, unknown>): Record<stri
 
   const rawAssocies = (formData.associes || []) as Array<Record<string, unknown>>;
   const a = rawAssocies[0] || {} as Record<string, unknown>;
-  const apport = (a.apport as number) || capital;
+  const apport = ((a.apport || 0) as number) || capital;
 
   const typeApport = (a.type_apport as string) || "numeraire";
   const apportNumeraire = typeApport === "numeraire" ? apport : 0;

@@ -12,8 +12,8 @@ export function prepareProjetFusionSocieteNouvelleData(formData: FormData): Temp
     representant_a: formData.representant_a || "",
     qualite_a: formData.qualite_a || "",
     objet_a: formData.objet_a || "",
-    nombre_actions_a: formData.nombre_actions_a ? formatNumber(formData.nombre_actions_a) : "",
-    valeur_nominale_a: formData.valeur_nominale_a ? formatNumber(formData.valeur_nominale_a) : "",
+    nombre_actions_a: formData.nombre_actions_a ? formatNumber(formData.nombre_actions_a as number || 0) : "",
+    valeur_nominale_a: formData.valeur_nominale_a ? formatNumber(formData.valeur_nominale_a as number || 0) : "",
 
     // Soci\u00e9t\u00e9 B
     denomination_b: formData.denomination_b || "",
@@ -24,8 +24,8 @@ export function prepareProjetFusionSocieteNouvelleData(formData: FormData): Temp
     representant_b: formData.representant_b || "",
     qualite_b: formData.qualite_b || "",
     objet_b: formData.objet_b || "",
-    nombre_actions_b: formData.nombre_actions_b ? formatNumber(formData.nombre_actions_b) : "",
-    valeur_nominale_b: formData.valeur_nominale_b ? formatNumber(formData.valeur_nominale_b) : "",
+    nombre_actions_b: formData.nombre_actions_b ? formatNumber(formData.nombre_actions_b as number || 0) : "",
+    valeur_nominale_b: formData.valeur_nominale_b ? formatNumber(formData.valeur_nominale_b as number || 0) : "",
 
     // Soci\u00e9t\u00e9 nouvelle C
     denomination_c: formData.denomination_c || "",
@@ -33,8 +33,8 @@ export function prepareProjetFusionSocieteNouvelleData(formData: FormData): Temp
     capital_c: formData.capital_c ? formatNumber(formData.capital_c as number) : "",
     siege_c: formData.siege_c || "",
     objet_c: formData.objet_c || "",
-    nombre_actions_c: formData.nombre_actions_c ? formatNumber(formData.nombre_actions_c) : "",
-    valeur_nominale_c: formData.valeur_nominale_c ? formatNumber(formData.valeur_nominale_c) : "",
+    nombre_actions_c: formData.nombre_actions_c ? formatNumber(formData.nombre_actions_c as number || 0) : "",
+    valeur_nominale_c: formData.valeur_nominale_c ? formatNumber(formData.valeur_nominale_c as number || 0) : "",
 
     // Fraction attribu\u00e9e
     fraction_a_pourcent: formData.fraction_a_pourcent || "",
@@ -75,12 +75,12 @@ export function prepareProjetFusionSocieteNouvelleData(formData: FormData): Temp
     // Chiffres d'affaires A
     ca_a_n_moins_2: formData.ca_a_n_moins_2 ? formatNumber(formData.ca_a_n_moins_2) : "",
     ca_a_n_moins_1: formData.ca_a_n_moins_1 ? formatNumber(formData.ca_a_n_moins_1) : "",
-    ca_a_n: formData.ca_a_n ? formatNumber(formData.ca_a_n) : "",
+    ca_a_n: formData.ca_a_n ? formatNumber(formData.ca_a_n as number || 0) : "",
 
     // Chiffres d'affaires B
     ca_b_n_moins_2: formData.ca_b_n_moins_2 ? formatNumber(formData.ca_b_n_moins_2) : "",
     ca_b_n_moins_1: formData.ca_b_n_moins_1 ? formatNumber(formData.ca_b_n_moins_1) : "",
-    ca_b_n: formData.ca_b_n ? formatNumber(formData.ca_b_n) : "",
+    ca_b_n: formData.ca_b_n ? formatNumber(formData.ca_b_n as number || 0) : "",
 
     nombre_exemplaires: formData.nombre_exemplaires || "",
     date_signature: formData.date_signature || new Date().toLocaleDateString("fr-FR"),

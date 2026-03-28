@@ -7,8 +7,8 @@ export function prepareSncData(formData: FormData): TemplateData {
   const nombreParts = Math.floor(capital / valeurNominale);
 
   const associes = (formData.associes || []).map((a: Associe, i: number) => {
-    const parts = Math.floor(a.apport / valeurNominale);
-    const pourcentage = ((a.apport / capital) * 100).toFixed(2);
+    const parts = Math.floor((a.apport || 0) / valeurNominale);
+    const pourcentage = (((a.apport || 0) / capital) * 100).toFixed(2);
     return {
       rang: i + 1,
       civilite: a.civilite || "Monsieur",
@@ -20,18 +20,18 @@ export function prepareSncData(formData: FormData): TemplateData {
       nationalite: a.nationalite || "congolaise",
       profession: a.profession || "...",
       adresse: a.adresse || "...",
-      apport: formatNumber(a.apport),
-      apport_lettres: numberToWords(a.apport),
+      apport: formatNumber((a.apport || 0)),
+      apport_lettres: numberToWords((a.apport || 0)),
       parts,
       pourcentage,
       type_apport: a.type_apport === "nature" ? "nature" : a.type_apport === "industrie" ? "industrie" : "num\u00e9raire",
-      numero_debut: i === 0 ? 1 : (formData.associes.slice(0, i).reduce((sum: number, prev: Associe) => sum + Math.floor(prev.apport / valeurNominale), 0) + 1),
-      numero_fin: formData.associes.slice(0, i + 1).reduce((sum: number, prev: Associe) => sum + Math.floor(prev.apport / valeurNominale), 0),
+      numero_debut: i === 0 ? 1 : (formData.associes.slice(0, i).reduce((sum: number, prev: Associe) => sum + Math.floor((prev.apport || 0) / valeurNominale), 0) + 1),
+      numero_fin: formData.associes.slice(0, i + 1).reduce((sum: number, prev: Associe) => sum + Math.floor((prev.apport || 0) / valeurNominale), 0),
     };
   });
 
-  const totalApportsNumeraire = (formData.associes || []).filter((a: Associe) => a.type_apport !== "nature" && a.type_apport !== "industrie").reduce((sum: number, a: Associe) => sum + ((a.apport || 0) || 0), 0);
-  const totalApportsNature = (formData.associes || []).filter((a: Associe) => a.type_apport === "nature").reduce((sum: number, a: Associe) => sum + ((a.apport || 0) || 0), 0);
+  const totalApportsNumeraire = (formData.associes || []).filter((a: Associe) => a.type_apport !== "nature" && a.type_apport !== "industrie").reduce((sum: number, a: Associe) => sum + (((a.apport || 0) || 0) || 0), 0);
+  const totalApportsNature = (formData.associes || []).filter((a: Associe) => a.type_apport === "nature").reduce((sum: number, a: Associe) => sum + (((a.apport || 0) || 0) || 0), 0);
 
   return {
     denomination: formData.denomination,

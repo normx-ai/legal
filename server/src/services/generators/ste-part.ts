@@ -5,12 +5,12 @@ import { formatNumber, numberToWords } from "./utils";
  * Prépare les données pour le template Société en Participation.
  */
 export function prepareStePartData(formData: FormData): TemplateData {
-  const totalApports = (formData.associes || []).reduce((sum: number, a: Associe) => sum + (a.apport || 0), 0);
+  const totalApports = (formData.associes || []).reduce((sum: number, a: Associe) => sum + ((a.apport || 0) || 0), 0);
   const valeurPart = formData.valeur_part || 10000;
   const nombreParts = valeurPart > 0 ? Math.floor(totalApports / valeurPart) : 0;
 
   const associes = (formData.associes || []).map((a: Associe, i: number) => {
-    const parts = valeurPart > 0 ? Math.floor((a.apport || 0) / valeurPart) : 0;
+    const parts = valeurPart > 0 ? Math.floor(((a.apport || 0) || 0) / valeurPart) : 0;
     return {
       rang: i + 1,
       civilite: a.civilite || "Monsieur",
@@ -22,8 +22,8 @@ export function prepareStePartData(formData: FormData): TemplateData {
       nationalite: a.nationalite || "",
       profession: a.profession || "",
       adresse: a.adresse || "",
-      apport: formatNumber(a.apport || 0),
-      apport_lettres: numberToWords(a.apport || 0),
+      apport: formatNumber((a.apport || 0) || 0),
+      apport_lettres: numberToWords((a.apport || 0) || 0),
       type_apport: a.type_apport === "numeraire" ? "numéraire" : a.type_apport === "nature" ? "nature" : "numéraire",
       parts,
     };

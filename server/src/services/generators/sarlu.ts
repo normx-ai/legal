@@ -10,8 +10,8 @@ export function prepareSarluData(formData: FormData): TemplateData {
   const nombreParts = Math.floor(capital / valeurNominale);
   const a = formData.associes[0]; // associé unique
 
-  const apportNumeraire = a.type_apport === "numeraire" ? a.apport : 0;
-  const apportNature = a.type_apport === "nature" ? a.apport : 0;
+  const apportNumeraire = a.type_apport === "numeraire" ? (a.apport || 0) : 0;
+  const apportNature = a.type_apport === "nature" ? (a.apport || 0) : 0;
   const partsNumeraire = Math.floor(apportNumeraire / valeurNominale);
   const partsNature = Math.floor(apportNature / valeurNominale);
 

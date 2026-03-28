@@ -26,7 +26,7 @@ export function prepareDecActionnaireUniqueAgData(formData: FormData): TemplateD
     is_personne_morale: !!formData.is_personne_morale,
     actionnaire_denomination: formData.actionnaire_denomination || "",
     actionnaire_forme: formData.actionnaire_forme || "",
-    actionnaire_capital: formData.actionnaire_capital ? formatNumber(formData.actionnaire_capital) : "",
+    actionnaire_capital: formData.actionnaire_capital ? formatNumber(formData.actionnaire_capital as number || 0) : "",
     actionnaire_siege: formData.actionnaire_siege || "",
     actionnaire_rc: formData.actionnaire_rc || "",
     actionnaire_representant: formData.actionnaire_representant || "",

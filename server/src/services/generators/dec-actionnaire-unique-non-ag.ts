@@ -26,7 +26,7 @@ export function prepareDecActionnaireUniqueNonAgData(formData: FormData): Templa
     is_personne_morale: !!formData.is_personne_morale,
     actionnaire_denomination: formData.actionnaire_denomination || "",
     actionnaire_forme: formData.actionnaire_forme || "",
-    actionnaire_capital: formData.actionnaire_capital ? formatNumber(formData.actionnaire_capital) : "",
+    actionnaire_capital: formData.actionnaire_capital ? formatNumber(formData.actionnaire_capital as number || 0) : "",
     actionnaire_siege: formData.actionnaire_siege || "",
     actionnaire_rc: formData.actionnaire_rc || "",
     actionnaire_representant: formData.actionnaire_representant || "",
@@ -103,27 +103,27 @@ export function prepareDecActionnaireUniqueNonAgData(formData: FormData): Templa
     nouveau_texte_article_siege: formData.nouveau_texte_article_siege || "",
 
     // Augmentation capital numéraire
-    montant_augmentation_numeraire: formData.montant_augmentation_numeraire ? formatNumber(formData.montant_augmentation_numeraire) : "",
+    montant_augmentation_numeraire: formData.montant_augmentation_numeraire ? formatNumber(formData.montant_augmentation_numeraire as number || 0) : "",
     ancien_capital: formatNumber(capital),
-    nouveau_capital_numeraire: formData.nouveau_capital_numeraire ? formatNumber(formData.nouveau_capital_numeraire) : "",
-    nombre_actions_nouvelles_numeraire: formData.nombre_actions_nouvelles_numeraire ? formatNumber(formData.nombre_actions_nouvelles_numeraire) : "",
+    nouveau_capital_numeraire: formData.nouveau_capital_numeraire ? formatNumber(formData.nouveau_capital_numeraire as number || 0) : "",
+    nombre_actions_nouvelles_numeraire: formData.nombre_actions_nouvelles_numeraire ? formatNumber(formData.nombre_actions_nouvelles_numeraire as number || 0) : "",
     articles_capital: formData.articles_capital || "",
 
     // Augmentation capital nature
-    montant_augmentation_nature: formData.montant_augmentation_nature ? formatNumber(formData.montant_augmentation_nature) : "",
-    nouveau_capital_nature: formData.nouveau_capital_nature ? formatNumber(formData.nouveau_capital_nature) : "",
-    nombre_actions_nouvelles_nature: formData.nombre_actions_nouvelles_nature ? formatNumber(formData.nombre_actions_nouvelles_nature) : "",
+    montant_augmentation_nature: formData.montant_augmentation_nature ? formatNumber(formData.montant_augmentation_nature as number || 0) : "",
+    nouveau_capital_nature: formData.nouveau_capital_nature ? formatNumber(formData.nouveau_capital_nature as number || 0) : "",
+    nombre_actions_nouvelles_nature: formData.nombre_actions_nouvelles_nature ? formatNumber(formData.nombre_actions_nouvelles_nature as number || 0) : "",
     description_apport_nature: formData.description_apport_nature || "",
-    valeur_apport_nature: formData.valeur_apport_nature ? formatNumber(formData.valeur_apport_nature) : "",
+    valeur_apport_nature: formData.valeur_apport_nature ? formatNumber(formData.valeur_apport_nature as number || 0) : "",
 
     // Augmentation capital par incorporation de réserves
-    montant_incorporation_reserves: formData.montant_incorporation_reserves ? formatNumber(formData.montant_incorporation_reserves) : "",
-    nouveau_capital_reserves: formData.nouveau_capital_reserves ? formatNumber(formData.nouveau_capital_reserves) : "",
-    nombre_actions_nouvelles_reserves: formData.nombre_actions_nouvelles_reserves ? formatNumber(formData.nombre_actions_nouvelles_reserves) : "",
+    montant_incorporation_reserves: formData.montant_incorporation_reserves ? formatNumber(formData.montant_incorporation_reserves as number || 0) : "",
+    nouveau_capital_reserves: formData.nouveau_capital_reserves ? formatNumber(formData.nouveau_capital_reserves as number || 0) : "",
+    nombre_actions_nouvelles_reserves: formData.nombre_actions_nouvelles_reserves ? formatNumber(formData.nombre_actions_nouvelles_reserves as number || 0) : "",
 
     // Réduction de capital
-    montant_reduction_capital: formData.montant_reduction_capital ? formatNumber(formData.montant_reduction_capital) : "",
-    nouveau_capital_reduit: formData.nouveau_capital_reduit ? formatNumber(formData.nouveau_capital_reduit) : "",
+    montant_reduction_capital: formData.montant_reduction_capital ? formatNumber(formData.montant_reduction_capital as number || 0) : "",
+    nouveau_capital_reduit: formData.nouveau_capital_reduit ? formatNumber(formData.nouveau_capital_reduit as number || 0) : "",
     modalite_reduction_capital: formData.modalite_reduction_capital || "",
     article_capital: formData.article_capital || "",
 
@@ -141,7 +141,7 @@ export function prepareDecActionnaireUniqueNonAgData(formData: FormData): Templa
 
     // Continuation malgré pertes
     date_etats_financiers: formData.date_etats_financiers || "",
-    montant_capitaux_propres: formData.montant_capitaux_propres ? formatNumber(formData.montant_capitaux_propres) : "",
+    montant_capitaux_propres: formData.montant_capitaux_propres ? formatNumber(formData.montant_capitaux_propres as number || 0) : "",
 
     // Decisions conditionnelles
     has_approbation_comptes: decisions.includes("approbation_comptes"),

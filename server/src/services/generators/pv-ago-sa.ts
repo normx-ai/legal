@@ -64,7 +64,7 @@ export function preparePvAgoSaData(formData: FormData): TemplateData {
     administrateurs_renouveles: formData.administrateurs_renouveles || "",
     administrateur_revoque_nom: formData.administrateur_revoque_nom || "",
     duree_mandat_administrateur: formData.duree_mandat_administrateur || "",
-    indemnite_fonction_montant: formData.indemnite_fonction_montant ? formatNumber(formData.indemnite_fonction_montant) : "",
+    indemnite_fonction_montant: formData.indemnite_fonction_montant ? formatNumber(formData.indemnite_fonction_montant as number || 0) : "",
 
     // Conventions
     has_conventions: !!formData.has_conventions,

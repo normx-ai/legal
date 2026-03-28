@@ -99,33 +99,33 @@ export function prepareDecAssocieUniqueNonGerantData(formData: FormData): Templa
     nouveau_texte_article_siege: formData.nouveau_texte_article_siege || "",
 
     // Augmentation capital numéraire
-    montant_augmentation_numeraire: formData.montant_augmentation_numeraire ? formatNumber(formData.montant_augmentation_numeraire) : "",
+    montant_augmentation_numeraire: formData.montant_augmentation_numeraire ? formatNumber(formData.montant_augmentation_numeraire as number || 0) : "",
     ancien_capital: formatNumber(capital),
-    nouveau_capital_numeraire: formData.nouveau_capital_numeraire ? formatNumber(formData.nouveau_capital_numeraire) : "",
-    nombre_parts_nouvelles_numeraire: formData.nombre_parts_nouvelles_numeraire ? formatNumber(formData.nombre_parts_nouvelles_numeraire) : "",
+    nouveau_capital_numeraire: formData.nouveau_capital_numeraire ? formatNumber(formData.nouveau_capital_numeraire as number || 0) : "",
+    nombre_parts_nouvelles_numeraire: formData.nombre_parts_nouvelles_numeraire ? formatNumber(formData.nombre_parts_nouvelles_numeraire as number || 0) : "",
     articles_capital: formData.articles_capital || "",
 
     // Augmentation capital nature
-    montant_augmentation_nature: formData.montant_augmentation_nature ? formatNumber(formData.montant_augmentation_nature) : "",
-    nouveau_capital_nature: formData.nouveau_capital_nature ? formatNumber(formData.nouveau_capital_nature) : "",
-    nombre_parts_nouvelles_nature: formData.nombre_parts_nouvelles_nature ? formatNumber(formData.nombre_parts_nouvelles_nature) : "",
+    montant_augmentation_nature: formData.montant_augmentation_nature ? formatNumber(formData.montant_augmentation_nature as number || 0) : "",
+    nouveau_capital_nature: formData.nouveau_capital_nature ? formatNumber(formData.nouveau_capital_nature as number || 0) : "",
+    nombre_parts_nouvelles_nature: formData.nombre_parts_nouvelles_nature ? formatNumber(formData.nombre_parts_nouvelles_nature as number || 0) : "",
     description_apport_nature: formData.description_apport_nature || "",
-    valeur_apport_nature: formData.valeur_apport_nature ? formatNumber(formData.valeur_apport_nature) : "",
+    valeur_apport_nature: formData.valeur_apport_nature ? formatNumber(formData.valeur_apport_nature as number || 0) : "",
 
     // Augmentation capital par incorporation de réserves
-    montant_incorporation_reserves: formData.montant_incorporation_reserves ? formatNumber(formData.montant_incorporation_reserves) : "",
-    nouveau_capital_reserves: formData.nouveau_capital_reserves ? formatNumber(formData.nouveau_capital_reserves) : "",
-    nombre_parts_nouvelles_reserves: formData.nombre_parts_nouvelles_reserves ? formatNumber(formData.nombre_parts_nouvelles_reserves) : "",
+    montant_incorporation_reserves: formData.montant_incorporation_reserves ? formatNumber(formData.montant_incorporation_reserves as number || 0) : "",
+    nouveau_capital_reserves: formData.nouveau_capital_reserves ? formatNumber(formData.nouveau_capital_reserves as number || 0) : "",
+    nombre_parts_nouvelles_reserves: formData.nombre_parts_nouvelles_reserves ? formatNumber(formData.nombre_parts_nouvelles_reserves as number || 0) : "",
 
     // Augmentation capital par majoration valeur nominale
-    montant_incorporation_majoration: formData.montant_incorporation_majoration ? formatNumber(formData.montant_incorporation_majoration) : "",
-    nouveau_capital_majoration: formData.nouveau_capital_majoration ? formatNumber(formData.nouveau_capital_majoration) : "",
-    ancienne_valeur_nominale: formData.ancienne_valeur_nominale ? formatNumber(formData.ancienne_valeur_nominale) : formatNumber(valeurNominale),
-    nouvelle_valeur_nominale: formData.nouvelle_valeur_nominale ? formatNumber(formData.nouvelle_valeur_nominale) : "",
+    montant_incorporation_majoration: formData.montant_incorporation_majoration ? formatNumber(formData.montant_incorporation_majoration as number || 0) : "",
+    nouveau_capital_majoration: formData.nouveau_capital_majoration ? formatNumber(formData.nouveau_capital_majoration as number || 0) : "",
+    ancienne_valeur_nominale: formData.ancienne_valeur_nominale ? formatNumber(formData.ancienne_valeur_nominale as number || 0) : formatNumber(valeurNominale),
+    nouvelle_valeur_nominale: formData.nouvelle_valeur_nominale ? formatNumber(formData.nouvelle_valeur_nominale as number || 0) : "",
 
     // Réduction de capital
-    montant_reduction_capital: formData.montant_reduction_capital ? formatNumber(formData.montant_reduction_capital) : "",
-    nouveau_capital_reduit: formData.nouveau_capital_reduit ? formatNumber(formData.nouveau_capital_reduit) : "",
+    montant_reduction_capital: formData.montant_reduction_capital ? formatNumber(formData.montant_reduction_capital as number || 0) : "",
+    nouveau_capital_reduit: formData.nouveau_capital_reduit ? formatNumber(formData.nouveau_capital_reduit as number || 0) : "",
     modalite_reduction_capital: formData.modalite_reduction_capital || "",
     article_capital: formData.article_capital || "",
 
