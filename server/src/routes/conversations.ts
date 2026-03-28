@@ -43,7 +43,7 @@ conversationRoutes.get("/:id", requireAuth(), async (req: AuthRequest, res: Resp
   const userId = req.userId as number;
 
   const conversation = await prisma.conversation.findFirst({
-    where: { id: req.params.id, userId },
+    where: { id: req.params.id as string, userId },
     include: {
       messages: { orderBy: { createdAt: "asc" } },
     },
@@ -61,13 +61,13 @@ conversationRoutes.delete("/:id", requireAuth(), async (req: AuthRequest, res: R
   const userId = req.userId as number;
 
   const conversation = await prisma.conversation.findFirst({
-    where: { id: req.params.id, userId },
+    where: { id: req.params.id as string, userId },
   });
 
   if (!conversation) {
     return res.status(404).json({ error: "Conversation introuvable" });
   }
 
-  await prisma.conversation.delete({ where: { id: req.params.id } });
+  await prisma.conversation.delete({ where: { id: req.params.id as string } });
   res.json({ success: true });
 });
