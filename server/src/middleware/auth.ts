@@ -20,7 +20,7 @@ const client = jwksClient({
 });
 
 export interface AuthRequest extends Request {
-  userId?: string;
+  userId?: string | number;
   userEmail?: string;
   userName?: string;
   userRoles?: string[];
