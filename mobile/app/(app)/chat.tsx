@@ -25,6 +25,7 @@ export default function ChatScreen() {
   const [conversationId, setConversationId] = useState<string | null>(null);
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [showHistory, setShowHistory] = useState(false);
+  const [showSources, setShowSources] = useState(false);
   const scrollRef = useRef<ScrollView>(null);
 
   // Charger la liste des conversations au mount
@@ -101,6 +102,7 @@ export default function ChatScreen() {
     setInput("");
     setIsLoading(true);
     setSources([]);
+    setShowSources(false);
 
     try {
       const result = await sendChatMessage(newMessages, {
@@ -274,6 +276,51 @@ export default function ChatScreen() {
           <View style={{ flexDirection: "row", alignItems: "center", gap: 8, paddingVertical: 8 }}>
             <ActivityIndicator size="small" color="#D4A843" />
             <Text style={{ fontFamily: fonts.regular, fontSize: 13, color: colors.textSecondary }}>Recherche en cours...</Text>
+          </View>
+        )}
+
+        {/* Sources RAG */}
+        {!isLoading && sources.length > 0 && messages.length > 0 && messages[messages.length - 1].role === "assistant" && (
+          <View style={{ marginTop: 4, marginBottom: 12, paddingLeft: 8 }}>
+            <TouchableOpacity
+              onPress={() => setShowSources(!showSources)}
+              style={{ flexDirection: "row", alignItems: "center", gap: 6, paddingVertical: 6 }}
+            >
+              <Ionicons name="document-text-outline" size={14} color="#9ca3af" />
+              <Text style={{ fontFamily: fonts.regular, fontSize: 12, color: "#9ca3af" }}>
+                {sources.length} source{sources.length > 1 ? "s" : ""} consultée{sources.length > 1 ? "s" : ""}
+              </Text>
+              <Ionicons name={showSources ? "chevron-up" : "chevron-down"} size={12} color="#9ca3af" />
+            </TouchableOpacity>
+            {showSources && (
+              <View style={{ gap: 6, marginTop: 4 }}>
+                {sources.map((src, i) => (
+                  <View
+                    key={i}
+                    style={{
+                      backgroundColor: "#f9fafb",
+                      borderWidth: 1,
+                      borderColor: "#e5e7eb",
+                      borderRadius: 8,
+                      padding: 10,
+                      flexDirection: "row",
+                      alignItems: "flex-start",
+                      gap: 8,
+                    }}
+                  >
+                    <Ionicons name="bookmark-outline" size={14} color="#D4A843" style={{ marginTop: 2 }} />
+                    <View style={{ flex: 1 }}>
+                      <Text style={{ fontFamily: fonts.medium, fontSize: 12, color: colors.text }} numberOfLines={2}>
+                        {src.titre}
+                      </Text>
+                      <Text style={{ fontFamily: fonts.regular, fontSize: 11, color: "#9ca3af", marginTop: 2 }}>
+                        {src.chapitre} {src.paragraphe ? `- §${src.paragraphe}` : ""} {src.forme_juridique && src.forme_juridique !== "TOUTES" ? `(${src.forme_juridique})` : ""}
+                      </Text>
+                    </View>
+                  </View>
+                ))}
+              </View>
+            )}
           </View>
         )}
       </ScrollView>
