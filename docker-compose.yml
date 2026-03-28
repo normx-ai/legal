@@ -9,7 +9,7 @@ services:
     expose:
       - "3004"
     depends_on:
-      postgres:
+      legal-postgres:
         condition: service_healthy
     networks:
       - normx-legal-net
@@ -17,7 +17,7 @@ services:
     volumes:
       - generated_docs:/app/generated
 
-  postgres:
+  legal-postgres:
     image: postgres:16-alpine
     container_name: normx-legal-postgres
     restart: unless-stopped

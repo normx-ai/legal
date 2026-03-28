@@ -39,7 +39,7 @@ jobs:
             cat > server/.env.production << 'ENVEOF'
             NODE_ENV=production
             PORT=3004
-            DATABASE_URL=postgresql://normxlegal:${{ secrets.POSTGRES_PASSWORD }}@postgres:5432/normxlegal?schema=public
+            DATABASE_URL=postgresql://normxlegal:${{ secrets.POSTGRES_PASSWORD }}@legal-postgres:5432/normxlegal?schema=public
             ANTHROPIC_API_KEY=${{ secrets.ANTHROPIC_API_KEY }}
             VOYAGE_API_KEY=${{ secrets.VOYAGE_API_KEY }}
             QDRANT_URL=http://cgi242-qdrant:6333
