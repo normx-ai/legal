@@ -1,85 +1,53 @@
+/**
+ * API Client — Keycloak token injection
+ * Le token Keycloak est envoye en header Authorization: Bearer
+ * Plus de cookies httpOnly, plus de CSRF, plus de refresh custom
+ */
+
 import axios, { type AxiosError, type InternalAxiosRequestConfig } from "axios";
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL || "http://localhost:3004/api";
 export { API_URL };
+const API_TIMEOUT_MS = 15_000;
 
-const isWeb = typeof window !== "undefined" && typeof sessionStorage !== "undefined";
+const isWeb = typeof window !== "undefined";
 const isMobile = !isWeb;
-
-let _getToken: () => Promise<string | null>;
-let _getRefreshToken: () => Promise<string | null>;
-let _setToken: (key: string, value: string) => Promise<void>;
-let _removeToken: (key: string) => Promise<void>;
-
-if (isWeb) {
-  _getToken = async () => null;
-  _getRefreshToken = async () => null;
-  _setToken = async () => {};
-  _removeToken = async () => {};
-} else {
-  _getToken = async () => {
-    const { getItemAsync } = require("expo-secure-store");
-    return getItemAsync("accessToken");
-  };
-  _getRefreshToken = async () => {
-    const { getItemAsync } = require("expo-secure-store");
-    return getItemAsync("refreshToken");
-  };
-  _setToken = async (key, value) => {
-    const { setItemAsync } = require("expo-secure-store");
-    return setItemAsync(key, value);
-  };
-  _removeToken = async (key) => {
-    const { deleteItemAsync } = require("expo-secure-store");
-    return deleteItemAsync(key);
-  };
-}
-
 export { isWeb, isMobile };
-export const storage = { get: _getToken, set: _setToken, remove: _removeToken };
+
+// Storage compat (pour les composants qui l'utilisent encore)
+export const storage = {
+  get: async () => null,
+  set: async () => {},
+  remove: async () => {},
+};
 
 export const api = axios.create({
   baseURL: API_URL,
-  timeout: 15_000,
+  timeout: API_TIMEOUT_MS,
   headers: { "Content-Type": "application/json" },
-  withCredentials: true,
 });
 
+// Request interceptor — injecter le token Keycloak
 api.interceptors.request.use(async (config) => {
   try {
     const { useAuthStore } = require("@/lib/store/auth");
+    const token = await useAuthStore.getState().getToken();
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
     const user = useAuthStore.getState().user;
     if (user?.entreprise_id) {
       config.headers["X-Organization-ID"] = user.entreprise_id;
     }
-  } catch {}
-
-  if (isMobile) {
-    config.headers["X-Platform"] = "mobile";
-    try {
-      const token = await _getToken();
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
-    } catch {}
-  } else {
-    try {
-      const csrfToken = decodeURIComponent(
-        document.cookie
-          .split("; ")
-          .find((c) => c.startsWith("csrf-token="))
-          ?.split("=")[1] || ""
-      ) || undefined;
-      if (csrfToken) {
-        config.headers["X-CSRF-Token"] = csrfToken;
-      }
-    } catch {}
+  } catch (err) {
+    if (__DEV__) console.warn("[api] Erreur injection token:", err);
   }
   return config;
 });
 
+// Response interceptor — gerer les 401
 let isRefreshing = false;
-let failedQueue: { resolve: (token: string | null) => void; reject: (err: unknown) => void }[] = [];
+let failedQueue: { resolve: (v: unknown) => void; reject: (e: unknown) => void }[] = [];
 
 function processQueue(error: unknown, token: string | null) {
   failedQueue.forEach((p) => {
@@ -87,17 +55,6 @@ function processQueue(error: unknown, token: string | null) {
     else p.resolve(token);
   });
   failedQueue = [];
-}
-
-async function forceLogout(reason?: "revoked" | "expired") {
-  if (isMobile) {
-    try { await _removeToken("accessToken"); } catch {}
-    try { await _removeToken("refreshToken"); } catch {}
-  } else {
-    try { await axios.post(`${API_URL}/auth/clear-session`, {}, { withCredentials: true }); } catch {}
-  }
-  const { useAuthStore } = require("@/lib/store/auth");
-  useAuthStore.getState().setSessionExpired(true, reason || "expired");
 }
 
 api.interceptors.response.use(
@@ -109,8 +66,7 @@ api.interceptors.response.use(
       !error.response ||
       error.response.status !== 401 ||
       originalRequest._retry ||
-      originalRequest._skipAuthRetry ||
-      originalRequest.url?.includes("/auth/")
+      originalRequest._skipAuthRetry
     ) {
       return Promise.reject(error);
     }
@@ -118,38 +74,27 @@ api.interceptors.response.use(
     if (isRefreshing) {
       return new Promise((resolve, reject) => {
         failedQueue.push({ resolve, reject });
-      }).then((token) => {
-        if (isMobile && token) {
-          originalRequest.headers.Authorization = `Bearer ${token}`;
-        }
-        return api(originalRequest);
-      });
+      }).then(() => api(originalRequest));
     }
 
     originalRequest._retry = true;
     isRefreshing = true;
 
     try {
-      if (isMobile) {
-        const refreshToken = await _getRefreshToken();
-        if (!refreshToken) {
-          await forceLogout();
-          return Promise.reject(error);
-        }
-        const { data } = await axios.post(`${API_URL}/auth/refresh-token`, { refreshToken });
-        await _setToken("accessToken", data.token);
-        if (data.refreshToken) await _setToken("refreshToken", data.refreshToken);
-        processQueue(null, data.token);
-        originalRequest.headers.Authorization = `Bearer ${data.token}`;
-        return api(originalRequest);
-      } else {
-        const { data } = await axios.post(`${API_URL}/auth/refresh-token`, {}, { withCredentials: true });
-        processQueue(null, data.token);
-        return api(originalRequest);
+      const { useAuthStore } = require("@/lib/store/auth");
+      const newToken = await useAuthStore.getState().getToken();
+      if (!newToken) {
+        useAuthStore.getState().setSessionExpired(true);
+        processQueue(error, null);
+        return Promise.reject(error);
       }
+      processQueue(null, newToken);
+      originalRequest.headers.Authorization = `Bearer ${newToken}`;
+      return api(originalRequest);
     } catch (refreshError) {
       processQueue(refreshError, null);
-      await forceLogout("expired");
+      const { useAuthStore } = require("@/lib/store/auth");
+      useAuthStore.getState().setSessionExpired(true);
       return Promise.reject(refreshError);
     } finally {
       isRefreshing = false;
