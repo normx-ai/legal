@@ -113,13 +113,13 @@ export function Sidebar({ collapsed, onToggle, activeSection, onSectionPress }: 
 
         {!collapsed && (
           <View style={{ flexDirection: "row", alignItems: "baseline", justifyContent: "center" }}>
-            <Text style={{ fontFamily: "Georgia, 'Playfair Display', serif", fontWeight: "bold", fontSize: 22, color: "#D4A843" }}>
+            <Text style={{ fontFamily: "'Inter', sans-serif", fontWeight: "bold", fontSize: 22, color: "#D4A843" }}>
               N
             </Text>
-            <Text style={{ fontFamily: "Georgia, 'Playfair Display', serif", fontWeight: "bold", fontSize: 16, color: "#374151" }}>
+            <Text style={{ fontFamily: "'Inter', sans-serif", fontWeight: "bold", fontSize: 16, color: "#374151" }}>
               ormX
             </Text>
-            <Text style={{ fontFamily: "Georgia, 'Playfair Display', serif", fontWeight: "bold", fontSize: 16, color: "#374151" }}>
+            <Text style={{ fontFamily: "'Inter', sans-serif", fontWeight: "bold", fontSize: 16, color: "#374151" }}>
               {" "}Legal
             </Text>
           </View>

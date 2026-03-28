@@ -5,31 +5,25 @@ import { ThemeProvider } from "@/lib/theme/ThemeContext";
 import "@/lib/i18n";
 import {
   useFonts,
-  Outfit_300Light,
-  Outfit_400Regular,
-  Outfit_500Medium,
-  Outfit_600SemiBold,
-  Outfit_700Bold,
-  Outfit_800ExtraBold,
-  Outfit_900Black,
-} from "@expo-google-fonts/outfit";
-import {
-  PlayfairDisplay_700Bold,
-  PlayfairDisplay_900Black,
-} from "@expo-google-fonts/playfair-display";
+  Inter_300Light,
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_600SemiBold,
+  Inter_700Bold,
+  Inter_800ExtraBold,
+  Inter_900Black,
+} from "@expo-google-fonts/inter";
 import { GOOGLE_FONTS_URL } from "@/lib/theme/fonts";
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
-    Outfit_300Light,
-    Outfit_400Regular,
-    Outfit_500Medium,
-    Outfit_600SemiBold,
-    Outfit_700Bold,
-    Outfit_800ExtraBold,
-    Outfit_900Black,
-    PlayfairDisplay_700Bold,
-    PlayfairDisplay_900Black,
+    Inter_300Light,
+    Inter_400Regular,
+    Inter_500Medium,
+    Inter_600SemiBold,
+    Inter_700Bold,
+    Inter_800ExtraBold,
+    Inter_900Black,
   });
 
   useEffect(() => {

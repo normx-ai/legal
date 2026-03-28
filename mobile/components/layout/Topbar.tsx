@@ -25,10 +25,10 @@ export function Topbar() {
         onPress={() => router.navigate("/(app)")}
         style={{ flexDirection: "row", alignItems: "baseline", gap: 2 }}
       >
-        <Text style={{ fontFamily: "Georgia, 'Playfair Display', serif", fontWeight: "bold", fontSize: 26, color: "#D4A843", letterSpacing: -1 }}>
+        <Text style={{ fontFamily: "'Inter', sans-serif", fontWeight: "bold", fontSize: 26, color: "#D4A843", letterSpacing: -1 }}>
           NORMX
         </Text>
-        <Text style={{ fontFamily: "Georgia, 'Playfair Display', serif", fontWeight: "400", fontSize: 26, color: "#e8e6e1", letterSpacing: -1 }}>
+        <Text style={{ fontFamily: "'Inter', sans-serif", fontWeight: "400", fontSize: 26, color: "#e8e6e1", letterSpacing: -1 }}>
           {" "}Legal
         </Text>
       </TouchableOpacity>

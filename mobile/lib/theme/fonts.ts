@@ -3,15 +3,15 @@ import { Platform } from "react-native";
 const isWeb = Platform.OS === "web";
 
 export const fonts = {
-  heading: isWeb ? "Playfair Display" : "PlayfairDisplay_700Bold",
-  headingBlack: isWeb ? "Playfair Display" : "PlayfairDisplay_900Black",
-  light: isWeb ? "Outfit" : "Outfit_300Light",
-  regular: isWeb ? "Outfit" : "Outfit_400Regular",
-  medium: isWeb ? "Outfit" : "Outfit_500Medium",
-  semiBold: isWeb ? "Outfit" : "Outfit_600SemiBold",
-  bold: isWeb ? "Outfit" : "Outfit_700Bold",
-  extraBold: isWeb ? "Outfit" : "Outfit_800ExtraBold",
-  black: isWeb ? "Outfit" : "Outfit_900Black",
+  heading: isWeb ? "Inter" : "Inter_700Bold",
+  headingBlack: isWeb ? "Inter" : "Inter_900Black",
+  light: isWeb ? "Inter" : "Inter_300Light",
+  regular: isWeb ? "Inter" : "Inter_400Regular",
+  medium: isWeb ? "Inter" : "Inter_500Medium",
+  semiBold: isWeb ? "Inter" : "Inter_600SemiBold",
+  bold: isWeb ? "Inter" : "Inter_700Bold",
+  extraBold: isWeb ? "Inter" : "Inter_800ExtraBold",
+  black: isWeb ? "Inter" : "Inter_900Black",
 } as const;
 
 export const fontWeights = {
@@ -27,4 +27,4 @@ export const fontWeights = {
 } as const;
 
 export const GOOGLE_FONTS_URL =
-  "https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,700&display=swap";
+  "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap";
