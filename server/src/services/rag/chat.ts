@@ -36,7 +36,7 @@ DONNEES CLES :
 - CAC obligatoire SA : toujours. SARL/SNC/SCS : si 2 conditions sur 3 (bilan, CA, effectif)
 - Cession parts SNC : unanimite (art. 274) ; SARL : libre entre associes, agrement tiers (art. 317-318)`;
 
-interface ChatMessage {
+export interface ChatMessage {
   role: "user" | "assistant";
   content: string;
 }
