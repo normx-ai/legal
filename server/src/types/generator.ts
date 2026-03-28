@@ -76,8 +76,6 @@ export interface FormData {
   cac_nom?: string;
   cac_adresse?: string;
 
-  // Divers — champs dynamiques selon le type de document
-  [key: string]: unknown;
 }
 
 export interface Associe {
