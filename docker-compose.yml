@@ -5,10 +5,7 @@ services:
       dockerfile: Dockerfile
     container_name: normx-legal-api
     restart: unless-stopped
-    environment:
-      PORT: "3004"
-      DATABASE_URL: "postgresql://normxlegal:X0MhDPJYie1SjTQSz6Ja1KuXIvFWBm27cAJwSN0r@postgres:5432/normxlegal?schema=public"
-      QDRANT_URL: "http://cgi242-qdrant:6333"
+    env_file: ./server/.env.production
     expose:
       - "3004"
     depends_on:
@@ -21,13 +18,13 @@ services:
       - generated_docs:/app/generated
 
   postgres:
-    image: postgres:16-alpine
+    image: postgres:15-alpine
     container_name: normx-legal-postgres
     restart: unless-stopped
     environment:
       POSTGRES_DB: normxlegal
       POSTGRES_USER: normxlegal
-      POSTGRES_PASSWORD: X0MhDPJYie1SjTQSz6Ja1KuXIvFWBm27cAJwSN0r
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
