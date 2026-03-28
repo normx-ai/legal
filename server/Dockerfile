@@ -23,6 +23,9 @@ COPY --from=builder /app/data ./data
 
 RUN mkdir -p /app/generated
 
+# Frontend build (copie par le workflow dans server/public/)
+COPY public/ /app/mobile/dist/
+
 EXPOSE 3004
 
 CMD ["sh", "-c", "sleep 5 && npx prisma migrate deploy && node dist/server.js"]

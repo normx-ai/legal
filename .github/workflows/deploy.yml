@@ -58,9 +58,12 @@ jobs:
             # --- Build frontend web ---
             cd mobile && rm -rf node_modules && npm install && npm run build:web && cd ..
 
-            # --- Copier le build ---
+            # --- Copier le build frontend ---
             sudo rm -rf nginx/dist
             cp -r mobile/dist nginx/dist
+            # Aussi dans server/public pour que l'API serve le SPA
+            rm -rf server/public
+            cp -r mobile/dist server/public
 
             # --- Rebuild et restart ---
             docker compose build --no-cache api

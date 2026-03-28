@@ -111,9 +111,9 @@ app.all("/api/{*path}", (_req: express.Request, res: express.Response) => {
 });
 
 // ── SPA fallback ──
-app.use(express.static(path.join(__dirname, "../../mobile/dist")));
+app.use(express.static(path.join(__dirname, "../mobile/dist")));
 app.get("{*path}", (_req: express.Request, res: express.Response) => {
-  res.sendFile(path.join(__dirname, "../../mobile/dist/index.html"));
+  res.sendFile(path.join(__dirname, "../mobile/dist/index.html"));
 });
 
 // ── Error handler ──
