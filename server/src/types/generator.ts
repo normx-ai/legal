@@ -77,7 +77,7 @@ export interface FormData {
   cac_adresse?: string;
 
   // Divers — champs dynamiques selon le type de document
-  [key: string]: string | number | boolean | undefined | Associe[] | Membre[] | Administrateur[] | Signataire[] | Resolution[] | string[];
+  [key: string]: unknown;
 }
 
 export interface Associe {
