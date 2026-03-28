@@ -14,8 +14,8 @@ services:
     environment:
       - PORT=3004
       - DATABASE_URL=postgresql://normxlegal:${POSTGRES_PASSWORD}@postgres:5432/normxlegal?schema=public
-    ports:
-      - "127.0.0.1:3004:3004"
+    expose:
+      - "3004"
     depends_on:
       postgres:
         condition: service_healthy
@@ -63,34 +63,7 @@ services:
         max-size: "10m"
         max-file: "3"
 
-  # --- Nginx (reverse proxy + frontend) ---
-  nginx:
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile
-    container_name: normx-legal-nginx
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - /etc/letsencrypt:/etc/letsencrypt:ro
-      - /var/www/certbot:/var/www/certbot:ro
-      - generated_docs:/var/www/files:ro
-    depends_on:
-      - api
-    networks:
-      - normx-legal-net
-    deploy:
-      resources:
-        limits:
-          memory: 128M
-          cpus: '0.5'
-    logging:
-      driver: json-file
-      options:
-        max-size: "10m"
-        max-file: "3"
+  # Nginx géré par cgi242-nginx (reverse proxy partagé VPS)
 
   # --- Qdrant (vector database for RAG) ---
   qdrant:
