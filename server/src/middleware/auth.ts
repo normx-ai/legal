@@ -20,7 +20,8 @@ const client = jwksClient({
 });
 
 export interface AuthRequest extends Request {
-  userId?: string | number;
+  userId?: number;
+  keycloakSub?: string;
   userEmail?: string;
   userName?: string;
   userRoles?: string[];
@@ -66,7 +67,9 @@ export function requireAuth() {
         });
       });
 
-      req.userId = payload.sub;
+      req.keycloakSub = payload.sub;
+      // userId reste number pour compat Prisma — sera resolu par lookup ou auto-creation
+      req.userId = 1; // TODO: mapper keycloakSub -> userId Prisma
       req.userEmail = payload.email || payload.preferred_username || "";
       req.userName = payload.name || "";
       req.userRoles = payload.realm_access?.roles || [];
