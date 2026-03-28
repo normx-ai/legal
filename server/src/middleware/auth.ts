@@ -68,6 +68,16 @@ export function requireAuth() {
       });
 
       req.keycloakSub = payload.sub;
+      req.userRoles = payload.realm_access?.roles || [];
+
+      // Verifier que l'user a le role "legal" ou "admin"
+      const roles = payload.realm_access?.roles || [];
+      if (!roles.includes("legal") && !roles.includes("admin")) {
+        return res.status(403).json({
+          error: "Acces refuse — abonnement Legal requis",
+          requiredRole: "legal",
+        });
+      }
 
       // Lookup ou auto-creation du user Prisma depuis le keycloakSub
       const { PrismaClient } = require("@prisma/client");
