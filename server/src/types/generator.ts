@@ -76,6 +76,7 @@ export interface Resolution {
   vote_pour?: number;
   vote_contre?: number;
   abstention?: number;
+  adoptee?: boolean;
 }
 
 // ══ Type de sortie — donnees pretes pour le template docx ══

@@ -10,8 +10,9 @@ export function prepareSarlData(formData: FormData): TemplateData {
   const nombreParts = Math.floor(capital / valeurNominale);
 
   const associes = (formData.associes || []).map((a: Associe, i: number) => {
-    const parts = Math.floor(a.apport / valeurNominale);
-    const pourcentage = ((a.apport / capital) * 100).toFixed(2);
+    const apport = a.apport || 0;
+    const parts = Math.floor(apport / valeurNominale);
+    const pourcentage = ((apport / capital) * 100).toFixed(2);
     return {
       rang: i + 1,
       civilite: a.civilite || "Monsieur",
