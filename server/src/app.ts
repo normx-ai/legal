@@ -15,6 +15,7 @@ import { templatesRoutes } from "./routes/templates.routes";
 import { userRoutes } from "./routes/user.routes";
 import { chatRoutes } from "./routes/chat";
 import { conversationRoutes } from "./routes/conversations";
+import { subscriptionRoutes } from "./routes/subscription.routes";
 
 export const app = express();
 app.set("trust proxy", 1);
@@ -70,6 +71,7 @@ app.use("/api/templates", templatesRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/chat", chatLimiter, chatRoutes);
 app.use("/api/conversations", conversationRoutes);
+app.use("/api/subscription", subscriptionRoutes);
 
 // ── Health check ──
 app.get("/health", (_req: express.Request, res: express.Response) => {

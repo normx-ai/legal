@@ -10,6 +10,7 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import jwksClient from "jwks-rsa";
 import { createTenantSchema, ensureUserInSchema } from "../db/tenant.service";
+import { getOrCreateSubscription, Subscription } from "../services/subscription.service";
 
 const KEYCLOAK_URL = process.env.KEYCLOAK_URL || "https://auth.normx-ai.com";
 const KEYCLOAK_REALM = process.env.KEYCLOAK_REALM || "normx";
@@ -30,6 +31,7 @@ export interface AuthRequest extends Request {
   userName?: string;
   userRoles?: string[];
   tenantSchema?: string;
+  subscription?: Subscription;
 }
 
 interface KeycloakPayload {
@@ -94,6 +96,13 @@ export function requireAuth() {
         nameParts[0] || ""
       );
       req.userId = userId;
+
+      // Auto-creer/resoudre l'abonnement produit
+      const subscription = await getOrCreateSubscription(
+        payload.sub,
+        payload.email || payload.preferred_username
+      );
+      req.subscription = subscription;
 
       next();
     } catch {
