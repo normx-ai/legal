@@ -63,7 +63,7 @@ export function AppLayout({ children }: AppLayoutProps) {
 
   const contextValue: LayoutContextType = {
     activeSection,
-    setActiveSection,
+    setActiveSection: handleSectionPress,
     sidebar2Section,
     setSidebar2Section,
     activeSubItem,

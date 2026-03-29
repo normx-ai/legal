@@ -291,7 +291,7 @@ export default function DashboardScreen() {
           <TouchableOpacity
             onPress={() => {
               if (layoutContext) {
-                layoutContext.setActiveSection("entreprise");
+                layoutContext.setActiveSection("creer");
               }
             }}
             style={{
