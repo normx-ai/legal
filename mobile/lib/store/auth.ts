@@ -206,7 +206,11 @@ export const useAuthStore = create<AuthState>()(
 
       // Retourne un token valide (refresh si expire)
       getToken: async () => {
-        const { accessToken } = get();
+        let { accessToken } = get();
+        // Fallback: lire depuis localStorage si le state n'est pas encore hydraté
+        if (!accessToken && isWeb && typeof localStorage !== "undefined") {
+          accessToken = localStorage.getItem(TOKEN_KEY);
+        }
         if (accessToken && !isTokenExpired(accessToken)) {
           return accessToken;
         }
