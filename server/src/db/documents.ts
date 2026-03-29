@@ -24,11 +24,10 @@ export async function createDocument(input: CreateDocumentInput) {
   );
   const row = result.rows[0];
   return {
-    id: row.id,
-    type: row.type,
-    denomination: row.denomination,
-    forme_juridique: row.forme_juridique,
-    docx_path: row.docx_path,
+    ...row,
+    label: `${row.type} — ${row.denomination}`,
+    status: "generated",
+    formeJuridique: row.forme_juridique,
     createdAt: row.created_at,
   };
 }
