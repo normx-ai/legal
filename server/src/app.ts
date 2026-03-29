@@ -31,16 +31,7 @@ app.use(cors({
 app.use(helmet({
   crossOriginResourcePolicy: { policy: "cross-origin" },
   crossOriginOpenerPolicy: false,
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'"],
-      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
-      fontSrc: ["'self'", "https://fonts.gstatic.com"],
-      connectSrc: ["'self'", "https://auth.normx-ai.com"],
-      imgSrc: ["'self'", "data:", "blob:"],
-    },
-  },
+  contentSecurityPolicy: false,
 }));
 app.use(express.json({ limit: "1mb" }));
 app.use(cookieParser());
