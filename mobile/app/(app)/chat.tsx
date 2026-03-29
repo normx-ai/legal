@@ -280,49 +280,6 @@ export default function ChatScreen() {
         )}
 
         {/* Sources RAG */}
-        {!isLoading && sources.length > 0 && messages.length > 0 && messages[messages.length - 1].role === "assistant" && (
-          <View style={{ marginTop: 4, marginBottom: 12, paddingLeft: 8 }}>
-            <TouchableOpacity
-              onPress={() => setShowSources(!showSources)}
-              style={{ flexDirection: "row", alignItems: "center", gap: 6, paddingVertical: 6 }}
-            >
-              <Ionicons name="document-text-outline" size={14} color={colors.textMuted} />
-              <Text style={{ fontFamily: fonts.regular, fontSize: 12, color: colors.textMuted }}>
-                {sources.length} source{sources.length > 1 ? "s" : ""} consultée{sources.length > 1 ? "s" : ""}
-              </Text>
-              <Ionicons name={showSources ? "chevron-up" : "chevron-down"} size={12} color={colors.textMuted} />
-            </TouchableOpacity>
-            {showSources && (
-              <View style={{ gap: 6, marginTop: 4 }}>
-                {sources.map((src, i) => (
-                  <View
-                    key={i}
-                    style={{
-                      backgroundColor: colors.background,
-                      borderWidth: 1,
-                      borderColor: colors.border,
-                      borderRadius: 8,
-                      padding: 10,
-                      flexDirection: "row",
-                      alignItems: "flex-start",
-                      gap: 8,
-                    }}
-                  >
-                    <Ionicons name="bookmark-outline" size={14} color="#D4A843" style={{ marginTop: 2 }} />
-                    <View style={{ flex: 1 }}>
-                      <Text style={{ fontFamily: fonts.medium, fontSize: 12, color: colors.text }} numberOfLines={2}>
-                        {src.titre}
-                      </Text>
-                      <Text style={{ fontFamily: fonts.regular, fontSize: 11, color: colors.textMuted, marginTop: 2 }}>
-                        {src.chapitre} {src.paragraphe ? `- §${src.paragraphe}` : ""} {src.forme_juridique && src.forme_juridique !== "TOUTES" ? `(${src.forme_juridique})` : ""}
-                      </Text>
-                    </View>
-                  </View>
-                ))}
-              </View>
-            )}
-          </View>
-        )}
       </ScrollView>
 
       {/* Input */}
