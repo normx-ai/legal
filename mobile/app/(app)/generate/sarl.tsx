@@ -12,6 +12,16 @@ import { useTranslation } from "react-i18next";
 
 const STEPS = ["Société", "Associés", "Capital", "Gérance", "Clauses", "Récapitulatif", "Aperçu"];
 
+function formatMontant(v: number | string): string {
+  const n = typeof v === 'string' ? parseInt(v.replace(/\s/g, '')) : v;
+  if (!n || isNaN(n)) return '';
+  return n.toLocaleString('fr-FR');
+}
+
+function parseMontant(v: string): number {
+  return parseInt(v.replace(/\s/g, '').replace(/\./g, '')) || 0;
+}
+
 function Field({ label, value, onChangeText, placeholder, multiline, keyboardType, colors }: {
   label: string; value: string; onChangeText: (v: string) => void;
   placeholder?: string; multiline?: boolean; keyboardType?: "default" | "numeric" | "email-address"; colors: Record<string, string>;
@@ -219,7 +229,7 @@ export default function SarlWizardScreen() {
                 <Field colors={colors} label="Nationalité" value={a.nationalite} onChangeText={(v) => w.updateAssocie(i, { nationalite: v })} />
                 <Field colors={colors} label="Profession" value={a.profession} onChangeText={(v) => w.updateAssocie(i, { profession: v })} />
                 <Field colors={colors} label="Adresse" value={a.adresse} onChangeText={(v) => w.updateAssocie(i, { adresse: v })} />
-                <Field colors={colors} label="Montant de l'apport (FCFA)" value={a.apport ? String(a.apport) : ""} onChangeText={(v) => w.updateAssocie(i, { apport: parseInt(v) || 0 })} keyboardType="numeric" />
+                <Field colors={colors} label="Montant de l'apport (FCFA)" value={formatMontant(a.apport)} onChangeText={(v) => w.updateAssocie(i, { apport: parseMontant(v) })} keyboardType="numeric" placeholder="Ex: 1 000 000" />
                 <Choice colors={colors} label="Type d'apport" options={[
                   { value: "numeraire", label: "Numéraire" },
                   { value: "nature", label: "Nature" },
@@ -246,9 +256,9 @@ export default function SarlWizardScreen() {
           const totalApports = w.associes.reduce((s, a) => s + a.apport, 0);
           return (
             <>
-              <Field colors={colors} label="Capital social total (FCFA)" value={w.capital ? String(w.capital) : ""} onChangeText={(v) => w.setCapital({ capital: parseInt(v.replace(/\s/g, "")) || 0 })} keyboardType="numeric" placeholder="Ex: 5000000" />
+              <Field colors={colors} label="Capital social total (FCFA)" value={formatMontant(w.capital)} onChangeText={(v) => w.setCapital({ capital: parseMontant(v) })} keyboardType="numeric" placeholder="Ex: 5 000 000" />
               <Text style={{ fontFamily: fonts.regular, fontSize: 13, color: colors.textMuted, marginBottom: 12 }}>Capital minimum SARL : 1 000 000 FCFA (Art. 311 AUSCGIE)</Text>
-              <Field colors={colors} label="Valeur nominale d'une part (FCFA)" value={w.valeur_nominale ? String(w.valeur_nominale) : ""} onChangeText={(v) => w.setCapital({ valeur_nominale: parseInt(v.replace(/\s/g, "")) || 0 })} keyboardType="numeric" placeholder="Ex: 5000" />
+              <Field colors={colors} label="Valeur nominale d'une part (FCFA)" value={formatMontant(w.valeur_nominale)} onChangeText={(v) => w.setCapital({ valeur_nominale: parseMontant(v) })} keyboardType="numeric" placeholder="Ex: 5 000" />
               <Text style={{ fontFamily: fonts.regular, fontSize: 13, color: colors.textMuted, marginBottom: 12 }}>Valeur nominale minimum : 5 000 FCFA (Art. 311-1 AUSCGIE)</Text>
 
               <Choice colors={colors} label="Mode de libération du capital" options={[
