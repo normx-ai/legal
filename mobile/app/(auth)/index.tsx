@@ -1,6 +1,8 @@
-import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
+import { View, Text, TouchableOpacity, ActivityIndicator, Platform } from "react-native";
+import { useEffect } from "react";
 import { useAuthStore } from "@/lib/store/auth";
 import { fonts, fontWeights } from "@/lib/theme/fonts";
+import LandingPage from "@/components/landing/LandingPage";
 
 const BG = "#1A3A5C";
 const GOLD = "#D4A843";
@@ -9,6 +11,14 @@ const PURPLE = "#7c3aed";
 export default function LoginKeycloak() {
   const login = useAuthStore((s) => s.login);
   const isLoading = useAuthStore((s) => s.isLoading);
+  const handleCallback = useAuthStore((s) => s.handleCallback);
+
+  // S'assurer que le callback Keycloak est traité au montage
+  useEffect(() => {
+    if (Platform.OS === "web" && window.location.search.includes("code=")) {
+      handleCallback();
+    }
+  }, []);
 
   if (isLoading) {
     return (
@@ -19,6 +29,11 @@ export default function LoginKeycloak() {
         </Text>
       </View>
     );
+  }
+
+  // Sur web : afficher la landing page complète
+  if (Platform.OS === "web") {
+    return <LandingPage />;
   }
 
   return (
