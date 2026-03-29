@@ -1,6 +1,6 @@
 import React, { useState, createContext, useContext } from "react";
 import { View, Platform } from "react-native";
-import { router } from "expo-router";
+import { router, type Href } from "expo-router";
 import { useResponsive } from "@/lib/hooks/useResponsive";
 import { Topbar } from "./Topbar";
 import { Topbar2 } from "./Topbar2";
@@ -53,10 +53,12 @@ export function AppLayout({ children }: AppLayoutProps) {
     } else {
       setSidebar2Section(null);
       // Navigate based on section
-      if (key === "accueil") {
+      if (key === "accueil" || key === "documents") {
         router.navigate("/(app)");
-      } else if (key === "documents") {
-        router.navigate("/(app)");
+      } else if (key === "chat") {
+        router.navigate("/(app)/chat" as Href);
+      } else if (key === "profil") {
+        router.navigate("/(app)/profil" as Href);
       }
     }
   };
