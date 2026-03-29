@@ -100,7 +100,7 @@ export default function LandingPage() {
       <View style={{ alignItems: "center", paddingTop: isMobile ? 60 : 100, paddingBottom: 60, paddingHorizontal: 24, backgroundColor: BG_WARM }}>
         <View style={{ backgroundColor: "rgba(212,168,67,0.1)", borderRadius: 100, paddingVertical: 8, paddingHorizontal: 20, marginBottom: 32 }}>
           <Text style={{ fontSize: 13, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: PRIMARY, letterSpacing: 0.5 }}>
-            Documents juridiques OHADA
+            La plateforme de génération des documents OHADA
           </Text>
         </View>
 
