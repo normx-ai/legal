@@ -11,6 +11,7 @@ const PURPLE = "#7c3aed";
 export default function LoginKeycloak() {
   const login = useAuthStore((s) => s.login);
   const isLoading = useAuthStore((s) => s.isLoading);
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const handleCallback = useAuthStore((s) => s.handleCallback);
 
   // S'assurer que le callback Keycloak est traité au montage
@@ -19,6 +20,14 @@ export default function LoginKeycloak() {
       handleCallback();
     }
   }, []);
+
+  // Rediriger vers le dashboard quand authentifié
+  useEffect(() => {
+    if (isAuthenticated) {
+      const { router } = require("expo-router");
+      router.replace("/(app)");
+    }
+  }, [isAuthenticated]);
 
   if (isLoading) {
     return (
