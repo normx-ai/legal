@@ -30,6 +30,13 @@ export function prepareLettreAppelFondsData(formData: FormData): TemplateData {
     date_limite: formData.date_limite || "",
     signataire_fonction: formData.signataire_fonction || "",
     signataire_nom: formData.signataire_nom || "",
+    rccm: formData.rccm || "",
+    dirigeant_civilite: formData.dirigeant_civilite || "",
+    dirigeant_nom: formData.dirigeant_nom || "",
+    dirigeant_prenom: formData.dirigeant_prenom || "",
+    dirigeant_qualite: formData.dirigeant_qualite || "",
+    banque_depot: formData.banque_depot || "",
+    reference_ag: formData.reference_ag || "",
     date_envoi: formData.date_envoi || new Date().toLocaleDateString("fr-FR"),
     lieu_envoi: formData.lieu_envoi || "...",
   };

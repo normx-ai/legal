@@ -20,6 +20,7 @@ export function prepareConvocationCaData(formData: FormData): TemplateData {
     lieu_reunion: formData.lieu_reunion,
     ordre_du_jour: formData.ordre_du_jour || "",
     president_nom: formData.president_nom || "",
+    date_signature: formData.date_signature || "",
     date_envoi: formData.date_envoi || new Date().toLocaleDateString("fr-FR"),
     lieu_envoi: formData.lieu_envoi || "...",
   };

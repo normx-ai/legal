@@ -14,7 +14,7 @@ export function preparePouvoirAgSaData(formData: FormData): TemplateData {
     mandant_prenom: formData.mandant_prenom || "",
     mandant_adresse: formData.mandant_adresse || "",
     mandant_nombre_actions: formData.mandant_nombre_actions || 0,
-    mandant_nombre_voix: formData.mandant_nombre_voix || 0,
+    mandant_nombre_voix: formData.mandant_nombre_voix || formData.mandant_nombre_actions || 0,
     mandataire_nom: formData.mandataire_nom || "",
     mandataire_prenom: formData.mandataire_prenom || "",
     mandataire_adresse: formData.mandataire_adresse || "",
