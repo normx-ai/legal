@@ -246,10 +246,10 @@ export default function SarlWizardScreen() {
           const totalApports = w.associes.reduce((s, a) => s + a.apport, 0);
           return (
             <>
-              <Field colors={colors} label="Capital social total (FCFA)" value={String(w.capital)} onChangeText={(v) => w.setCapital({ capital: parseInt(v) || 0 })} keyboardType="numeric" />
-              <Text style={{ fontFamily: fonts.regular, fontSize: 13, color: colors.warning, marginBottom: 12 }}>Capital minimum SARL : 1.000.000 FCFA</Text>
-              <Field colors={colors} label="Valeur nominale d'une part (FCFA)" value={String(w.valeur_nominale)} onChangeText={(v) => w.setCapital({ valeur_nominale: parseInt(v) || 0 })} keyboardType="numeric" />
-              <Text style={{ fontFamily: fonts.regular, fontSize: 13, color: colors.warning, marginBottom: 12 }}>Valeur nominale minimum : 5.000 FCFA</Text>
+              <Field colors={colors} label="Capital social total (FCFA)" value={w.capital ? String(w.capital) : ""} onChangeText={(v) => w.setCapital({ capital: parseInt(v.replace(/\s/g, "")) || 0 })} keyboardType="numeric" placeholder="Ex: 5000000" />
+              <Text style={{ fontFamily: fonts.regular, fontSize: 13, color: colors.textMuted, marginBottom: 12 }}>Capital minimum SARL : 1 000 000 FCFA (Art. 311 AUSCGIE)</Text>
+              <Field colors={colors} label="Valeur nominale d'une part (FCFA)" value={w.valeur_nominale ? String(w.valeur_nominale) : ""} onChangeText={(v) => w.setCapital({ valeur_nominale: parseInt(v.replace(/\s/g, "")) || 0 })} keyboardType="numeric" placeholder="Ex: 5000" />
+              <Text style={{ fontFamily: fonts.regular, fontSize: 13, color: colors.textMuted, marginBottom: 12 }}>Valeur nominale minimum : 5 000 FCFA (Art. 311-1 AUSCGIE)</Text>
 
               <Choice colors={colors} label="Mode de libération du capital" options={[
                 { value: "intégralement", label: "Intégralement" },
