@@ -75,14 +75,8 @@ export function requireAuth() {
       req.userName = payload.name || "";
       req.userRoles = payload.realm_access?.roles || [];
 
-      // Verifier role "legal" ou "admin"
-      const roles = payload.realm_access?.roles || [];
-      if (!roles.includes("legal") && !roles.includes("admin")) {
-        return res.status(403).json({
-          error: "Accès refusé — abonnement Legal requis",
-          requiredRole: "legal",
-        });
-      }
+      // Note: la vérification d'accès sera gérée par le système d'abonnements
+      // (pas par les rôles Keycloak)
 
       // Resoudre le tenant : utiliser le sub Keycloak comme slug de tenant
       // Chaque utilisateur Keycloak a son propre schema isole
