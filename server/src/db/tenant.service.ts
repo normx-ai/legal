@@ -13,11 +13,15 @@ const SCHEMA_TEMPLATE = fs.readFileSync(
 );
 
 function validateSchemaName(name: string): string {
-  const clean = name.toLowerCase().replace(/[^a-z0-9_]/g, "_").substring(0, 63);
-  if (!clean || !/^[a-z]/.test(clean)) {
+  const clean = name.toLowerCase().replace(/[^a-z0-9_]/g, "_").substring(0, 55);
+  if (!clean) {
     throw new Error(`Nom de schema invalide: ${name}`);
   }
-  return `tenant_${clean}`;
+  const schema = `tenant_${clean}`;
+  if (!/^[a-z][a-z0-9_]*$/.test(schema)) {
+    throw new Error(`Nom de schema invalide: ${schema}`);
+  }
+  return schema;
 }
 
 export async function createTenantSchema(tenantSlug: string): Promise<string> {
