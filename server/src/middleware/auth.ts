@@ -105,7 +105,8 @@ export function requireAuth() {
       req.subscription = subscription;
 
       next();
-    } catch {
+    } catch (err) {
+      console.error("[Auth] Erreur:", err);
       return res.status(401).json({ error: "Token invalide ou expiré" });
     }
   };
