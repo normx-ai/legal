@@ -20,6 +20,7 @@ export default function AppLayoutScreen() {
         <Stack.Screen name="index" />
         <Stack.Screen name="generate" />
         <Stack.Screen name="chat" />
+        <Stack.Screen name="profil" />
       </Stack>
     </AppLayout>
   );

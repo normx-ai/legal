@@ -33,57 +33,37 @@ export function Topbar() {
         </Text>
       </TouchableOpacity>
 
-      {/* User info + logout */}
-      <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-          <View
-            style={{
-              width: 30,
-              height: 30,
-              borderRadius: 15,
-              backgroundColor: "rgba(255,255,255,0.15)",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Ionicons name="person-outline" size={15} color="#ffffff" />
-          </View>
-          <Text
-            style={{
-              fontFamily: fonts.medium,
-              fontWeight: fontWeights.medium,
-              fontSize: 13,
-              color: "rgba(255,255,255,0.85)",
-            }}
-          >
-            {user?.prenom} {user?.nom}
-          </Text>
-        </View>
-        <TouchableOpacity
-          onPress={logout}
+      {/* User info + profil */}
+      <TouchableOpacity
+        onPress={() => router.navigate("/(app)/profil" as any)}
+        style={{ flexDirection: "row", alignItems: "center", gap: 8 }}
+      >
+        <View
           style={{
-            flexDirection: "row",
+            width: 32,
+            height: 32,
+            borderRadius: 16,
+            backgroundColor: "#7c3aed",
             alignItems: "center",
-            gap: 4,
-            paddingHorizontal: 10,
-            paddingVertical: 6,
-            borderRadius: 6,
-            backgroundColor: "rgba(255,255,255,0.08)",
+            justifyContent: "center",
           }}
         >
-          <Ionicons name="log-out-outline" size={16} color="rgba(255,255,255,0.7)" />
-          <Text
-            style={{
-              fontFamily: fonts.medium,
-              fontWeight: fontWeights.medium,
-              fontSize: 12,
-              color: "rgba(255,255,255,0.7)",
-            }}
-          >
-            Quitter
+          <Text style={{ fontFamily: fonts.bold, fontWeight: fontWeights.bold, fontSize: 13, color: "#fff" }}>
+            {(user?.prenom?.[0] || "").toUpperCase()}{(user?.nom?.[0] || "").toUpperCase()}
           </Text>
-        </TouchableOpacity>
-      </View>
+        </View>
+        <Text
+          style={{
+            fontFamily: fonts.medium,
+            fontWeight: fontWeights.medium,
+            fontSize: 13,
+            color: "rgba(255,255,255,0.85)",
+          }}
+        >
+          {user?.prenom} {user?.nom}
+        </Text>
+        <Ionicons name="chevron-down" size={14} color="rgba(255,255,255,0.5)" />
+      </TouchableOpacity>
     </View>
   );
 }

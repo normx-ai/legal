@@ -113,5 +113,24 @@
     "siegeRequired": "Le siège social est obligatoire",
     "apportRequired": "Le montant de l'apport est obligatoire",
     "totalApportsNeCapital": "La somme des apports doit être égale au capital social"
+  },
+  "profil": {
+    "title": "Profil",
+    "account": "Compte",
+    "name": "Nom",
+    "email": "Email",
+    "subscription": "Abonnement",
+    "planTrial": "Essai gratuit",
+    "planFree": "Gratuit",
+    "planPro": "Pro",
+    "planEnterprise": "Entreprise",
+    "appearance": "Apparence",
+    "darkMode": "Mode sombre",
+    "language": "Langue",
+    "legal": "Informations légales",
+    "terms": "Conditions générales",
+    "privacy": "Politique de confidentialité",
+    "legalNotices": "Mentions légales",
+    "logout": "Se déconnecter"
   }
 }

@@ -71,5 +71,24 @@
     "generateDocx": "Generate DOCX",
     "generatePdf": "Generate PDF",
     "downloadReady": "Your document is ready!"
+  },
+  "profil": {
+    "title": "Profile",
+    "account": "Account",
+    "name": "Name",
+    "email": "Email",
+    "subscription": "Subscription",
+    "planTrial": "Free trial",
+    "planFree": "Free",
+    "planPro": "Pro",
+    "planEnterprise": "Enterprise",
+    "appearance": "Appearance",
+    "darkMode": "Dark mode",
+    "language": "Language",
+    "legal": "Legal information",
+    "terms": "Terms of service",
+    "privacy": "Privacy policy",
+    "legalNotices": "Legal notices",
+    "logout": "Log out"
   }
 }
