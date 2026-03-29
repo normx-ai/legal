@@ -1,10 +1,11 @@
+import { createDocument } from "../../db/documents";
 import { Router, Response } from "express";
 import path from "path";
 import fs from "fs";
 import { requireAuth, AuthRequest } from "../../middleware/auth";
 import { validateFeuillePresence } from "../../services/validator";
 import { generateDocx, prepareFeuillePresenceData } from "../../services/docx-generator";
-import { prisma } from "../../server";
+import pool from "../../db/pool";
 
 export const feuillePresenceRoute = Router();
 
@@ -31,18 +32,14 @@ feuillePresenceRoute.post("/feuille-presence", requireAuth(), async (req: AuthRe
 
     fs.writeFileSync(filepath, docxBuffer);
 
-    const document = await prisma.document.create({
-      data: {
-        type: "feuille-presence",
-        label: `Feuille de présence — ${req.body.denomination}`,
-        formeJuridique: req.body.forme_juridique || "SARL",
-        denomination: req.body.denomination,
-        status: "generated",
-        data: req.body,
-        docxPath: filepath,
-        userId: req.userId!,
-        organizationId: req.orgId || null,
-      },
+    const document = await createDocument({
+      tenantSchema: (req as AuthRequest).tenantSchema!,
+      userId: (req as AuthRequest).userId!,
+      type: "feuille-presence",
+      denomination: req.body.denomination,
+      formeJuridique: "SARL",
+      docxPath: filepath,
+      data: req.body,
     });
 
     res.status(201).json({

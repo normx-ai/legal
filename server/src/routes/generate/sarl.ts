@@ -1,10 +1,11 @@
+import { createDocument } from "../../db/documents";
 import { Router, Response } from "express";
 import path from "path";
 import fs from "fs";
 import { requireAuth, AuthRequest } from "../../middleware/auth";
 import { validateSarl } from "../../services/validator";
 import { generateDocx, prepareSarlData } from "../../services/docx-generator";
-import { prisma } from "../../server";
+import pool from "../../db/pool";
 
 export const sarlRoute = Router();
 
@@ -37,18 +38,14 @@ sarlRoute.post("/sarl", requireAuth(), async (req: AuthRequest, res: Response) =
     fs.writeFileSync(filepath, docxBuffer);
 
     // 5. Save to database
-    const document = await prisma.document.create({
-      data: {
-        type: "statuts-sarl",
-        label: `Statuts SARL — ${req.body.denomination}`,
-        formeJuridique: "SARL",
-        denomination: req.body.denomination,
-        status: "generated",
-        data: req.body,
-        docxPath: filepath,
-        userId: req.userId!,
-        organizationId: req.orgId || null,
-      },
+    const document = await createDocument({
+      tenantSchema: (req as AuthRequest).tenantSchema!,
+      userId: (req as AuthRequest).userId!,
+      type: "statuts-sarl",
+      denomination: req.body.denomination,
+      formeJuridique: "SARL",
+      docxPath: filepath,
+      data: req.body,
     });
 
     res.status(201).json({

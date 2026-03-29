@@ -1,10 +1,11 @@
+import { createDocument } from "../../db/documents";
 import { Router, Response } from "express";
 import path from "path";
 import fs from "fs";
 import { requireAuth, AuthRequest } from "../../middleware/auth";
 import { validateRequeteProrogationAgo } from "../../services/validator";
 import { generateDocx, prepareRequeteProrogationAgoData } from "../../services/docx-generator";
-import { prisma } from "../../server";
+import pool from "../../db/pool";
 
 export const requeteProrogationAgoRoute = Router();
 
@@ -32,18 +33,14 @@ requeteProrogationAgoRoute.post("/requete-prorogation-ago", requireAuth(), async
 
     const formeJuridique = req.body.forme_juridique || "SA";
 
-    const document = await prisma.document.create({
-      data: {
-        type: "requete-prorogation-ago",
-        label: `Requête prorogation AGO — ${req.body.denomination}`,
-        formeJuridique,
-        denomination: req.body.denomination,
-        status: "generated",
-        data: req.body,
-        docxPath: filepath,
-        userId: req.userId!,
-        organizationId: req.orgId || null,
-      },
+    const document = await createDocument({
+      tenantSchema: (req as AuthRequest).tenantSchema!,
+      userId: (req as AuthRequest).userId!,
+      type: "requete-prorogation-ago",
+      denomination: req.body.denomination,
+      formeJuridique: "SARL",
+      docxPath: filepath,
+      data: req.body,
     });
 
     res.status(201).json({

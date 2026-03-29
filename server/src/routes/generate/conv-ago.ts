@@ -1,10 +1,11 @@
+import { createDocument } from "../../db/documents";
 import { Router, Response } from "express";
 import path from "path";
 import fs from "fs";
 import { requireAuth, AuthRequest } from "../../middleware/auth";
 import { validateConvAgo } from "../../services/validator";
 import { generateDocx, prepareConvAgoData } from "../../services/docx-generator";
-import { prisma } from "../../server";
+import pool from "../../db/pool";
 
 export const convAgoRoute = Router();
 
@@ -31,18 +32,14 @@ convAgoRoute.post("/conv-ago", requireAuth(), async (req: AuthRequest, res: Resp
 
     fs.writeFileSync(filepath, docxBuffer);
 
-    const document = await prisma.document.create({
-      data: {
-        type: "conv-ago",
-        label: `Convocation AGO — ${req.body.denomination}`,
-        formeJuridique: req.body.forme_juridique || "SARL",
-        denomination: req.body.denomination,
-        status: "generated",
-        data: req.body,
-        docxPath: filepath,
-        userId: req.userId!,
-        organizationId: req.orgId || null,
-      },
+    const document = await createDocument({
+      tenantSchema: (req as AuthRequest).tenantSchema!,
+      userId: (req as AuthRequest).userId!,
+      type: "conv-ago",
+      denomination: req.body.denomination,
+      formeJuridique: "SARL",
+      docxPath: filepath,
+      data: req.body,
     });
 
     res.status(201).json({

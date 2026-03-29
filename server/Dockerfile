@@ -26,6 +26,9 @@ RUN mkdir -p /app/generated
 # Frontend build (copie par le workflow dans server/public/)
 COPY public/ /app/mobile/dist/
 
+# Schema template pour les tenants
+COPY src/db/tenant-schema.sql /app/dist/db/tenant-schema.sql
+
 EXPOSE 3004
 
-CMD ["sh", "-c", "sleep 5 && npx prisma migrate deploy && node dist/server.js"]
+CMD ["sh", "-c", "sleep 3 && node dist/server.js"]

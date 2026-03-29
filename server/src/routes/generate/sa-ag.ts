@@ -1,10 +1,11 @@
+import { createDocument } from "../../db/documents";
 import { Router, Response } from "express";
 import path from "path";
 import fs from "fs";
 import { requireAuth, AuthRequest } from "../../middleware/auth";
 import { validateSaAg } from "../../services/validator";
 import { generateDocx, prepareSaAgData } from "../../services/docx-generator";
-import { prisma } from "../../server";
+import pool from "../../db/pool";
 
 export const saAgRoute = Router();
 
@@ -37,18 +38,14 @@ saAgRoute.post("/sa-ag", requireAuth(), async (req: AuthRequest, res: Response) 
     fs.writeFileSync(filepath, docxBuffer);
 
     // 5. Save to database
-    const document = await prisma.document.create({
-      data: {
-        type: "statuts-sa-ag",
-        label: `Statuts SA AG — ${req.body.denomination}`,
-        formeJuridique: "SA AG",
-        denomination: req.body.denomination,
-        status: "generated",
-        data: req.body,
-        docxPath: filepath,
-        userId: req.userId!,
-        organizationId: req.orgId || null,
-      },
+    const document = await createDocument({
+      tenantSchema: (req as AuthRequest).tenantSchema!,
+      userId: (req as AuthRequest).userId!,
+      type: "statuts-sa-ag",
+      denomination: req.body.denomination,
+      formeJuridique: "SA AG",
+      docxPath: filepath,
+      data: req.body,
     });
 
     res.status(201).json({

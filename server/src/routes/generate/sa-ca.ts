@@ -1,10 +1,11 @@
+import { createDocument } from "../../db/documents";
 import { Router, Response } from "express";
 import path from "path";
 import fs from "fs";
 import { requireAuth, AuthRequest } from "../../middleware/auth";
 import { validateSaCa } from "../../services/validator";
 import { generateDocx, prepareSaCaData } from "../../services/docx-generator";
-import { prisma } from "../../server";
+import pool from "../../db/pool";
 
 export const saCaRoute = Router();
 
@@ -37,18 +38,14 @@ saCaRoute.post("/sa-ca", requireAuth(), async (req: AuthRequest, res: Response) 
     fs.writeFileSync(filepath, docxBuffer);
 
     // 5. Save to database
-    const document = await prisma.document.create({
-      data: {
-        type: "statuts-sa-ca",
-        label: `Statuts SA CA — ${req.body.denomination}`,
-        formeJuridique: "SA CA",
-        denomination: req.body.denomination,
-        status: "generated",
-        data: req.body,
-        docxPath: filepath,
-        userId: req.userId!,
-        organizationId: req.orgId || null,
-      },
+    const document = await createDocument({
+      tenantSchema: (req as AuthRequest).tenantSchema!,
+      userId: (req as AuthRequest).userId!,
+      type: "statuts-sa-ca",
+      denomination: req.body.denomination,
+      formeJuridique: "SA CA",
+      docxPath: filepath,
+      data: req.body,
     });
 
     res.status(201).json({

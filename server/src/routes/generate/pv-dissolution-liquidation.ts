@@ -1,10 +1,11 @@
+import { createDocument } from "../../db/documents";
 import { Router, Response } from "express";
 import path from "path";
 import fs from "fs";
 import { requireAuth, AuthRequest } from "../../middleware/auth";
 import { validatePvDissolutionLiquidation } from "../../services/validator";
 import { generateDocx, preparePvDissolutionLiquidationData } from "../../services/docx-generator";
-import { prisma } from "../../server";
+import pool from "../../db/pool";
 
 export const pvDissolutionLiquidationRoute = Router();
 
@@ -30,18 +31,14 @@ pvDissolutionLiquidationRoute.post("/pv-dissolution-liquidation", requireAuth(),
 
     fs.writeFileSync(filepath, docxBuffer);
 
-    const document = await prisma.document.create({
-      data: {
-        type: "pv-dissolution-liquidation",
-        label: `PV dissolution-liquidation — ${req.body.denomination}`,
-        formeJuridique: "SA",
-        denomination: req.body.denomination,
-        status: "generated",
-        data: req.body,
-        docxPath: filepath,
-        userId: req.userId!,
-        organizationId: req.orgId || null,
-      },
+    const document = await createDocument({
+      tenantSchema: (req as AuthRequest).tenantSchema!,
+      userId: (req as AuthRequest).userId!,
+      type: "pv-dissolution-liquidation",
+      denomination: req.body.denomination,
+      formeJuridique: "SA",
+      docxPath: filepath,
+      data: req.body,
     });
 
     res.status(201).json({

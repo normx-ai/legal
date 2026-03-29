@@ -1,10 +1,11 @@
+import { createDocument } from "../../db/documents";
 import { Router, Response } from "express";
 import path from "path";
 import fs from "fs";
 import { requireAuth, AuthRequest } from "../../middleware/auth";
 import { validateDeroulementAgSa } from "../../services/validator";
 import { generateDocx, prepareDeroulementAgSaData } from "../../services/docx-generator";
-import { prisma } from "../../server";
+import pool from "../../db/pool";
 
 export const deroulementAgSaRoute = Router();
 
@@ -30,18 +31,14 @@ deroulementAgSaRoute.post("/deroulement-ag-sa", requireAuth(), async (req: AuthR
 
     fs.writeFileSync(filepath, docxBuffer);
 
-    const document = await prisma.document.create({
-      data: {
-        type: "deroulement-ag-sa",
-        label: `D\u00e9roulement AG SA \u2014 ${req.body.denomination}`,
-        formeJuridique: "SA",
-        denomination: req.body.denomination,
-        status: "generated",
-        data: req.body,
-        docxPath: filepath,
-        userId: req.userId!,
-        organizationId: req.orgId || null,
-      },
+    const document = await createDocument({
+      tenantSchema: (req as AuthRequest).tenantSchema!,
+      userId: (req as AuthRequest).userId!,
+      type: "deroulement-ag-sa",
+      denomination: req.body.denomination,
+      formeJuridique: "SA",
+      docxPath: filepath,
+      data: req.body,
     });
 
     res.status(201).json({

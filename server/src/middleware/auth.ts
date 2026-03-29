@@ -1,11 +1,15 @@
 /**
- * Middleware Auth Keycloak — NORMX Legal
- * Validation JWT via JWKS (cles publiques Keycloak)
+ * Middleware Auth + Tenant — NORMX Legal
+ * 1. Valide le JWT Keycloak (JWKS)
+ * 2. Verifie le role "legal" ou "admin"
+ * 3. Cree/resout le schema tenant
+ * 4. Auto-cree l'utilisateur dans le schema
  */
 
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import jwksClient from "jwks-rsa";
+import { createTenantSchema, ensureUserInSchema } from "../db/tenant.service";
 
 const KEYCLOAK_URL = process.env.KEYCLOAK_URL || "https://auth.normx-ai.com";
 const KEYCLOAK_REALM = process.env.KEYCLOAK_REALM || "normx";
@@ -25,7 +29,7 @@ export interface AuthRequest extends Request {
   userEmail?: string;
   userName?: string;
   userRoles?: string[];
-  orgId?: number;
+  tenantSchema?: string;
 }
 
 interface KeycloakPayload {
@@ -34,6 +38,8 @@ interface KeycloakPayload {
   name?: string;
   preferred_username?: string;
   realm_access?: { roles: string[] };
+  // Tenant info from Keycloak token or header
+  tenant_slug?: string;
 }
 
 function getSigningKey(header: jwt.JwtHeader, callback: jwt.SigningKeyCallback): void {
@@ -52,9 +58,6 @@ export function requireAuth() {
     if (authHeader?.startsWith("Bearer ")) {
       token = authHeader.slice(7);
     }
-    if (!token && req.cookies?.accessToken) {
-      token = req.cookies.accessToken;
-    }
     if (!token) {
       return res.status(401).json({ error: "Token manquant" });
     }
@@ -68,53 +71,39 @@ export function requireAuth() {
       });
 
       req.keycloakSub = payload.sub;
-      req.userRoles = payload.realm_access?.roles || [];
-
-      // Verifier que l'user a le role "legal" ou "admin"
-      const roles = payload.realm_access?.roles || [];
-      if (!roles.includes("legal") && !roles.includes("admin")) {
-        return res.status(403).json({
-          error: "Acces refuse — abonnement Legal requis",
-          requiredRole: "legal",
-        });
-      }
-
-      // Lookup ou auto-creation du user Prisma depuis le keycloakSub
-      const { prisma } = require("../server");
-      try {
-        let user = await prisma.user.findUnique({ where: { keycloakSub: payload.sub } });
-        if (!user) {
-          // Auto-creation : premier login Keycloak → creer le user en base
-          const nameParts = (payload.name || "").split(" ");
-          user = await prisma.user.upsert({
-            where: { email: payload.email || payload.preferred_username || payload.sub },
-            update: { keycloakSub: payload.sub },
-            create: {
-              keycloakSub: payload.sub,
-              email: payload.email || payload.preferred_username || payload.sub,
-              nom: nameParts.slice(1).join(" ") || "",
-              prenom: nameParts[0] || "",
-              isEmailVerified: true,
-            },
-          });
-        }
-        req.userId = user.id;
-      } catch {
-        // Fallback si DB inaccessible — continuer avec keycloakSub
-        req.userId = 0;
-      }
       req.userEmail = payload.email || payload.preferred_username || "";
       req.userName = payload.name || "";
       req.userRoles = payload.realm_access?.roles || [];
 
-      const orgHeader = req.headers["x-organization-id"];
-      if (orgHeader) {
-        req.orgId = parseInt(orgHeader as string, 10);
+      // Verifier role "legal" ou "admin"
+      const roles = payload.realm_access?.roles || [];
+      if (!roles.includes("legal") && !roles.includes("admin")) {
+        return res.status(403).json({
+          error: "Accès refusé — abonnement Legal requis",
+          requiredRole: "legal",
+        });
       }
+
+      // Resoudre le tenant : utiliser le sub Keycloak comme slug de tenant
+      // Chaque utilisateur Keycloak a son propre schema isole
+      const tenantSlug = payload.sub.replace(/-/g, "_");
+      const schema = await createTenantSchema(tenantSlug);
+      req.tenantSchema = schema;
+
+      // Auto-creer/resoudre l'utilisateur dans le schema
+      const nameParts = (payload.name || "").split(" ");
+      const userId = await ensureUserInSchema(
+        schema,
+        payload.sub,
+        payload.email || payload.preferred_username || payload.sub,
+        nameParts.slice(1).join(" ") || "",
+        nameParts[0] || ""
+      );
+      req.userId = userId;
 
       next();
     } catch {
-      return res.status(401).json({ error: "Token invalide ou expire" });
+      return res.status(401).json({ error: "Token invalide ou expiré" });
     }
   };
 }

@@ -1,10 +1,11 @@
+import { createDocument } from "../../db/documents";
 import { Router, Response } from "express";
 import path from "path";
 import fs from "fs";
 import { requireAuth, AuthRequest } from "../../middleware/auth";
 import { validateDecActionnaireUniqueNonAg } from "../../services/validator";
 import { generateDocx, prepareDecActionnaireUniqueNonAgData } from "../../services/docx-generator";
-import { prisma } from "../../server";
+import pool from "../../db/pool";
 
 export const decActionnaireUniqueNonAgRoute = Router();
 
@@ -30,18 +31,14 @@ decActionnaireUniqueNonAgRoute.post("/dec-actionnaire-unique-non-ag", requireAut
 
     fs.writeFileSync(filepath, docxBuffer);
 
-    const document = await prisma.document.create({
-      data: {
-        type: "dec-actionnaire-unique-non-ag",
-        label: `Décisions actionnaire unique non AG — ${req.body.denomination}`,
-        formeJuridique: "SA",
-        denomination: req.body.denomination,
-        status: "generated",
-        data: req.body,
-        docxPath: filepath,
-        userId: req.userId!,
-        organizationId: req.orgId || null,
-      },
+    const document = await createDocument({
+      tenantSchema: (req as AuthRequest).tenantSchema!,
+      userId: (req as AuthRequest).userId!,
+      type: "dec-actionnaire-unique-non-ag",
+      denomination: req.body.denomination,
+      formeJuridique: "SA",
+      docxPath: filepath,
+      data: req.body,
     });
 
     res.status(201).json({

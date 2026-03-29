@@ -1,10 +1,11 @@
+import { createDocument } from "../../db/documents";
 import { Router, Response } from "express";
 import path from "path";
 import fs from "fs";
 import { requireAuth, AuthRequest } from "../../middleware/auth";
 import { validateDecAssocieUniqueGerant } from "../../services/validator";
 import { generateDocx, prepareDecAssocieUniqueGerantData } from "../../services/docx-generator";
-import { prisma } from "../../server";
+import pool from "../../db/pool";
 
 export const decAssocieUniqueGerantRoute = Router();
 
@@ -30,18 +31,14 @@ decAssocieUniqueGerantRoute.post("/dec-associe-unique-gerant", requireAuth(), as
 
     fs.writeFileSync(filepath, docxBuffer);
 
-    const document = await prisma.document.create({
-      data: {
-        type: "dec-associe-unique-gerant",
-        label: `Décisions associé unique gérant — ${req.body.denomination}`,
-        formeJuridique: "SARL",
-        denomination: req.body.denomination,
-        status: "generated",
-        data: req.body,
-        docxPath: filepath,
-        userId: req.userId!,
-        organizationId: req.orgId || null,
-      },
+    const document = await createDocument({
+      tenantSchema: (req as AuthRequest).tenantSchema!,
+      userId: (req as AuthRequest).userId!,
+      type: "dec-associe-unique-gerant",
+      denomination: req.body.denomination,
+      formeJuridique: "SARL",
+      docxPath: filepath,
+      data: req.body,
     });
 
     res.status(201).json({

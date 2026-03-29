@@ -1,10 +1,11 @@
+import { createDocument } from "../../db/documents";
 import { Router, Response } from "express";
 import path from "path";
 import fs from "fs";
 import { requireAuth, AuthRequest } from "../../middleware/auth";
 import { validateLettreAppelFonds } from "../../services/validator";
 import { generateDocx, prepareLettreAppelFondsData } from "../../services/docx-generator";
-import { prisma } from "../../server";
+import pool from "../../db/pool";
 
 export const lettreAppelFondsRoute = Router();
 
@@ -30,18 +31,14 @@ lettreAppelFondsRoute.post("/lettre-appel-fonds", requireAuth(), async (req: Aut
 
     fs.writeFileSync(filepath, docxBuffer);
 
-    const document = await prisma.document.create({
-      data: {
-        type: "lettre-appel-fonds",
-        label: `Lettre appel de fonds — ${req.body.denomination}`,
-        formeJuridique: req.body.forme_juridique || "SA",
-        denomination: req.body.denomination,
-        status: "generated",
-        data: req.body,
-        docxPath: filepath,
-        userId: req.userId!,
-        organizationId: req.orgId || null,
-      },
+    const document = await createDocument({
+      tenantSchema: (req as AuthRequest).tenantSchema!,
+      userId: (req as AuthRequest).userId!,
+      type: "lettre-appel-fonds",
+      denomination: req.body.denomination,
+      formeJuridique: "SARL",
+      docxPath: filepath,
+      data: req.body,
     });
 
     res.status(201).json({

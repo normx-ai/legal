@@ -1,3 +1,4 @@
+import { createDocument } from "../../db/documents";
 import { Router } from "express";
 import { sarlRoute } from "./sarl";
 import { sarluRoute } from "./sarlu";

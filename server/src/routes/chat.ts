@@ -1,8 +1,8 @@
 import { Router, Response } from "express";
 import { requireAuth, AuthRequest } from "../middleware/auth";
 import { chat, ChatMessage } from "../services/rag/chat";
+import pool from "../db/pool";
 
-import { prisma } from '../server';
 export const chatRoutes = Router();
 
 interface ChatRequestBody {
@@ -14,7 +14,7 @@ interface ChatRequestBody {
 
 // POST /api/chat
 chatRoutes.post("/", requireAuth(), async (req: AuthRequest, res: Response) => {
-  const userId = req.userId as number;
+  const s = req.tenantSchema!;
   const { messages, forme_juridique, chapitre, conversationId } = req.body as ChatRequestBody;
 
   if (!messages || !Array.isArray(messages) || messages.length === 0) {
@@ -28,26 +28,41 @@ chatRoutes.post("/", requireAuth(), async (req: AuthRequest, res: Response) => {
 
   // Persister si conversationId fourni
   if (conversationId) {
-    const conversation = await prisma.conversation.findFirst({
-      where: { id: conversationId, userId },
-    });
+    const conv = await pool.query(
+      `SELECT id FROM "${s}".conversations WHERE id = $1 AND user_id = $2`,
+      [conversationId, req.userId]
+    );
 
-    if (conversation) {
+    if (conv.rows.length > 0) {
       const lastUserMsg = messages[messages.length - 1];
-      await prisma.message.createMany({
-        data: [
-          { conversationId, role: lastUserMsg.role, content: lastUserMsg.content },
-          { conversationId, role: "assistant", content: result.response, sources: result.sources },
-        ],
-      });
 
-      // Titre auto sur le premier message
-      const msgCount = await prisma.message.count({ where: { conversationId } });
+      await pool.query(
+        `INSERT INTO "${s}".messages (conversation_id, role, content) VALUES ($1, $2, $3)`,
+        [conversationId, lastUserMsg.role, lastUserMsg.content]
+      );
+      await pool.query(
+        `INSERT INTO "${s}".messages (conversation_id, role, content, sources) VALUES ($1, $2, $3, $4)`,
+        [conversationId, "assistant", result.response, JSON.stringify(result.sources)]
+      );
+
+      // Titre auto sur les premiers messages
+      const countResult = await pool.query(
+        `SELECT COUNT(*) as c FROM "${s}".messages WHERE conversation_id = $1`,
+        [conversationId]
+      );
+      const msgCount = parseInt(countResult.rows[0].c);
+
       if (msgCount <= 2) {
         const title = lastUserMsg.content.substring(0, 80) + (lastUserMsg.content.length > 80 ? "..." : "");
-        await prisma.conversation.update({ where: { id: conversationId }, data: { title } });
+        await pool.query(
+          `UPDATE "${s}".conversations SET title = $1, updated_at = NOW() WHERE id = $2`,
+          [title, conversationId]
+        );
       } else {
-        await prisma.conversation.update({ where: { id: conversationId }, data: { updatedAt: new Date() } });
+        await pool.query(
+          `UPDATE "${s}".conversations SET updated_at = NOW() WHERE id = $1`,
+          [conversationId]
+        );
       }
     }
   }

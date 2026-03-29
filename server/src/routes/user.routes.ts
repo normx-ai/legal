@@ -1,18 +1,21 @@
 import { Router, Response } from "express";
 import { requireAuth, AuthRequest } from "../middleware/auth";
-import { prisma } from "../server";
+import pool from "../db/pool";
 
 export const userRoutes = Router();
 
 userRoutes.get("/profile", requireAuth(), async (req: AuthRequest, res: Response) => {
-  const user = await prisma.user.findUnique({ where: { id: req.userId } });
-  if (!user) return res.status(404).json({ error: "Utilisateur non trouvé" });
+  const s = req.tenantSchema!;
+  const result = await pool.query(
+    `SELECT id, nom, prenom, email, telephone, role, created_at FROM "${s}".users WHERE id = $1`,
+    [req.userId]
+  );
 
-  const membership = await prisma.organizationMember.findFirst({
-    where: { userId: user.id },
-    include: { organization: true },
-  });
+  if (result.rows.length === 0) {
+    return res.status(404).json({ error: "Utilisateur non trouvé" });
+  }
 
+  const user = result.rows[0];
   res.json({
     user: {
       id: user.id,
@@ -20,11 +23,8 @@ userRoutes.get("/profile", requireAuth(), async (req: AuthRequest, res: Response
       prenom: user.prenom,
       email: user.email,
       telephone: user.telephone,
-      role: membership?.role || user.role,
-      entreprise_id: membership?.organizationId,
-      entreprise_nom: membership?.organization.name,
-      is_verified: user.isEmailVerified,
-      created_at: user.createdAt.toISOString(),
+      role: user.role,
+      created_at: user.created_at,
     },
   });
 });

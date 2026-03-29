@@ -1,10 +1,11 @@
+import { createDocument } from "../../db/documents";
 import { Router, Response } from "express";
 import path from "path";
 import fs from "fs";
 import { requireAuth, AuthRequest } from "../../middleware/auth";
 import { validateStePart } from "../../services/validator";
 import { generateDocx, prepareStePartData } from "../../services/docx-generator";
-import { prisma } from "../../server";
+import pool from "../../db/pool";
 
 export const stePartRoute = Router();
 
@@ -31,18 +32,14 @@ stePartRoute.post("/ste-part", requireAuth(), async (req: AuthRequest, res: Resp
 
     fs.writeFileSync(filepath, docxBuffer);
 
-    const document = await prisma.document.create({
-      data: {
-        type: "statuts-ste-part",
-        label: `Statuts Société en Participation — ${req.body.denomination}`,
-        formeJuridique: "STE PART",
-        denomination: req.body.denomination,
-        status: "generated",
-        data: req.body,
-        docxPath: filepath,
-        userId: req.userId!,
-        organizationId: req.orgId || null,
-      },
+    const document = await createDocument({
+      tenantSchema: (req as AuthRequest).tenantSchema!,
+      userId: (req as AuthRequest).userId!,
+      type: "statuts-ste-part",
+      denomination: req.body.denomination,
+      formeJuridique: "STE PART",
+      docxPath: filepath,
+      data: req.body,
     });
 
     res.status(201).json({

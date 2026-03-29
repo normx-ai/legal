@@ -17,6 +17,7 @@
     "@anthropic-ai/sdk": "^0.80.0",
     "@prisma/client": "^6.19.2",
     "@qdrant/js-client-rest": "^1.17.0",
+    "@types/pg": "^8.20.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
     "docxtemplater": "^3.50.0",
@@ -29,6 +30,7 @@
     "libreoffice-convert": "^1.6.0",
     "nodemailer": "^8.0.1",
     "pdf2json": "^4.0.2",
+    "pg": "^8.20.0",
     "pizzip": "^3.1.7"
   },
   "devDependencies": {

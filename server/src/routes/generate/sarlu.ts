@@ -1,10 +1,11 @@
+import { createDocument } from "../../db/documents";
 import { Router, Response } from "express";
 import path from "path";
 import fs from "fs";
 import { requireAuth, AuthRequest } from "../../middleware/auth";
 import { validateSarlu } from "../../services/validator";
 import { generateDocx, prepareSarluData } from "../../services/docx-generator";
-import { prisma } from "../../server";
+import pool from "../../db/pool";
 
 export const sarluRoute = Router();
 
@@ -31,18 +32,14 @@ sarluRoute.post("/sarlu", requireAuth(), async (req: AuthRequest, res: Response)
 
     fs.writeFileSync(filepath, docxBuffer);
 
-    const document = await prisma.document.create({
-      data: {
-        type: "statuts-sarlu",
-        label: `Statuts SARLU — ${req.body.denomination}`,
-        formeJuridique: "SARLU",
-        denomination: req.body.denomination,
-        status: "generated",
-        data: req.body,
-        docxPath: filepath,
-        userId: req.userId!,
-        organizationId: req.orgId || null,
-      },
+    const document = await createDocument({
+      tenantSchema: (req as AuthRequest).tenantSchema!,
+      userId: (req as AuthRequest).userId!,
+      type: "statuts-sarlu",
+      denomination: req.body.denomination,
+      formeJuridique: "SARLU",
+      docxPath: filepath,
+      data: req.body,
     });
 
     res.status(201).json({

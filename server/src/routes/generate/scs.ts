@@ -1,10 +1,11 @@
+import { createDocument } from "../../db/documents";
 import { Router, Response } from "express";
 import path from "path";
 import fs from "fs";
 import { requireAuth, AuthRequest } from "../../middleware/auth";
 import { validateScs } from "../../services/validator";
 import { generateDocx, prepareScsData } from "../../services/docx-generator";
-import { prisma } from "../../server";
+import pool from "../../db/pool";
 
 export const scsRoute = Router();
 
@@ -30,18 +31,14 @@ scsRoute.post("/scs", requireAuth(), async (req: AuthRequest, res: Response) => 
 
     fs.writeFileSync(filepath, docxBuffer);
 
-    const document = await prisma.document.create({
-      data: {
-        type: "statuts-scs",
-        label: `Statuts SCS \u2014 ${req.body.denomination}`,
-        formeJuridique: "SCS",
-        denomination: req.body.denomination,
-        status: "generated",
-        data: req.body,
-        docxPath: filepath,
-        userId: req.userId!,
-        organizationId: req.orgId || null,
-      },
+    const document = await createDocument({
+      tenantSchema: (req as AuthRequest).tenantSchema!,
+      userId: (req as AuthRequest).userId!,
+      type: "statuts-scs",
+      denomination: req.body.denomination,
+      formeJuridique: "SCS",
+      docxPath: filepath,
+      data: req.body,
     });
 
     res.status(201).json({

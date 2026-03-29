@@ -1,10 +1,11 @@
+import { createDocument } from "../../db/documents";
 import { Router, Response } from "express";
 import path from "path";
 import fs from "fs";
 import { requireAuth, AuthRequest } from "../../middleware/auth";
 import { validateLettreNotificationRepresentant } from "../../services/validator";
 import { generateDocx, prepareLettreNotificationRepresentantData } from "../../services/docx-generator";
-import { prisma } from "../../server";
+import pool from "../../db/pool";
 
 export const lettreNotificationRepresentantRoute = Router();
 
@@ -30,18 +31,14 @@ lettreNotificationRepresentantRoute.post("/lettre-notification-representant", re
 
     fs.writeFileSync(filepath, docxBuffer);
 
-    const document = await prisma.document.create({
-      data: {
-        type: "lettre-notification-representant",
-        label: `Lettre notification repr\u00e9sentant \u2014 ${req.body.denomination_administrateur}`,
-        formeJuridique: "SA",
-        denomination: req.body.denomination_administrateur,
-        status: "generated",
-        data: req.body,
-        docxPath: filepath,
-        userId: req.userId!,
-        organizationId: req.orgId || null,
-      },
+    const document = await createDocument({
+      tenantSchema: (req as AuthRequest).tenantSchema!,
+      userId: (req as AuthRequest).userId!,
+      type: "lettre-notification-representant",
+      denomination: req.body.denomination_administrateur,
+      formeJuridique: "SA",
+      docxPath: filepath,
+      data: req.body,
     });
 
     res.status(201).json({

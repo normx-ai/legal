@@ -1,10 +1,11 @@
+import { createDocument } from "../../db/documents";
 import { Router, Response } from "express";
 import path from "path";
 import fs from "fs";
 import { requireAuth, AuthRequest } from "../../middleware/auth";
 import { validatePacteActionnaires } from "../../services/validator";
 import { generateDocx, preparePacteActionnairesData } from "../../services/docx-generator";
-import { prisma } from "../../server";
+import pool from "../../db/pool";
 
 export const pacteActionnairesRoute = Router();
 
@@ -30,18 +31,14 @@ pacteActionnairesRoute.post("/pacte-actionnaires", requireAuth(), async (req: Au
 
     fs.writeFileSync(filepath, docxBuffer);
 
-    const document = await prisma.document.create({
-      data: {
-        type: "pacte-actionnaires",
-        label: `Pacte d'actionnaires — ${req.body.denomination}`,
-        formeJuridique: req.body.forme_juridique || "SA",
-        denomination: req.body.denomination,
-        status: "generated",
-        data: req.body,
-        docxPath: filepath,
-        userId: req.userId!,
-        organizationId: req.orgId || null,
-      },
+    const document = await createDocument({
+      tenantSchema: (req as AuthRequest).tenantSchema!,
+      userId: (req as AuthRequest).userId!,
+      type: "pacte-actionnaires",
+      denomination: req.body.denomination,
+      formeJuridique: "SARL",
+      docxPath: filepath,
+      data: req.body,
     });
 
     res.status(201).json({

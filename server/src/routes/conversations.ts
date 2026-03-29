@@ -1,72 +1,59 @@
 import { Router, Response } from "express";
 import { requireAuth, AuthRequest } from "../middleware/auth";
+import pool from "../db/pool";
 
-import { prisma } from '../server';
 export const conversationRoutes = Router();
 
-// GET /api/conversations — Liste des conversations de l'utilisateur
+// GET /api/conversations
 conversationRoutes.get("/", requireAuth(), async (req: AuthRequest, res: Response) => {
-  const userId = req.userId as number;
-
-  const conversations = await prisma.conversation.findMany({
-    where: { userId },
-    orderBy: { updatedAt: "desc" },
-    include: {
-      messages: {
-        orderBy: { createdAt: "asc" },
-        take: 1,
-      },
-    },
-  });
-
-  res.json(conversations);
+  const s = req.tenantSchema!;
+  const result = await pool.query(
+    `SELECT c.id, c.title, c.created_at, c.updated_at,
+            (SELECT content FROM "${s}".messages m WHERE m.conversation_id = c.id ORDER BY m.created_at ASC LIMIT 1) as first_message
+     FROM "${s}".conversations c WHERE c.user_id = $1 ORDER BY c.updated_at DESC`,
+    [req.userId]
+  );
+  res.json(result.rows);
 });
 
-// POST /api/conversations — Créer une nouvelle conversation
+// POST /api/conversations
 conversationRoutes.post("/", requireAuth(), async (req: AuthRequest, res: Response) => {
-  const userId = req.userId as number;
+  const s = req.tenantSchema!;
   const { title } = req.body as { title?: string };
-
-  const conversation = await prisma.conversation.create({
-    data: {
-      title: title || "Nouvelle conversation",
-      userId,
-    },
-  });
-
-  res.status(201).json(conversation);
+  const result = await pool.query(
+    `INSERT INTO "${s}".conversations (user_id, title) VALUES ($1, $2) RETURNING *`,
+    [req.userId, title || "Nouvelle conversation"]
+  );
+  res.status(201).json(result.rows[0]);
 });
 
-// GET /api/conversations/:id — Récupérer une conversation avec ses messages
+// GET /api/conversations/:id
 conversationRoutes.get("/:id", requireAuth(), async (req: AuthRequest, res: Response) => {
-  const userId = req.userId as number;
-
-  const conversation = await prisma.conversation.findFirst({
-    where: { id: req.params.id as string, userId },
-    include: {
-      messages: { orderBy: { createdAt: "asc" } },
-    },
-  });
-
-  if (!conversation) {
+  const s = req.tenantSchema!;
+  const conv = await pool.query(
+    `SELECT * FROM "${s}".conversations WHERE id = $1 AND user_id = $2`,
+    [req.params.id, req.userId]
+  );
+  if (conv.rows.length === 0) {
     return res.status(404).json({ error: "Conversation introuvable" });
   }
-
-  res.json(conversation);
+  const messages = await pool.query(
+    `SELECT * FROM "${s}".messages WHERE conversation_id = $1 ORDER BY created_at ASC`,
+    [req.params.id]
+  );
+  res.json({ ...conv.rows[0], messages: messages.rows });
 });
 
-// DELETE /api/conversations/:id — Supprimer une conversation
+// DELETE /api/conversations/:id
 conversationRoutes.delete("/:id", requireAuth(), async (req: AuthRequest, res: Response) => {
-  const userId = req.userId as number;
-
-  const conversation = await prisma.conversation.findFirst({
-    where: { id: req.params.id as string, userId },
-  });
-
-  if (!conversation) {
+  const s = req.tenantSchema!;
+  const conv = await pool.query(
+    `SELECT id FROM "${s}".conversations WHERE id = $1 AND user_id = $2`,
+    [req.params.id, req.userId]
+  );
+  if (conv.rows.length === 0) {
     return res.status(404).json({ error: "Conversation introuvable" });
   }
-
-  await prisma.conversation.delete({ where: { id: req.params.id as string } });
+  await pool.query(`DELETE FROM "${s}".conversations WHERE id = $1`, [req.params.id]);
   res.json({ success: true });
 });
