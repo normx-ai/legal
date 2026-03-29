@@ -43,12 +43,12 @@ export function Topbar() {
             width: 32,
             height: 32,
             borderRadius: 16,
-            backgroundColor: "#7c3aed",
+            backgroundColor: "#D4A843",
             alignItems: "center",
             justifyContent: "center",
           }}
         >
-          <Text style={{ fontFamily: fonts.bold, fontWeight: fontWeights.bold, fontSize: 13, color: "#fff" }}>
+          <Text style={{ fontFamily: fonts.bold, fontWeight: fontWeights.bold, fontSize: 13, color: "#0F2A42" }}>
             {(user?.prenom?.[0] || "").toUpperCase()}{(user?.nom?.[0] || "").toUpperCase()}
           </Text>
         </View>

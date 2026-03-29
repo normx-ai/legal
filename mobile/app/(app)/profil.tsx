@@ -7,7 +7,8 @@ import { useResponsive } from "@/lib/hooks/useResponsive";
 import { fonts, fontWeights } from "@/lib/theme/fonts";
 import i18n from "@/lib/i18n";
 
-const PURPLE = "#7c3aed";
+const ACCENT = "#D4A843";
+const DARK = "#0F2A42";
 
 function Section({ title, children, colors }: { title: string; children: React.ReactNode; colors: any }) {
   return (
@@ -45,8 +46,8 @@ function Row({ icon, label, value, onPress, danger, toggle, toggleValue, colors 
         borderBottomColor: colors.border,
       }}
     >
-      <View style={{ width: 34, height: 34, borderRadius: 8, backgroundColor: danger ? "rgba(239,68,68,0.1)" : `${PURPLE}12`, alignItems: "center", justifyContent: "center", marginRight: 12 }}>
-        <Ionicons name={icon} size={18} color={danger ? "#ef4444" : PURPLE} />
+      <View style={{ width: 34, height: 34, borderRadius: 8, backgroundColor: danger ? "rgba(239,68,68,0.1)" : `${ACCENT}12`, alignItems: "center", justifyContent: "center", marginRight: 12 }}>
+        <Ionicons name={icon} size={18} color={danger ? "#ef4444" : ACCENT} />
       </View>
       <Text style={{ flex: 1, fontFamily: fonts.regular, fontSize: 15, color: danger ? "#ef4444" : colors.text }}>
         {label}
@@ -61,7 +62,7 @@ function Row({ icon, label, value, onPress, danger, toggle, toggleValue, colors 
           onPress={onPress}
           style={{
             width: 48, height: 28, borderRadius: 14,
-            backgroundColor: toggleValue ? PURPLE : colors.border,
+            backgroundColor: toggleValue ? ACCENT : colors.border,
             justifyContent: "center",
             paddingHorizontal: 2,
           }}
@@ -109,7 +110,7 @@ export default function ProfilScreen() {
       <View style={{ alignItems: "center", marginBottom: 32, paddingTop: 16 }}>
         <View style={{
           width: 72, height: 72, borderRadius: 36,
-          backgroundColor: PURPLE,
+          backgroundColor: DARK,
           alignItems: "center", justifyContent: "center",
           marginBottom: 12,
         }}>
@@ -124,8 +125,8 @@ export default function ProfilScreen() {
           {user?.email}
         </Text>
         {subscription && (
-          <View style={{ backgroundColor: `${PURPLE}15`, paddingHorizontal: 14, paddingVertical: 4, borderRadius: 20, marginTop: 8 }}>
-            <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 12, color: PURPLE }}>
+          <View style={{ backgroundColor: `${ACCENT}15`, paddingHorizontal: 14, paddingVertical: 4, borderRadius: 20, marginTop: 8 }}>
+            <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 12, color: ACCENT }}>
               {planLabels[subscription.plan] || subscription.plan}
             </Text>
           </View>
