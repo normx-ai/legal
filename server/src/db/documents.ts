@@ -22,5 +22,13 @@ export async function createDocument(input: CreateDocumentInput) {
      RETURNING id, type, denomination, forme_juridique, docx_path, created_at`,
     [input.userId, input.type, input.denomination, input.formeJuridique, input.docxPath, JSON.stringify(input.data)]
   );
-  return result.rows[0];
+  const row = result.rows[0];
+  return {
+    id: row.id,
+    type: row.type,
+    denomination: row.denomination,
+    forme_juridique: row.forme_juridique,
+    docx_path: row.docx_path,
+    createdAt: row.created_at,
+  };
 }
