@@ -17,6 +17,7 @@ import { chatRoutes } from "./routes/chat";
 import { conversationRoutes } from "./routes/conversations";
 
 export const app = express();
+app.set("trust proxy", 1);
 
 // ── CORS (fix #8 — utiliser le middleware cors au lieu du manuel) ──
 const allowedOrigins = (process.env.CORS_ORIGIN || "http://localhost:8081").split(",").map(s => s.trim());
