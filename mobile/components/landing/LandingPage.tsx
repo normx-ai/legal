@@ -82,7 +82,7 @@ export default function LandingPage() {
     <ScrollView style={{ flex: 1, backgroundColor: "#ffffff" }}>
 
       {/* Header */}
-      <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", height: 64, paddingHorizontal: 24, borderBottomWidth: 1, borderBottomColor: "rgba(0,0,0,0.08)", backgroundColor: "rgba(255,255,255,0.92)" }}>
+      <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", height: 64, paddingHorizontal: 24, maxWidth: 1200, width: "100%", alignSelf: "center", borderBottomWidth: 1, borderBottomColor: "rgba(0,0,0,0.08)", backgroundColor: "rgba(255,255,255,0.92)" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
           <View style={{ width: 34, height: 34, borderRadius: 10, backgroundColor: PRIMARY, alignItems: "center", justifyContent: "center" }}>
             <Text style={{ fontFamily: fonts.black, fontWeight: fontWeights.black, fontSize: 16, color: DARK }}>N</Text>
