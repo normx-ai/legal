@@ -85,9 +85,9 @@ const SIDEBAR2_DATA: Record<string, SubSection[]> = {
     {
       title: "SA",
       items: [
-        { id: "sa-ag", label: "SA (Administrateur Général)", available: true },
-        { id: "sa-ca", label: "SA (Conseil d'Administration)", available: true },
-        { id: "sa-uni", label: "SA Unipersonnelle", available: true },
+        { id: "sa-ag", label: "Statuts SA (Administrateur Général)", available: true },
+        { id: "sa-ca", label: "Statuts SA (Conseil d'Administration)", available: true },
+        { id: "sa-uni", label: "Statuts SA Unipersonnelle", available: true },
       ],
     },
     {
@@ -100,8 +100,8 @@ const SIDEBAR2_DATA: Record<string, SubSection[]> = {
     {
       title: "AUTRES FORMES",
       items: [
-        { id: "snc", label: "SNC (Nom Collectif)", available: true },
-        { id: "scs", label: "SCS (Commandite Simple)", available: true },
+        { id: "snc", label: "Statuts SNC (Nom Collectif)", available: true },
+        { id: "scs", label: "Statuts SCS (Commandite Simple)", available: true },
         { id: "gie", label: "Convention GIE", available: true },
         { id: "ste-part", label: "Société en Participation", available: true },
       ],
