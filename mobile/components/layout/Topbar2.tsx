@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, ScrollView, Platform } from "react-native
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { fonts, fontWeights } from "@/lib/theme/fonts";
+import { useTheme } from "@/lib/theme/ThemeContext";
 import { SIDEBAR2_DATA, ROUTES } from "./Sidebar2";
 
 // ── Onglets principaux OHADA ──
@@ -25,6 +26,7 @@ interface Topbar2Props {
 }
 
 export function Topbar2({ activeSection, onSectionPress, activeSubItem, onItemPress }: Topbar2Props) {
+  const { colors } = useTheme();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   const handleNavPress = (key: string, hasDropdown?: boolean) => {
@@ -56,12 +58,12 @@ export function Topbar2({ activeSection, onSectionPress, activeSubItem, onItemPr
       <View
         style={{
           height: 44,
-          backgroundColor: "#ffffff",
+          backgroundColor: colors.card,
           flexDirection: "row",
           alignItems: "center",
           paddingHorizontal: 16,
           borderBottomWidth: 1,
-          borderBottomColor: "#e5e7eb",
+          borderBottomColor: colors.border,
           gap: 0,
         }}
       >
@@ -78,20 +80,20 @@ export function Topbar2({ activeSection, onSectionPress, activeSubItem, onItemPr
                 paddingVertical: 10,
                 gap: 6,
                 borderBottomWidth: 2,
-                borderBottomColor: isActive ? "#D4A843" : "transparent",
+                borderBottomColor: isActive ? colors.primary : "transparent",
               }}
             >
               <Ionicons
                 name={item.icon}
                 size={16}
-                color={isActive ? "#D4A843" : "#6b7280"}
+                color={isActive ? colors.primary : colors.textSecondary}
               />
               <Text
                 style={{
                   fontFamily: isActive ? fonts.semiBold : fonts.medium,
                   fontWeight: isActive ? fontWeights.semiBold : fontWeights.medium,
                   fontSize: 13,
-                  color: isActive ? "#D4A843" : "#374151",
+                  color: isActive ? colors.primary : colors.text,
                 }}
               >
                 {item.label}
@@ -100,7 +102,7 @@ export function Topbar2({ activeSection, onSectionPress, activeSubItem, onItemPr
                 <Ionicons
                   name={openDropdown === item.key ? "chevron-up" : "chevron-down"}
                   size={12}
-                  color={isActive ? "#D4A843" : "#9ca3af"}
+                  color={isActive ? colors.primary : colors.textMuted}
                 />
               )}
             </TouchableOpacity>
@@ -116,9 +118,9 @@ export function Topbar2({ activeSection, onSectionPress, activeSubItem, onItemPr
             top: 44,
             left: 0,
             right: 0,
-            backgroundColor: "#ffffff",
+            backgroundColor: colors.card,
             borderBottomWidth: 1,
-            borderBottomColor: "#e5e7eb",
+            borderBottomColor: colors.border,
             ...(Platform.OS === "web" ? { boxShadow: "0 4px 12px rgba(0,0,0,0.08)" } : {}),
             zIndex: 200,
           }}
@@ -141,7 +143,7 @@ export function Topbar2({ activeSection, onSectionPress, activeSubItem, onItemPr
                     fontFamily: fonts.semiBold,
                     fontWeight: fontWeights.semiBold,
                     fontSize: 10,
-                    color: "#D4A843",
+                    color: colors.primary,
                     textTransform: "uppercase",
                     letterSpacing: 1.2,
                     marginBottom: 10,
@@ -164,7 +166,7 @@ export function Topbar2({ activeSection, onSectionPress, activeSubItem, onItemPr
                         paddingVertical: 6,
                         paddingHorizontal: 8,
                         borderRadius: 4,
-                        backgroundColor: isItemActive ? "#FDF8EE" : "transparent",
+                        backgroundColor: isItemActive ? colors.sidebarActive : "transparent",
                         gap: 6,
                       }}
                     >
@@ -173,7 +175,7 @@ export function Topbar2({ activeSection, onSectionPress, activeSubItem, onItemPr
                           width: 5,
                           height: 5,
                           borderRadius: 3,
-                          backgroundColor: item.available ? "#22c55e" : "#d1d5db",
+                          backgroundColor: item.available ? colors.success : colors.disabled,
                         }}
                       />
                       <Text
@@ -182,15 +184,15 @@ export function Topbar2({ activeSection, onSectionPress, activeSubItem, onItemPr
                           fontWeight: isItemActive ? fontWeights.semiBold : fontWeights.regular,
                           fontSize: 13,
                           color: item.available
-                            ? isItemActive ? "#92400e" : "#374151"
-                            : "#9ca3af",
+                            ? isItemActive ? "#92400e" : colors.text
+                            : colors.textMuted,
                         }}
                         numberOfLines={1}
                       >
                         {item.label}
                       </Text>
                       {!item.available && (
-                        <Text style={{ fontFamily: fonts.regular, fontSize: 9, color: "#d1d5db" }}>
+                        <Text style={{ fontFamily: fonts.regular, fontSize: 9, color: colors.disabled }}>
                           soon
                         </Text>
                       )}
@@ -211,7 +213,7 @@ export function Topbar2({ activeSection, onSectionPress, activeSubItem, onItemPr
               padding: 4,
             }}
           >
-            <Ionicons name="close" size={18} color="#9ca3af" />
+            <Ionicons name="close" size={18} color={colors.textMuted} />
           </TouchableOpacity>
         </View>
       )}

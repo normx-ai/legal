@@ -2,15 +2,15 @@ import { View, Text, TouchableOpacity, ScrollView, Platform, Linking } from "rea
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@/lib/theme/ThemeContext";
+import type { ThemeColors } from "@/lib/theme/colors";
 import { useAuthStore } from "@/lib/store/auth";
 import { useResponsive } from "@/lib/hooks/useResponsive";
 import { fonts, fontWeights } from "@/lib/theme/fonts";
 import i18n from "@/lib/i18n";
 
-const ACCENT = "#D4A843";
-const DARK = "#0F2A42";
+// Colors are now sourced from useTheme() — see ProfilScreen and its sub-components
 
-function Section({ title, children, colors }: { title: string; children: React.ReactNode; colors: any }) {
+function Section({ title, children, colors }: { title: string; children: React.ReactNode; colors: ThemeColors }) {
   return (
     <View style={{ marginBottom: 24 }}>
       <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 12, color: colors.textMuted, textTransform: "uppercase", letterSpacing: 1, marginBottom: 10, paddingHorizontal: 4 }}>
@@ -31,7 +31,7 @@ function Row({ icon, label, value, onPress, danger, toggle, toggleValue, colors 
   danger?: boolean;
   toggle?: boolean;
   toggleValue?: boolean;
-  colors: any;
+  colors: ThemeColors;
 }) {
   return (
     <TouchableOpacity
@@ -46,10 +46,10 @@ function Row({ icon, label, value, onPress, danger, toggle, toggleValue, colors 
         borderBottomColor: colors.border,
       }}
     >
-      <View style={{ width: 34, height: 34, borderRadius: 8, backgroundColor: danger ? "rgba(239,68,68,0.1)" : `${ACCENT}12`, alignItems: "center", justifyContent: "center", marginRight: 12 }}>
-        <Ionicons name={icon} size={18} color={danger ? "#ef4444" : ACCENT} />
+      <View style={{ width: 34, height: 34, borderRadius: 8, backgroundColor: danger ? "rgba(239,68,68,0.1)" : `${colors.primary}12`, alignItems: "center", justifyContent: "center", marginRight: 12 }}>
+        <Ionicons name={icon} size={18} color={danger ? colors.danger : colors.primary} />
       </View>
-      <Text style={{ flex: 1, fontFamily: fonts.regular, fontSize: 15, color: danger ? "#ef4444" : colors.text }}>
+      <Text style={{ flex: 1, fontFamily: fonts.regular, fontSize: 15, color: danger ? colors.danger : colors.text }}>
         {label}
       </Text>
       {value && (
@@ -62,7 +62,7 @@ function Row({ icon, label, value, onPress, danger, toggle, toggleValue, colors 
           onPress={onPress}
           style={{
             width: 48, height: 28, borderRadius: 14,
-            backgroundColor: toggleValue ? ACCENT : colors.border,
+            backgroundColor: toggleValue ? colors.primary : colors.border,
             justifyContent: "center",
             paddingHorizontal: 2,
           }}
@@ -110,7 +110,7 @@ export default function ProfilScreen() {
       <View style={{ alignItems: "center", marginBottom: 32, paddingTop: 16 }}>
         <View style={{
           width: 72, height: 72, borderRadius: 36,
-          backgroundColor: DARK,
+          backgroundColor: colors.headerBg,
           alignItems: "center", justifyContent: "center",
           marginBottom: 12,
         }}>
@@ -125,8 +125,8 @@ export default function ProfilScreen() {
           {user?.email}
         </Text>
         {subscription && (
-          <View style={{ backgroundColor: `${ACCENT}15`, paddingHorizontal: 14, paddingVertical: 4, borderRadius: 20, marginTop: 8 }}>
-            <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 12, color: ACCENT }}>
+          <View style={{ backgroundColor: `${colors.primary}15`, paddingHorizontal: 14, paddingVertical: 4, borderRadius: 20, marginTop: 8 }}>
+            <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 12, color: colors.primary }}>
               {planLabels[subscription.plan] || subscription.plan}
             </Text>
           </View>

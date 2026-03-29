@@ -131,7 +131,7 @@ export default function ChatScreen() {
   ];
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#f8fafc" }}>
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
       {/* Header */}
       <View style={{ backgroundColor: colors.headerBg, paddingTop: isMobile ? 50 : 0, paddingBottom: 16, paddingHorizontal: 24 }}>
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
@@ -161,7 +161,7 @@ export default function ChatScreen() {
 
       {/* Historique des conversations */}
       {showHistory && (
-        <View style={{ backgroundColor: "#fff", borderBottomWidth: 1, borderBottomColor: "#e5e7eb", maxHeight: 300 }}>
+        <View style={{ backgroundColor: colors.card, borderBottomWidth: 1, borderBottomColor: colors.border, maxHeight: 300 }}>
           <ScrollView>
             {conversations.length === 0 ? (
               <Text style={{ fontFamily: fonts.regular, fontSize: 14, color: colors.textSecondary, padding: 16, textAlign: "center" }}>
@@ -177,11 +177,11 @@ export default function ChatScreen() {
                     alignItems: "center",
                     padding: 14,
                     borderBottomWidth: 1,
-                    borderBottomColor: "#f3f4f6",
-                    backgroundColor: conv.id === conversationId ? "#f0f4ff" : "#fff",
+                    borderBottomColor: colors.border,
+                    backgroundColor: conv.id === conversationId ? colors.sidebarActive : colors.card,
                   }}
                 >
-                  <Ionicons name="chatbubble-outline" size={16} color={conv.id === conversationId ? colors.headerBg : "#9ca3af"} style={{ marginRight: 12 }} />
+                  <Ionicons name="chatbubble-outline" size={16} color={conv.id === conversationId ? colors.headerBg : colors.textMuted} style={{ marginRight: 12 }} />
                   <Text style={{ fontFamily: fonts.regular, fontSize: 14, color: colors.text, flex: 1 }} numberOfLines={1}>
                     {conv.title}
                   </Text>
@@ -219,9 +219,9 @@ export default function ChatScreen() {
                   key={i}
                   onPress={() => { setInput(s); }}
                   style={{
-                    backgroundColor: "#fff",
+                    backgroundColor: colors.card,
                     borderWidth: 1,
-                    borderColor: "#e5e7eb",
+                    borderColor: colors.border,
                     borderRadius: 8,
                     padding: 14,
                     flexDirection: "row",
@@ -231,7 +231,7 @@ export default function ChatScreen() {
                 >
                   <Ionicons name="chatbubble-outline" size={16} color="#D4A843" />
                   <Text style={{ fontFamily: fonts.regular, fontSize: 14, color: colors.text, flex: 1 }}>{s}</Text>
-                  <Ionicons name="arrow-forward" size={14} color="#9ca3af" />
+                  <Ionicons name="arrow-forward" size={14} color={colors.textMuted} />
                 </TouchableOpacity>
               ))}
             </View>
@@ -250,11 +250,11 @@ export default function ChatScreen() {
             <View
               style={{
                 maxWidth: "80%",
-                backgroundColor: msg.role === "user" ? colors.headerBg : "#fff",
+                backgroundColor: msg.role === "user" ? colors.headerBg : colors.card,
                 borderRadius: 12,
                 padding: 14,
                 borderWidth: msg.role === "assistant" ? 1 : 0,
-                borderColor: "#e5e7eb",
+                borderColor: colors.border,
                 ...(Platform.OS === "web" && msg.role === "assistant" ? { boxShadow: "0 1px 3px rgba(0,0,0,0.06)" } : {}),
               }}
             >
@@ -286,11 +286,11 @@ export default function ChatScreen() {
               onPress={() => setShowSources(!showSources)}
               style={{ flexDirection: "row", alignItems: "center", gap: 6, paddingVertical: 6 }}
             >
-              <Ionicons name="document-text-outline" size={14} color="#9ca3af" />
-              <Text style={{ fontFamily: fonts.regular, fontSize: 12, color: "#9ca3af" }}>
+              <Ionicons name="document-text-outline" size={14} color={colors.textMuted} />
+              <Text style={{ fontFamily: fonts.regular, fontSize: 12, color: colors.textMuted }}>
                 {sources.length} source{sources.length > 1 ? "s" : ""} consultée{sources.length > 1 ? "s" : ""}
               </Text>
-              <Ionicons name={showSources ? "chevron-up" : "chevron-down"} size={12} color="#9ca3af" />
+              <Ionicons name={showSources ? "chevron-up" : "chevron-down"} size={12} color={colors.textMuted} />
             </TouchableOpacity>
             {showSources && (
               <View style={{ gap: 6, marginTop: 4 }}>
@@ -298,9 +298,9 @@ export default function ChatScreen() {
                   <View
                     key={i}
                     style={{
-                      backgroundColor: "#f9fafb",
+                      backgroundColor: colors.background,
                       borderWidth: 1,
-                      borderColor: "#e5e7eb",
+                      borderColor: colors.border,
                       borderRadius: 8,
                       padding: 10,
                       flexDirection: "row",
@@ -313,7 +313,7 @@ export default function ChatScreen() {
                       <Text style={{ fontFamily: fonts.medium, fontSize: 12, color: colors.text }} numberOfLines={2}>
                         {src.titre}
                       </Text>
-                      <Text style={{ fontFamily: fonts.regular, fontSize: 11, color: "#9ca3af", marginTop: 2 }}>
+                      <Text style={{ fontFamily: fonts.regular, fontSize: 11, color: colors.textMuted, marginTop: 2 }}>
                         {src.chapitre} {src.paragraphe ? `- §${src.paragraphe}` : ""} {src.forme_juridique && src.forme_juridique !== "TOUTES" ? `(${src.forme_juridique})` : ""}
                       </Text>
                     </View>
@@ -329,8 +329,8 @@ export default function ChatScreen() {
       <View
         style={{
           borderTopWidth: 1,
-          borderTopColor: "#e5e7eb",
-          backgroundColor: "#fff",
+          borderTopColor: colors.border,
+          backgroundColor: colors.card,
           padding: 12,
           paddingBottom: isMobile ? 28 : 12,
         }}
@@ -349,11 +349,11 @@ export default function ChatScreen() {
             value={input}
             onChangeText={setInput}
             placeholder="Posez votre question sur le droit OHADA..."
-            placeholderTextColor="#9ca3af"
+            placeholderTextColor={colors.textMuted}
             onSubmitEditing={handleSend}
             style={{
               flex: 1,
-              backgroundColor: "#f3f4f6",
+              backgroundColor: colors.input,
               borderRadius: 24,
               paddingHorizontal: 18,
               paddingVertical: 12,
@@ -370,12 +370,12 @@ export default function ChatScreen() {
               width: 44,
               height: 44,
               borderRadius: 22,
-              backgroundColor: input.trim() ? "#D4A843" : "#e5e7eb",
+              backgroundColor: input.trim() ? colors.primary : colors.border,
               alignItems: "center",
               justifyContent: "center",
             }}
           >
-            <Ionicons name="send" size={18} color={input.trim() ? "#fff" : "#9ca3af"} />
+            <Ionicons name="send" size={18} color={input.trim() ? "#fff" : colors.textMuted} />
           </TouchableOpacity>
         </View>
       </View>

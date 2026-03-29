@@ -253,8 +253,8 @@ export default function DashboardScreen() {
 
   const renderDocument = ({ item }: { item: DocumentItem }) => (
     <TouchableOpacity style={{
-      backgroundColor: "#ffffff", padding: 18,
-      borderBottomWidth: 1, borderBottomColor: "#f1f5f9",
+      backgroundColor: colors.card, padding: 18,
+      borderBottomWidth: 1, borderBottomColor: colors.background,
       flexDirection: "row", alignItems: "center", gap: 14,
     }}>
       <View style={{ width: 42, height: 42, borderRadius: 8, backgroundColor: colors.primary + "12", alignItems: "center", justifyContent: "center" }}>
@@ -308,7 +308,7 @@ export default function DashboardScreen() {
 
         {/* Stats */}
         <View style={{ flexDirection: "row", gap: 16, marginBottom: 28 }}>
-          <View style={{ flex: 1, backgroundColor: "#ffffff", padding: 24, borderRadius: 12, borderWidth: 1, borderColor: "#e5e7eb" }}>
+          <View style={{ flex: 1, backgroundColor: colors.card, padding: 24, borderRadius: 12, borderWidth: 1, borderColor: colors.border }}>
             <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 12 }}>
               <View style={{ width: 40, height: 40, borderRadius: 10, backgroundColor: "#FDF8EE", alignItems: "center", justifyContent: "center" }}>
                 <Ionicons name="document-text" size={20} color="#D4A843" />
@@ -317,7 +317,7 @@ export default function DashboardScreen() {
             </View>
             <Text style={{ fontFamily: fonts.bold, fontWeight: fontWeights.bold, fontSize: 32, color: colors.text }}>{documents.length}</Text>
           </View>
-          <View style={{ flex: 1, backgroundColor: "#ffffff", padding: 24, borderRadius: 12, borderWidth: 1, borderColor: "#e5e7eb" }}>
+          <View style={{ flex: 1, backgroundColor: colors.card, padding: 24, borderRadius: 12, borderWidth: 1, borderColor: colors.border }}>
             <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 12 }}>
               <View style={{ width: 40, height: 40, borderRadius: 10, backgroundColor: "#ecfdf5", alignItems: "center", justifyContent: "center" }}>
                 <Ionicons name="calendar-outline" size={20} color="#22c55e" />
@@ -328,7 +328,7 @@ export default function DashboardScreen() {
               {documents.filter(d => new Date(d.created_at).getMonth() === new Date().getMonth()).length}
             </Text>
           </View>
-          <View style={{ flex: 1, backgroundColor: "#ffffff", padding: 24, borderRadius: 12, borderWidth: 1, borderColor: "#e5e7eb" }}>
+          <View style={{ flex: 1, backgroundColor: colors.card, padding: 24, borderRadius: 12, borderWidth: 1, borderColor: colors.border }}>
             <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 12 }}>
               <View style={{ width: 40, height: 40, borderRadius: 10, backgroundColor: "#eff6ff", alignItems: "center", justifyContent: "center" }}>
                 <Ionicons name="checkmark-circle-outline" size={20} color="#3b82f6" />
@@ -356,9 +356,9 @@ export default function DashboardScreen() {
               key={item.id}
               onPress={() => navigateTo(item.id)}
               style={{
-                backgroundColor: "#ffffff",
+                backgroundColor: colors.card,
                 borderWidth: 1,
-                borderColor: "#e5e7eb",
+                borderColor: colors.border,
                 borderRadius: 10,
                 paddingHorizontal: 20,
                 paddingVertical: 14,
@@ -372,7 +372,7 @@ export default function DashboardScreen() {
                 <Ionicons name={item.icon} size={18} color="#D4A843" />
               </View>
               <Text style={{ fontFamily: fonts.medium, fontWeight: fontWeights.medium, fontSize: 13, color: colors.text }}>{item.label}</Text>
-              <Ionicons name="chevron-forward" size={14} color="#9ca3af" style={{ marginLeft: "auto" }} />
+              <Ionicons name="chevron-forward" size={14} color={colors.textMuted} style={{ marginLeft: "auto" }} />
             </TouchableOpacity>
           ))}
         </View>
@@ -396,8 +396,8 @@ export default function DashboardScreen() {
         ) : null}
 
         {documents.length === 0 ? (
-          <View style={{ backgroundColor: "#ffffff", padding: 48, alignItems: "center", borderWidth: 1, borderColor: "#e5e7eb", borderRadius: 12 }}>
-            <View style={{ width: 72, height: 72, borderRadius: 16, backgroundColor: "#f1f5f9", alignItems: "center", justifyContent: "center", marginBottom: 18 }}>
+          <View style={{ backgroundColor: colors.card, padding: 48, alignItems: "center", borderWidth: 1, borderColor: colors.border, borderRadius: 12 }}>
+            <View style={{ width: 72, height: 72, borderRadius: 16, backgroundColor: colors.background, alignItems: "center", justifyContent: "center", marginBottom: 18 }}>
               <Ionicons name="document-text-outline" size={36} color={colors.textMuted} />
             </View>
             <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 18, color: colors.text, marginBottom: 8 }}>
@@ -408,7 +408,7 @@ export default function DashboardScreen() {
             </Text>
           </View>
         ) : (
-          <View style={{ backgroundColor: "#ffffff", borderWidth: 1, borderColor: "#e5e7eb", borderRadius: 12, overflow: "hidden" }}>
+          <View style={{ backgroundColor: colors.card, borderWidth: 1, borderColor: colors.border, borderRadius: 12, overflow: "hidden" }}>
             <FlatList data={documents} renderItem={renderDocument} keyExtractor={(item) => item.id} scrollEnabled={false} />
           </View>
         )}
@@ -420,9 +420,9 @@ export default function DashboardScreen() {
 
   // ── Mobile: keep existing behavior with inline header + tabs ──
   return (
-    <View style={{ flex: 1, backgroundColor: "#f8fafc" }}>
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
       {/* Header + Logo */}
-      <View style={{ backgroundColor: "#ffffff", paddingTop: 50, borderBottomWidth: 1, borderBottomColor: "#e2e8f0" }}>
+      <View style={{ backgroundColor: colors.card, paddingTop: 50, borderBottomWidth: 1, borderBottomColor: colors.border }}>
         <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingHorizontal: 24, paddingBottom: 12 }}>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
             <View style={{ width: 36, height: 36, borderRadius: 6, backgroundColor: colors.headerBg, alignItems: "center", justifyContent: "center" }}>
@@ -480,7 +480,7 @@ export default function DashboardScreen() {
 
       {/* Menu deroulant */}
       {showMenu && content && (
-        <View style={{ backgroundColor: colors.headerBg, paddingVertical: 20, paddingHorizontal: 24, borderBottomWidth: 1, borderBottomColor: "#e2e8f0" }}>
+        <View style={{ backgroundColor: colors.headerBg, paddingVertical: 20, paddingHorizontal: 24, borderBottomWidth: 1, borderBottomColor: colors.border }}>
           {/* Services populaires */}
           <View style={{ marginBottom: 20 }}>
             <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 12, color: colors.primary, textTransform: "uppercase", letterSpacing: 1, marginBottom: 10 }}>
@@ -567,11 +567,11 @@ export default function DashboardScreen() {
 
         {/* Stats */}
         <View style={{ flexDirection: "row", gap: 12, marginBottom: 24 }}>
-          <View style={{ flex: 1, backgroundColor: "#ffffff", padding: 20, borderRadius: 10, borderWidth: 1, borderColor: "#e2e8f0" }}>
+          <View style={{ flex: 1, backgroundColor: colors.card, padding: 20, borderRadius: 10, borderWidth: 1, borderColor: colors.border }}>
             <Text style={{ fontFamily: fonts.regular, fontSize: 13, color: colors.textSecondary, marginBottom: 8 }}>Total documents</Text>
             <Text style={{ fontFamily: fonts.bold, fontWeight: fontWeights.bold, fontSize: 28, color: colors.text }}>{documents.length}</Text>
           </View>
-          <View style={{ flex: 1, backgroundColor: "#ffffff", padding: 20, borderRadius: 10, borderWidth: 1, borderColor: "#e2e8f0" }}>
+          <View style={{ flex: 1, backgroundColor: colors.card, padding: 20, borderRadius: 10, borderWidth: 1, borderColor: colors.border }}>
             <Text style={{ fontFamily: fonts.regular, fontSize: 13, color: colors.textSecondary, marginBottom: 8 }}>Ce mois</Text>
             <Text style={{ fontFamily: fonts.bold, fontWeight: fontWeights.bold, fontSize: 28, color: colors.text }}>
               {documents.filter(d => new Date(d.created_at).getMonth() === new Date().getMonth()).length}
@@ -598,8 +598,8 @@ export default function DashboardScreen() {
         ) : null}
 
         {documents.length === 0 ? (
-          <View style={{ backgroundColor: "#ffffff", padding: 48, alignItems: "center", borderWidth: 1, borderColor: "#e2e8f0", borderRadius: 10 }}>
-            <View style={{ width: 72, height: 72, borderRadius: 16, backgroundColor: "#f1f5f9", alignItems: "center", justifyContent: "center", marginBottom: 18 }}>
+          <View style={{ backgroundColor: colors.card, padding: 48, alignItems: "center", borderWidth: 1, borderColor: colors.border, borderRadius: 10 }}>
+            <View style={{ width: 72, height: 72, borderRadius: 16, backgroundColor: colors.background, alignItems: "center", justifyContent: "center", marginBottom: 18 }}>
               <Ionicons name="document-text-outline" size={36} color={colors.textMuted} />
             </View>
             <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 18, color: colors.text, marginBottom: 8 }}>
@@ -617,7 +617,7 @@ export default function DashboardScreen() {
             </TouchableOpacity>
           </View>
         ) : (
-          <View style={{ backgroundColor: "#ffffff", borderWidth: 1, borderColor: "#e2e8f0", borderRadius: 10, overflow: "hidden" }}>
+          <View style={{ backgroundColor: colors.card, borderWidth: 1, borderColor: colors.border, borderRadius: 10, overflow: "hidden" }}>
             <FlatList data={documents} renderItem={renderDocument} keyExtractor={(item) => item.id} scrollEnabled={false} />
           </View>
         )}
