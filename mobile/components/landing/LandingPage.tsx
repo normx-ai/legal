@@ -105,7 +105,7 @@ export default function LandingPage() {
             <View style={{ flex: 1, maxWidth: 520 }}>
               <View style={{ backgroundColor: "#222", borderRadius: 12, padding: 4, paddingBottom: 0, borderWidth: 2, borderColor: "#333" }}>
                 <View style={{ width: 6, height: 6, borderRadius: 3, backgroundColor: "#444", alignSelf: "center", marginBottom: 3 }} />
-                <Image source={require("@/assets/princ_legal.png")} style={{ width: "100%", aspectRatio: 1.6, borderRadius: 2 }} resizeMode="cover" />
+                <Image source={require("@/assets/hero_legal.png")} style={{ width: "100%", aspectRatio: 1.6, borderRadius: 2 }} resizeMode="cover" />
               </View>
               <View style={{ height: 12, backgroundColor: "#c8c8c8", borderBottomLeftRadius: 4, borderBottomRightRadius: 4 }}>
                 <View style={{ width: 80, height: 4, backgroundColor: "#9a9a9a", borderBottomLeftRadius: 4, borderBottomRightRadius: 4, alignSelf: "center" }} />
