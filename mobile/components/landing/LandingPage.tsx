@@ -189,7 +189,7 @@ function FeatureSection({
   const webProps = (cls: string) => Platform.OS === "web" ? ({ className: cls } as Record<string, unknown>) : {};
 
   return (
-    <View style={{ flexDirection: isMobile ? "column" : (reverse ? "row-reverse" : "row"), gap: isMobile ? 32 : 60, paddingVertical: 64, paddingHorizontal: 16, maxWidth: 1100, alignSelf: "center", width: "100%" }}>
+    <View style={{ flexDirection: isMobile ? "column" : (reverse ? "row-reverse" : "row"), gap: isMobile ? 32 : 60, paddingVertical: 64, paddingHorizontal: 16, maxWidth: 1600, alignSelf: "center", width: "100%" }}>
       <View {...webProps(reverse ? "lp-reveal-right" : "lp-reveal-left")} style={{ flex: 1, minWidth: 280 }}>
         {content}
       </View>
@@ -210,7 +210,7 @@ export default function LandingPage() {
 
       {/* Header — Nav app.normx-ai.com style */}
       <View style={{ position: "absolute", top: 0, left: 0, right: 0, zIndex: 100, backgroundColor: "rgba(255,255,255,0.92)", borderBottomWidth: 1, borderBottomColor: "rgba(0,0,0,0.08)", ...(Platform.OS === "web" ? { backdropFilter: "blur(20px)" } as Record<string, string> : {}) }}>
-        <View style={{ flexDirection: "row", alignItems: "center", height: 64, paddingHorizontal: 16, maxWidth: 1200, width: "100%", alignSelf: "center" }}>
+        <View style={{ flexDirection: "row", alignItems: "center", height: 64, paddingHorizontal: 16, maxWidth: 1600, width: "100%", alignSelf: "center" }}>
           {/* Logo */}
           <TouchableOpacity onPress={() => Platform.OS === "web" && window.scrollTo({ top: 0, behavior: "smooth" })} style={{ flexDirection: "row", alignItems: "center" }}>
             <Image source={require("@/assets/logo-horizontal.png")} style={{ height: 30, width: 130 }} resizeMode="contain" />
@@ -247,7 +247,7 @@ export default function LandingPage() {
             <View style={{ position: "absolute", top: 200, right: 200, width: 200, height: 200, borderRadius: 100, backgroundColor: "rgba(37,99,235,0.08)", ...({ filter: "blur(60px)", animationName: "heroGlow", animationDuration: "6s", animationIterationCount: "infinite", animationTimingFunction: "ease-in-out" } as Record<string, string>) }} />
           </>
         )}
-        <View style={{ maxWidth: 1200, width: "100%", alignSelf: "center", flexDirection: isMobile ? "column" : "row", alignItems: "center", gap: isMobile ? 40 : 60, position: "relative", zIndex: 1 }}>
+        <View style={{ maxWidth: 1600, width: "100%", alignSelf: "center", flexDirection: isMobile ? "column" : "row", alignItems: "center", gap: isMobile ? 40 : 60, position: "relative", zIndex: 1 }}>
 
           {/* MacBook mockup CSS — gauche */}
           {!isMobile && (
@@ -352,7 +352,7 @@ export default function LandingPage() {
         </View>
 
         {/* Stats bar */}
-        <View style={{ flexDirection: "row", backgroundColor: DARK, borderRadius: 16, paddingVertical: 24, paddingHorizontal: isMobile ? 16 : 48, width: "100%", maxWidth: 800, alignSelf: "center", marginTop: 48 }}>
+        <View style={{ flexDirection: "row", backgroundColor: DARK, borderRadius: 16, paddingVertical: 24, paddingHorizontal: isMobile ? 16 : 48, width: "100%", maxWidth: 1100, alignSelf: "center", marginTop: 48 }}>
           {STATS.map((s, i) => (
             <View key={i} style={{ flex: 1, alignItems: "center", borderRightWidth: i < STATS.length - 1 ? 1 : 0, borderRightColor: "rgba(255,255,255,0.15)" }}>
               <Text style={{ fontSize: isMobile ? 20 : 28, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: PRIMARY }}>{s.value}</Text>
@@ -459,7 +459,7 @@ export default function LandingPage() {
 
       {/* Section : Comment ça marche */}
       <View {...(Platform.OS === "web" ? ({ className: "lp-reveal" } as Record<string, unknown>) : {})} style={{ paddingVertical: 80, paddingHorizontal: 16, backgroundColor: "#ffffff" }}>
-        <View style={{ maxWidth: 1100, width: "100%", alignSelf: "center" }}>
+        <View style={{ maxWidth: 1600, width: "100%", alignSelf: "center" }}>
           <Text style={{ fontSize: 12, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: PRIMARY, letterSpacing: 2, textTransform: "uppercase", textAlign: "center", marginBottom: 12 }}>COMMENT ÇA MARCHE</Text>
           <Text style={{ fontSize: isMobile ? 26 : 36, fontFamily: fonts.black, fontWeight: fontWeights.black, color: DARK, textAlign: "center", marginBottom: 12 }}>Trois étapes pour générer un acte juridique</Text>
           <Text style={{ fontSize: 16, color: TEXT_SEC, textAlign: "center", marginBottom: 48, maxWidth: 600, alignSelf: "center", lineHeight: 24 }}>Plus besoin d'attendre des heures votre avocat. Générez vos documents en quelques minutes.</Text>
@@ -482,7 +482,7 @@ export default function LandingPage() {
 
       {/* Section : Pour qui */}
       <View {...(Platform.OS === "web" ? ({ className: "lp-reveal" } as Record<string, unknown>) : {})} style={{ paddingVertical: 80, paddingHorizontal: 16, backgroundColor: BG_WARM }}>
-        <View style={{ maxWidth: 1100, width: "100%", alignSelf: "center" }}>
+        <View style={{ maxWidth: 1600, width: "100%", alignSelf: "center" }}>
           <Text style={{ fontSize: 12, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: "#2563eb", letterSpacing: 2, textTransform: "uppercase", textAlign: "center", marginBottom: 12 }}>POUR QUI</Text>
           <Text style={{ fontSize: isMobile ? 26 : 36, fontFamily: fonts.black, fontWeight: fontWeights.black, color: DARK, textAlign: "center", marginBottom: 12 }}>Conçu pour tous les acteurs du droit OHADA</Text>
           <Text style={{ fontSize: 16, color: TEXT_SEC, textAlign: "center", marginBottom: 48, maxWidth: 600, alignSelf: "center", lineHeight: 24 }}>Avocats, comptables, dirigeants, étudiants — chacun y trouve son intérêt.</Text>
@@ -502,7 +502,7 @@ export default function LandingPage() {
 
       {/* Section : Catalogue documents */}
       <View {...(Platform.OS === "web" ? ({ className: "lp-reveal" } as Record<string, unknown>) : {})} style={{ paddingVertical: 80, paddingHorizontal: 16, backgroundColor: "#ffffff" }}>
-        <View style={{ maxWidth: 1100, width: "100%", alignSelf: "center" }}>
+        <View style={{ maxWidth: 1600, width: "100%", alignSelf: "center" }}>
           <Text style={{ fontSize: 12, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: "#7c3aed", letterSpacing: 2, textTransform: "uppercase", textAlign: "center", marginBottom: 12 }}>59 MODÈLES DISPONIBLES</Text>
           <Text style={{ fontSize: isMobile ? 26 : 36, fontFamily: fonts.black, fontWeight: fontWeights.black, color: DARK, textAlign: "center", marginBottom: 12 }}>Tous vos actes juridiques en un endroit</Text>
           <Text style={{ fontSize: 16, color: TEXT_SEC, textAlign: "center", marginBottom: 48, maxWidth: 600, alignSelf: "center", lineHeight: 24 }}>Une bibliothèque complète couvrant la vie d'une société, de la constitution à la dissolution.</Text>
@@ -533,7 +533,7 @@ export default function LandingPage() {
 
       {/* Section : FAQ */}
       <View {...(Platform.OS === "web" ? ({ className: "lp-reveal" } as Record<string, unknown>) : {})} style={{ paddingVertical: 80, paddingHorizontal: 16, backgroundColor: BG_WARM }}>
-        <View style={{ maxWidth: 800, width: "100%", alignSelf: "center" }}>
+        <View style={{ maxWidth: 1100, width: "100%", alignSelf: "center" }}>
           <Text style={{ fontSize: 12, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: "#d97706", letterSpacing: 2, textTransform: "uppercase", textAlign: "center", marginBottom: 12 }}>QUESTIONS FRÉQUENTES</Text>
           <Text style={{ fontSize: isMobile ? 26 : 36, fontFamily: fonts.black, fontWeight: fontWeights.black, color: DARK, textAlign: "center", marginBottom: 48 }}>Tout ce qu'il faut savoir</Text>
           <View style={{ gap: 16 }}>
@@ -571,7 +571,7 @@ export default function LandingPage() {
 
       {/* Footer style app.normx-ai.com */}
       <View style={{ backgroundColor: "#0F2A42", borderTopWidth: 1, borderTopColor: "rgba(255,255,255,0.08)", paddingTop: 48, paddingHorizontal: 16 }}>
-        <View style={{ maxWidth: 1100, width: "100%", alignSelf: "center", flexDirection: isMobile ? "column" : "row", gap: isMobile ? 32 : 32, flexWrap: "wrap" }}>
+        <View style={{ maxWidth: 1600, width: "100%", alignSelf: "center", flexDirection: isMobile ? "column" : "row", gap: isMobile ? 32 : 32, flexWrap: "wrap" }}>
           {/* Brand */}
           <View style={{ flex: isMobile ? undefined : 1.5, minWidth: 240, marginBottom: isMobile ? 24 : 0 }}>
             <Text style={{ fontSize: 19, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: "#e8e6e1", marginBottom: 8 }}>
