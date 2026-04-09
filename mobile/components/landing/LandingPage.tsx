@@ -73,6 +73,37 @@ const STATS = [
   { value: "PDF", label: "Export immédiat" },
 ];
 
+const HOW_IT_WORKS = [
+  { num: "1", icon: "search-outline" as const, title: "Choisissez votre document", desc: "Parmi 59 modèles : statuts, PV, cessions, convocations, rapports — tous conformes OHADA." },
+  { num: "2", icon: "create-outline" as const, title: "Renseignez les informations", desc: "Un formulaire guidé collecte les données nécessaires : associés, capital, parts, clauses." },
+  { num: "3", icon: "download-outline" as const, title: "Téléchargez en Word/PDF", desc: "Document généré instantanément, prêt à signer. Conforme aux Actes uniformes OHADA." },
+];
+
+const POUR_QUI = [
+  { icon: "briefcase-outline" as const, color: "#D4A843", title: "Avocats & juristes", desc: "Gagnez du temps sur la rédaction des actes courants. Plus de copier-coller." },
+  { icon: "people-outline" as const, color: "#2563eb", title: "Cabinets comptables", desc: "Proposez des services juridiques à vos clients sans dépendre d'un avocat partenaire." },
+  { icon: "business-outline" as const, color: "#7c3aed", title: "Dirigeants & créateurs", desc: "Constituez votre société, organisez vos AG sans frais de rédaction excessifs." },
+  { icon: "school-outline" as const, color: "#d97706", title: "Étudiants & formateurs", desc: "Modèles pédagogiques pour comprendre la pratique du droit OHADA." },
+];
+
+const DOCS_CATEGORIES = [
+  { icon: "document-text-outline" as const, color: "#D4A843", title: "Statuts", count: 9, items: ["SARL", "SARLU", "SAS", "SASU", "SA", "SNC", "SCS", "GIE", "SP"] },
+  { icon: "people-outline" as const, color: "#2563eb", title: "Assemblées générales", count: 14, items: ["PV AGO", "PV AGE", "Convocations", "Feuilles présence", "Pouvoirs"] },
+  { icon: "swap-horizontal-outline" as const, color: "#7c3aed", title: "Cessions et titres", count: 8, items: ["Cession parts", "Cession actions", "Bulletins souscription", "Certificats"] },
+  { icon: "file-tray-full-outline" as const, color: "#059669", title: "Actes constitutifs", count: 12, items: ["Apports", "Augmentation capital", "Réduction capital", "Fusion"] },
+  { icon: "shield-checkmark-outline" as const, color: "#d97706", title: "Conformité & contrôle", count: 9, items: ["Rapports CAC", "Audit", "Conventions réglementées", "Approbations"] },
+  { icon: "alert-circle-outline" as const, color: "#ef4444", title: "Dissolution & liquidation", count: 7, items: ["Dissolution amiable", "Liquidation", "Clôture", "Radiation"] },
+];
+
+const FAQ = [
+  { q: "Les documents générés sont-ils conformes au droit OHADA ?", a: "Oui, tous les modèles sont rédigés conformément aux Actes uniformes OHADA en vigueur, notamment l'Acte uniforme sur le droit des sociétés commerciales et du GIE." },
+  { q: "Puis-je personnaliser les clauses des documents ?", a: "Oui, le formulaire de génération propose des clauses optionnelles pour chaque document (objet, durée, capital, gérance, etc.). Vous pouvez aussi modifier le document final dans Word." },
+  { q: "Dans quels formats les documents sont-ils exportés ?", a: "Tous les documents sont disponibles en formats Word (.docx) et PDF, prêts à imprimer et signer." },
+  { q: "Y a-t-il un assistant IA pour répondre à mes questions ?", a: "Oui, un assistant IA formé sur les Actes uniformes OHADA est disponible 24h/24 pour répondre à vos questions sur le droit des sociétés et le droit commercial général." },
+  { q: "Le service est-il disponible dans tous les pays OHADA ?", a: "Oui, le droit OHADA s'applique uniformément dans les 17 États membres. Les modèles sont valables dans tous ces pays." },
+  { q: "Comment puis-je m'inscrire ?", a: "Cliquez sur « Se connecter » en haut de la page. L'authentification se fait via NORMX AI et donne accès à toute la suite logicielle." },
+];
+
 function FeatureSection({
   isMobile, reverse, label, labelColor, title, description, checks,
   mockupIcon, mockupColor, mockupTitle, mockupLines,
@@ -424,6 +455,99 @@ export default function LandingPage() {
             "Responsabilité|Limitée aux apports",
           ]}
         />
+      </View>
+
+      {/* Section : Comment ça marche */}
+      <View {...(Platform.OS === "web" ? ({ className: "lp-reveal" } as Record<string, unknown>) : {})} style={{ paddingVertical: 80, paddingHorizontal: 16, backgroundColor: "#ffffff" }}>
+        <View style={{ maxWidth: 1100, width: "100%", alignSelf: "center" }}>
+          <Text style={{ fontSize: 12, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: PRIMARY, letterSpacing: 2, textTransform: "uppercase", textAlign: "center", marginBottom: 12 }}>COMMENT ÇA MARCHE</Text>
+          <Text style={{ fontSize: isMobile ? 26 : 36, fontFamily: fonts.black, fontWeight: fontWeights.black, color: DARK, textAlign: "center", marginBottom: 12 }}>Trois étapes pour générer un acte juridique</Text>
+          <Text style={{ fontSize: 16, color: TEXT_SEC, textAlign: "center", marginBottom: 48, maxWidth: 600, alignSelf: "center", lineHeight: 24 }}>Plus besoin d'attendre des heures votre avocat. Générez vos documents en quelques minutes.</Text>
+          <View style={{ flexDirection: isMobile ? "column" : "row", gap: 24 }}>
+            {HOW_IT_WORKS.map((s, i) => (
+              <View key={i} {...(Platform.OS === "web" ? ({ className: "lp-reveal-scale" } as Record<string, unknown>) : {})} style={{ flex: 1, padding: 28, borderRadius: 16, borderWidth: 1, borderColor: "rgba(0,0,0,0.06)", backgroundColor: BG_WARM, alignItems: "center" }}>
+                <View style={{ width: 56, height: 56, borderRadius: 28, backgroundColor: PRIMARY, alignItems: "center", justifyContent: "center", marginBottom: 16, position: "relative" }}>
+                  <Ionicons name={s.icon} size={28} color={DARK} />
+                  <View style={{ position: "absolute", top: -8, right: -8, width: 24, height: 24, borderRadius: 12, backgroundColor: DARK, alignItems: "center", justifyContent: "center" }}>
+                    <Text style={{ fontSize: 11, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: PRIMARY }}>{s.num}</Text>
+                  </View>
+                </View>
+                <Text style={{ fontSize: 18, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: DARK, marginBottom: 8, textAlign: "center" }}>{s.title}</Text>
+                <Text style={{ fontSize: 14, color: TEXT_SEC, lineHeight: 22, textAlign: "center", fontFamily: fonts.regular }}>{s.desc}</Text>
+              </View>
+            ))}
+          </View>
+        </View>
+      </View>
+
+      {/* Section : Pour qui */}
+      <View {...(Platform.OS === "web" ? ({ className: "lp-reveal" } as Record<string, unknown>) : {})} style={{ paddingVertical: 80, paddingHorizontal: 16, backgroundColor: BG_WARM }}>
+        <View style={{ maxWidth: 1100, width: "100%", alignSelf: "center" }}>
+          <Text style={{ fontSize: 12, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: "#2563eb", letterSpacing: 2, textTransform: "uppercase", textAlign: "center", marginBottom: 12 }}>POUR QUI</Text>
+          <Text style={{ fontSize: isMobile ? 26 : 36, fontFamily: fonts.black, fontWeight: fontWeights.black, color: DARK, textAlign: "center", marginBottom: 12 }}>Conçu pour tous les acteurs du droit OHADA</Text>
+          <Text style={{ fontSize: 16, color: TEXT_SEC, textAlign: "center", marginBottom: 48, maxWidth: 600, alignSelf: "center", lineHeight: 24 }}>Avocats, comptables, dirigeants, étudiants — chacun y trouve son intérêt.</Text>
+          <View style={{ flexDirection: isMobile ? "column" : "row", flexWrap: "wrap", gap: 20 }}>
+            {POUR_QUI.map((p, i) => (
+              <View key={i} {...(Platform.OS === "web" ? ({ className: "lp-reveal-scale" } as Record<string, unknown>) : {})} style={{ flex: isMobile ? undefined : 1, minWidth: 240, padding: 24, borderRadius: 16, backgroundColor: "#fff", borderWidth: 1, borderColor: "rgba(0,0,0,0.06)" }}>
+                <View style={{ width: 48, height: 48, borderRadius: 12, backgroundColor: `${p.color}15`, alignItems: "center", justifyContent: "center", marginBottom: 16 }}>
+                  <Ionicons name={p.icon} size={24} color={p.color} />
+                </View>
+                <Text style={{ fontSize: 16, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: DARK, marginBottom: 8 }}>{p.title}</Text>
+                <Text style={{ fontSize: 13, color: TEXT_SEC, lineHeight: 20, fontFamily: fonts.regular }}>{p.desc}</Text>
+              </View>
+            ))}
+          </View>
+        </View>
+      </View>
+
+      {/* Section : Catalogue documents */}
+      <View {...(Platform.OS === "web" ? ({ className: "lp-reveal" } as Record<string, unknown>) : {})} style={{ paddingVertical: 80, paddingHorizontal: 16, backgroundColor: "#ffffff" }}>
+        <View style={{ maxWidth: 1100, width: "100%", alignSelf: "center" }}>
+          <Text style={{ fontSize: 12, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: "#7c3aed", letterSpacing: 2, textTransform: "uppercase", textAlign: "center", marginBottom: 12 }}>59 MODÈLES DISPONIBLES</Text>
+          <Text style={{ fontSize: isMobile ? 26 : 36, fontFamily: fonts.black, fontWeight: fontWeights.black, color: DARK, textAlign: "center", marginBottom: 12 }}>Tous vos actes juridiques en un endroit</Text>
+          <Text style={{ fontSize: 16, color: TEXT_SEC, textAlign: "center", marginBottom: 48, maxWidth: 600, alignSelf: "center", lineHeight: 24 }}>Une bibliothèque complète couvrant la vie d'une société, de la constitution à la dissolution.</Text>
+          <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 20, justifyContent: "center" }}>
+            {DOCS_CATEGORIES.map((c, i) => (
+              <View key={i} {...(Platform.OS === "web" ? ({ className: "lp-reveal-scale lp-feature-mockup" } as Record<string, unknown>) : {})} style={{ width: isMobile ? "100%" : "31%", minWidth: 280, padding: 24, borderRadius: 16, backgroundColor: BG_WARM, borderWidth: 1, borderColor: "rgba(0,0,0,0.06)" }}>
+                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
+                  <View style={{ width: 44, height: 44, borderRadius: 12, backgroundColor: `${c.color}15`, alignItems: "center", justifyContent: "center" }}>
+                    <Ionicons name={c.icon} size={22} color={c.color} />
+                  </View>
+                  <View style={{ paddingVertical: 4, paddingHorizontal: 12, backgroundColor: `${c.color}15`, borderRadius: 100 }}>
+                    <Text style={{ fontSize: 12, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: c.color }}>{c.count} modèles</Text>
+                  </View>
+                </View>
+                <Text style={{ fontSize: 17, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: DARK, marginBottom: 10 }}>{c.title}</Text>
+                <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 6 }}>
+                  {c.items.map((item, j) => (
+                    <View key={j} style={{ paddingVertical: 4, paddingHorizontal: 10, backgroundColor: "#fff", borderRadius: 6, borderWidth: 1, borderColor: "rgba(0,0,0,0.06)" }}>
+                      <Text style={{ fontSize: 11, color: TEXT_SEC, fontFamily: fonts.regular }}>{item}</Text>
+                    </View>
+                  ))}
+                </View>
+              </View>
+            ))}
+          </View>
+        </View>
+      </View>
+
+      {/* Section : FAQ */}
+      <View {...(Platform.OS === "web" ? ({ className: "lp-reveal" } as Record<string, unknown>) : {})} style={{ paddingVertical: 80, paddingHorizontal: 16, backgroundColor: BG_WARM }}>
+        <View style={{ maxWidth: 800, width: "100%", alignSelf: "center" }}>
+          <Text style={{ fontSize: 12, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: "#d97706", letterSpacing: 2, textTransform: "uppercase", textAlign: "center", marginBottom: 12 }}>QUESTIONS FRÉQUENTES</Text>
+          <Text style={{ fontSize: isMobile ? 26 : 36, fontFamily: fonts.black, fontWeight: fontWeights.black, color: DARK, textAlign: "center", marginBottom: 48 }}>Tout ce qu'il faut savoir</Text>
+          <View style={{ gap: 16 }}>
+            {FAQ.map((f, i) => (
+              <View key={i} {...(Platform.OS === "web" ? ({ className: "lp-reveal-scale" } as Record<string, unknown>) : {})} style={{ padding: 24, borderRadius: 12, backgroundColor: "#fff", borderWidth: 1, borderColor: "rgba(0,0,0,0.06)" }}>
+                <View style={{ flexDirection: "row", alignItems: "flex-start", gap: 12, marginBottom: 8 }}>
+                  <Ionicons name="help-circle" size={22} color={PRIMARY} style={{ marginTop: 1 }} />
+                  <Text style={{ fontSize: 16, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: DARK, flex: 1 }}>{f.q}</Text>
+                </View>
+                <Text style={{ fontSize: 14, color: TEXT_SEC, lineHeight: 22, marginLeft: 34, fontFamily: fonts.regular }}>{f.a}</Text>
+              </View>
+            ))}
+          </View>
+        </View>
       </View>
 
       {/* CTA */}
