@@ -23,15 +23,28 @@ function useInjectAnimations() {
       @keyframes heroScaleIn { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
       @keyframes heroShimmer { 0% { background-position: -1000px 0; } 100% { background-position: 1000px 0; } }
 
-      /* Scroll reveal — animations qui se déclenchent au scroll */
-      .lp-reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+      /* Scroll reveal — fluide avec cubic-bezier doux */
+      .lp-reveal { opacity: 0; transform: translateY(60px); transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1), transform 1.1s cubic-bezier(0.16, 1, 0.3, 1); }
       .lp-reveal.visible { opacity: 1; transform: translateY(0); }
-      .lp-reveal-left { opacity: 0; transform: translateX(-40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+      .lp-reveal-left { opacity: 0; transform: translateX(-60px); transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1), transform 1.1s cubic-bezier(0.16, 1, 0.3, 1); }
       .lp-reveal-left.visible { opacity: 1; transform: translateX(0); }
-      .lp-reveal-right { opacity: 0; transform: translateX(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+      .lp-reveal-right { opacity: 0; transform: translateX(60px); transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1), transform 1.1s cubic-bezier(0.16, 1, 0.3, 1); }
       .lp-reveal-right.visible { opacity: 1; transform: translateX(0); }
-      .lp-reveal-scale { opacity: 0; transform: scale(0.92); transition: opacity 0.7s ease, transform 0.7s ease; }
+      .lp-reveal-scale { opacity: 0; transform: scale(0.85); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1); }
       .lp-reveal-scale.visible { opacity: 1; transform: scale(1); }
+      .lp-reveal-blur { opacity: 0; filter: blur(10px); transform: translateY(40px); transition: opacity 1.2s ease, filter 1.2s ease, transform 1.2s ease; }
+      .lp-reveal-blur.visible { opacity: 1; filter: blur(0); transform: translateY(0); }
+
+      /* Stagger : cascade automatique pour les enfants directs */
+      .lp-stagger > * { opacity: 0; transform: translateY(40px); transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
+      .lp-stagger.visible > *:nth-child(1) { transition-delay: 0.05s; opacity: 1; transform: translateY(0); }
+      .lp-stagger.visible > *:nth-child(2) { transition-delay: 0.15s; opacity: 1; transform: translateY(0); }
+      .lp-stagger.visible > *:nth-child(3) { transition-delay: 0.25s; opacity: 1; transform: translateY(0); }
+      .lp-stagger.visible > *:nth-child(4) { transition-delay: 0.35s; opacity: 1; transform: translateY(0); }
+      .lp-stagger.visible > *:nth-child(5) { transition-delay: 0.45s; opacity: 1; transform: translateY(0); }
+      .lp-stagger.visible > *:nth-child(6) { transition-delay: 0.55s; opacity: 1; transform: translateY(0); }
+      .lp-stagger.visible > *:nth-child(7) { transition-delay: 0.65s; opacity: 1; transform: translateY(0); }
+      .lp-stagger.visible > *:nth-child(8) { transition-delay: 0.75s; opacity: 1; transform: translateY(0); }
 
       /* Hover effects */
       .lp-cta-btn { transition: all 0.25s ease; }
@@ -53,7 +66,7 @@ function useInjectAnimations() {
           }
         });
       }, { threshold: 0.15 });
-      const reveals = document.querySelectorAll(".lp-reveal, .lp-reveal-left, .lp-reveal-right, .lp-reveal-scale");
+      const reveals = document.querySelectorAll(".lp-reveal, .lp-reveal-left, .lp-reveal-right, .lp-reveal-scale, .lp-reveal-blur, .lp-stagger");
       reveals.forEach((el) => observer.observe(el));
       return () => observer.disconnect();
     }
@@ -463,9 +476,9 @@ export default function LandingPage() {
           <Text style={{ fontSize: 12, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: PRIMARY, letterSpacing: 2, textTransform: "uppercase", textAlign: "center", marginBottom: 12 }}>COMMENT ÇA MARCHE</Text>
           <Text style={{ fontSize: isMobile ? 26 : 36, fontFamily: fonts.black, fontWeight: fontWeights.black, color: DARK, textAlign: "center", marginBottom: 12 }}>Trois étapes pour générer un acte juridique</Text>
           <Text style={{ fontSize: 16, color: TEXT_SEC, textAlign: "center", marginBottom: 48, maxWidth: 600, alignSelf: "center", lineHeight: 24 }}>Plus besoin d'attendre des heures votre avocat. Générez vos documents en quelques minutes.</Text>
-          <View style={{ flexDirection: isMobile ? "column" : "row", gap: 24 }}>
+          <View {...(Platform.OS === "web" ? ({ className: "lp-stagger" } as Record<string, unknown>) : {})} style={{ flexDirection: isMobile ? "column" : "row", gap: 24 }}>
             {HOW_IT_WORKS.map((s, i) => (
-              <View key={i} {...(Platform.OS === "web" ? ({ className: "lp-reveal-scale" } as Record<string, unknown>) : {})} style={{ flex: 1, padding: 28, borderRadius: 16, borderWidth: 1, borderColor: "rgba(0,0,0,0.06)", backgroundColor: BG_WARM, alignItems: "center" }}>
+              <View key={i} style={{ flex: 1, padding: 28, borderRadius: 16, borderWidth: 1, borderColor: "rgba(0,0,0,0.06)", backgroundColor: BG_WARM, alignItems: "center" }}>
                 <View style={{ width: 56, height: 56, borderRadius: 28, backgroundColor: PRIMARY, alignItems: "center", justifyContent: "center", marginBottom: 16, position: "relative" }}>
                   <Ionicons name={s.icon} size={28} color={DARK} />
                   <View style={{ position: "absolute", top: -8, right: -8, width: 24, height: 24, borderRadius: 12, backgroundColor: DARK, alignItems: "center", justifyContent: "center" }}>
@@ -486,9 +499,9 @@ export default function LandingPage() {
           <Text style={{ fontSize: 12, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: "#2563eb", letterSpacing: 2, textTransform: "uppercase", textAlign: "center", marginBottom: 12 }}>POUR QUI</Text>
           <Text style={{ fontSize: isMobile ? 26 : 36, fontFamily: fonts.black, fontWeight: fontWeights.black, color: DARK, textAlign: "center", marginBottom: 12 }}>Conçu pour tous les acteurs du droit OHADA</Text>
           <Text style={{ fontSize: 16, color: TEXT_SEC, textAlign: "center", marginBottom: 48, maxWidth: 600, alignSelf: "center", lineHeight: 24 }}>Avocats, comptables, dirigeants, étudiants — chacun y trouve son intérêt.</Text>
-          <View style={{ flexDirection: isMobile ? "column" : "row", flexWrap: "wrap", gap: 20 }}>
+          <View {...(Platform.OS === "web" ? ({ className: "lp-stagger" } as Record<string, unknown>) : {})} style={{ flexDirection: isMobile ? "column" : "row", flexWrap: "wrap", gap: 20 }}>
             {POUR_QUI.map((p, i) => (
-              <View key={i} {...(Platform.OS === "web" ? ({ className: "lp-reveal-scale" } as Record<string, unknown>) : {})} style={{ flex: isMobile ? undefined : 1, minWidth: 240, padding: 24, borderRadius: 16, backgroundColor: "#fff", borderWidth: 1, borderColor: "rgba(0,0,0,0.06)" }}>
+              <View key={i} style={{ flex: isMobile ? undefined : 1, minWidth: 240, padding: 24, borderRadius: 16, backgroundColor: "#fff", borderWidth: 1, borderColor: "rgba(0,0,0,0.06)" }}>
                 <View style={{ width: 48, height: 48, borderRadius: 12, backgroundColor: `${p.color}15`, alignItems: "center", justifyContent: "center", marginBottom: 16 }}>
                   <Ionicons name={p.icon} size={24} color={p.color} />
                 </View>
@@ -506,9 +519,9 @@ export default function LandingPage() {
           <Text style={{ fontSize: 12, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: "#7c3aed", letterSpacing: 2, textTransform: "uppercase", textAlign: "center", marginBottom: 12 }}>59 MODÈLES DISPONIBLES</Text>
           <Text style={{ fontSize: isMobile ? 26 : 36, fontFamily: fonts.black, fontWeight: fontWeights.black, color: DARK, textAlign: "center", marginBottom: 12 }}>Tous vos actes juridiques en un endroit</Text>
           <Text style={{ fontSize: 16, color: TEXT_SEC, textAlign: "center", marginBottom: 48, maxWidth: 600, alignSelf: "center", lineHeight: 24 }}>Une bibliothèque complète couvrant la vie d'une société, de la constitution à la dissolution.</Text>
-          <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 20, justifyContent: "center" }}>
+          <View {...(Platform.OS === "web" ? ({ className: "lp-stagger" } as Record<string, unknown>) : {})} style={{ flexDirection: "row", flexWrap: "wrap", gap: 20, justifyContent: "center" }}>
             {DOCS_CATEGORIES.map((c, i) => (
-              <View key={i} {...(Platform.OS === "web" ? ({ className: "lp-reveal-scale lp-feature-mockup" } as Record<string, unknown>) : {})} style={{ width: isMobile ? "100%" : "31%", minWidth: 280, padding: 24, borderRadius: 16, backgroundColor: BG_WARM, borderWidth: 1, borderColor: "rgba(0,0,0,0.06)" }}>
+              <View key={i} {...(Platform.OS === "web" ? ({ className: "lp-feature-mockup" } as Record<string, unknown>) : {})} style={{ width: isMobile ? "100%" : "31%", minWidth: 280, padding: 24, borderRadius: 16, backgroundColor: BG_WARM, borderWidth: 1, borderColor: "rgba(0,0,0,0.06)" }}>
                 <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
                   <View style={{ width: 44, height: 44, borderRadius: 12, backgroundColor: `${c.color}15`, alignItems: "center", justifyContent: "center" }}>
                     <Ionicons name={c.icon} size={22} color={c.color} />
@@ -536,9 +549,9 @@ export default function LandingPage() {
         <View style={{ maxWidth: 1100, width: "100%", alignSelf: "center" }}>
           <Text style={{ fontSize: 12, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: "#d97706", letterSpacing: 2, textTransform: "uppercase", textAlign: "center", marginBottom: 12 }}>QUESTIONS FRÉQUENTES</Text>
           <Text style={{ fontSize: isMobile ? 26 : 36, fontFamily: fonts.black, fontWeight: fontWeights.black, color: DARK, textAlign: "center", marginBottom: 48 }}>Tout ce qu'il faut savoir</Text>
-          <View style={{ gap: 16 }}>
+          <View {...(Platform.OS === "web" ? ({ className: "lp-stagger" } as Record<string, unknown>) : {})} style={{ gap: 16 }}>
             {FAQ.map((f, i) => (
-              <View key={i} {...(Platform.OS === "web" ? ({ className: "lp-reveal-scale" } as Record<string, unknown>) : {})} style={{ padding: 24, borderRadius: 12, backgroundColor: "#fff", borderWidth: 1, borderColor: "rgba(0,0,0,0.06)" }}>
+              <View key={i} style={{ padding: 24, borderRadius: 12, backgroundColor: "#fff", borderWidth: 1, borderColor: "rgba(0,0,0,0.06)" }}>
                 <View style={{ flexDirection: "row", alignItems: "flex-start", gap: 12, marginBottom: 8 }}>
                   <Ionicons name="help-circle" size={22} color={PRIMARY} style={{ marginTop: 1 }} />
                   <Text style={{ fontSize: 16, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: DARK, flex: 1 }}>{f.q}</Text>
