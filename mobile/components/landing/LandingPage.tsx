@@ -58,28 +58,61 @@ function FeatureSection({
   );
 
   const mockup = (
-    <View style={{ flex: 1, minWidth: 280 }}>
-      <View style={{ backgroundColor: "#ffffff", borderRadius: 16, borderWidth: 1, borderColor: "rgba(0,0,0,0.08)", shadowColor: "#000", shadowOffset: { width: 0, height: 8 }, shadowOpacity: 0.06, shadowRadius: 24, overflow: "hidden" }}>
-        <View style={{ height: 36, backgroundColor: "#f3f4f6", borderBottomWidth: 1, borderBottomColor: "rgba(0,0,0,0.06)", flexDirection: "row", alignItems: "center", paddingHorizontal: 14, gap: 6 }}>
-          <View style={{ width: 10, height: 10, borderRadius: 5, backgroundColor: "#ef4444" }} />
-          <View style={{ width: 10, height: 10, borderRadius: 5, backgroundColor: "#f59e0b" }} />
-          <View style={{ width: 10, height: 10, borderRadius: 5, backgroundColor: "#22c55e" }} />
-        </View>
-        <View style={{ padding: 20 }}>
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 16 }}>
-            <View style={{ width: 36, height: 36, borderRadius: 10, backgroundColor: `${mockupColor}15`, alignItems: "center", justifyContent: "center" }}>
-              <Ionicons name={mockupIcon} size={20} color={mockupColor} />
-            </View>
-            <Text style={{ fontSize: 14, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: DARK }}>{mockupTitle}</Text>
+    <View style={{ flex: 1, minWidth: 280, maxWidth: 480 }}>
+      {/* MacBook Air frame */}
+      <View style={{ backgroundColor: "#e2e2e2", borderRadius: 14, padding: 6, paddingBottom: 0, borderWidth: 1, borderColor: "#d4d4d4" }}>
+        {/* Caméra notch */}
+        <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: "#1a1a1a", alignSelf: "center", marginBottom: 4, borderWidth: 1, borderColor: "#333" }} />
+        {/* Ecran */}
+        <View style={{ backgroundColor: "#fff", borderRadius: 2, overflow: "hidden" }}>
+          {/* Topbar */}
+          <View style={{ backgroundColor: DARK, height: 30, flexDirection: "row", alignItems: "center", paddingHorizontal: 10, gap: 6 }}>
+            <View style={{ width: 7, height: 7, borderRadius: 4, backgroundColor: "#ef4444" }} />
+            <View style={{ width: 7, height: 7, borderRadius: 4, backgroundColor: "#f59e0b" }} />
+            <View style={{ width: 7, height: 7, borderRadius: 4, backgroundColor: "#22c55e" }} />
+            <Text style={{ flex: 1, textAlign: "center", fontSize: 9, fontWeight: "600", color: "rgba(255,255,255,0.6)" }}>{mockupTitle}</Text>
           </View>
-          {mockupLines.map((line, i) => (
-            <View key={i} style={{ flexDirection: "row", justifyContent: "space-between", paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: "#f3f4f6" }}>
-              <Text style={{ fontSize: 12, color: TEXT_SEC, fontFamily: fonts.regular }}>{line.split("|")[0]}</Text>
-              <Text style={{ fontSize: 12, color: DARK, fontFamily: fonts.bold, fontWeight: fontWeights.bold }}>{line.split("|")[1] || ""}</Text>
+          {/* Content */}
+          <View style={{ padding: 14 }}>
+            {/* Header avec icône */}
+            <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
+              <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+                <View style={{ width: 28, height: 28, borderRadius: 8, backgroundColor: `${mockupColor}15`, alignItems: "center", justifyContent: "center" }}>
+                  <Ionicons name={mockupIcon} size={16} color={mockupColor} />
+                </View>
+                <Text style={{ fontSize: 11, fontWeight: "800", color: DARK }}>{mockupTitle}</Text>
+              </View>
+              <View style={{ paddingVertical: 2, paddingHorizontal: 8, backgroundColor: `${mockupColor}15`, borderRadius: 4 }}>
+                <Text style={{ fontSize: 8, fontWeight: "700", color: mockupColor }}>OHADA</Text>
+              </View>
             </View>
-          ))}
+            {/* Table */}
+            <View style={{ backgroundColor: "#f9fafb", borderRadius: 4, overflow: "hidden" }}>
+              <View style={{ flexDirection: "row", paddingVertical: 5, paddingHorizontal: 8, backgroundColor: "#f3f4f6" }}>
+                <Text style={{ flex: 2, fontSize: 8, fontWeight: "700", color: TEXT_SEC, letterSpacing: 0.3 }}>RUBRIQUE</Text>
+                <Text style={{ flex: 1, fontSize: 8, fontWeight: "700", color: TEXT_SEC, textAlign: "right", letterSpacing: 0.3 }}>VALEUR</Text>
+              </View>
+              {mockupLines.map((line, i) => (
+                <View key={i} style={{ flexDirection: "row", paddingVertical: 6, paddingHorizontal: 8, borderBottomWidth: 1, borderBottomColor: "#e5e7eb" }}>
+                  <Text style={{ flex: 2, fontSize: 9, color: "#374151" }}>{line.split("|")[0]}</Text>
+                  <Text style={{ flex: 1, fontSize: 9, fontWeight: "600", color: i === 0 ? mockupColor : DARK, textAlign: "right" }}>{line.split("|")[1] || ""}</Text>
+                </View>
+              ))}
+            </View>
+            {/* Footer */}
+            <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 8, padding: 6, backgroundColor: "#f9fafb", borderRadius: 4 }}>
+              <Text style={{ fontSize: 9, color: TEXT_SEC }}>Document généré</Text>
+              <Text style={{ fontSize: 9, fontWeight: "700", color: GREEN }}>Conforme ✓</Text>
+            </View>
+          </View>
         </View>
       </View>
+      {/* MacBook Air base */}
+      <View style={{ height: 8, backgroundColor: "#d1d1d1", borderBottomLeftRadius: 2, borderBottomRightRadius: 2, marginHorizontal: 20 }}>
+        <View style={{ width: 60, height: 3, backgroundColor: "#b0b0b0", borderBottomLeftRadius: 2, borderBottomRightRadius: 2, alignSelf: "center" }} />
+      </View>
+      {/* Ombre */}
+      <View style={{ height: 4, marginHorizontal: 40, ...(Platform.OS === "web" ? { background: "radial-gradient(ellipse at center, rgba(0,0,0,0.1) 0%, transparent 70%)" } as Record<string, string> : {}) }} />
     </View>
   );
 
