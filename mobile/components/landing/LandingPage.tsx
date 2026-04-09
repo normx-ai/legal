@@ -158,7 +158,7 @@ function FeatureSection({
   const webProps = (cls: string) => Platform.OS === "web" ? ({ className: cls } as Record<string, unknown>) : {};
 
   return (
-    <View style={{ flexDirection: isMobile ? "column" : (reverse ? "row-reverse" : "row"), gap: isMobile ? 32 : 60, paddingVertical: 64, paddingHorizontal: 24, maxWidth: 1100, alignSelf: "center", width: "100%" }}>
+    <View style={{ flexDirection: isMobile ? "column" : (reverse ? "row-reverse" : "row"), gap: isMobile ? 32 : 60, paddingVertical: 64, paddingHorizontal: 16, maxWidth: 1100, alignSelf: "center", width: "100%" }}>
       <View {...webProps(reverse ? "lp-reveal-right" : "lp-reveal-left")} style={{ flex: 1, minWidth: 280 }}>
         {content}
       </View>
@@ -179,7 +179,7 @@ export default function LandingPage() {
 
       {/* Header — Nav app.normx-ai.com style */}
       <View style={{ position: "absolute", top: 0, left: 0, right: 0, zIndex: 100, backgroundColor: "rgba(255,255,255,0.92)", borderBottomWidth: 1, borderBottomColor: "rgba(0,0,0,0.08)", ...(Platform.OS === "web" ? { backdropFilter: "blur(20px)" } as Record<string, string> : {}) }}>
-        <View style={{ flexDirection: "row", alignItems: "center", height: 64, paddingHorizontal: 24, maxWidth: 1200, width: "100%", alignSelf: "center" }}>
+        <View style={{ flexDirection: "row", alignItems: "center", height: 64, paddingHorizontal: 16, maxWidth: 1200, width: "100%", alignSelf: "center" }}>
           {/* Logo */}
           <TouchableOpacity onPress={() => Platform.OS === "web" && window.scrollTo({ top: 0, behavior: "smooth" })} style={{ flexDirection: "row", alignItems: "center" }}>
             <Image source={require("@/assets/logo-horizontal.png")} style={{ height: 30, width: 130 }} resizeMode="contain" />
@@ -207,7 +207,7 @@ export default function LandingPage() {
       <View style={{ height: 64 }} />
 
       {/* Hero */}
-      <View style={{ paddingTop: isMobile ? 60 : 100, paddingBottom: 60, paddingHorizontal: 24, backgroundColor: BG_WARM, position: "relative", overflow: "hidden" }}>
+      <View style={{ paddingTop: isMobile ? 60 : 100, paddingBottom: 60, paddingHorizontal: 16, backgroundColor: BG_WARM, position: "relative", overflow: "hidden" }}>
         {/* Blobs décoratifs */}
         {Platform.OS === "web" && !isMobile && (
           <>
@@ -427,7 +427,7 @@ export default function LandingPage() {
       </View>
 
       {/* CTA */}
-      <View {...(Platform.OS === "web" ? ({ className: "lp-reveal-scale" } as Record<string, unknown>) : {})} style={{ alignItems: "center", paddingVertical: 80, paddingHorizontal: 24, backgroundColor: "#ffffff", position: "relative", overflow: "hidden" }}>
+      <View {...(Platform.OS === "web" ? ({ className: "lp-reveal-scale" } as Record<string, unknown>) : {})} style={{ alignItems: "center", paddingVertical: 80, paddingHorizontal: 16, backgroundColor: "#ffffff", position: "relative", overflow: "hidden" }}>
         {Platform.OS === "web" && (
           <View style={{ position: "absolute", top: 40, left: "50%", marginLeft: -300, width: 600, height: 200, borderRadius: 100, backgroundColor: "rgba(212,168,67,0.12)", ...({ filter: "blur(80px)", animationName: "heroGlow", animationDuration: "5s", animationIterationCount: "infinite" } as Record<string, string>) }} />
         )}
@@ -446,7 +446,7 @@ export default function LandingPage() {
       </View>
 
       {/* Footer style app.normx-ai.com */}
-      <View style={{ backgroundColor: "#0F2A42", borderTopWidth: 1, borderTopColor: "rgba(255,255,255,0.08)", paddingTop: 48, paddingHorizontal: 24 }}>
+      <View style={{ backgroundColor: "#0F2A42", borderTopWidth: 1, borderTopColor: "rgba(255,255,255,0.08)", paddingTop: 48, paddingHorizontal: 16 }}>
         <View style={{ maxWidth: 1100, width: "100%", alignSelf: "center", flexDirection: isMobile ? "column" : "row", gap: isMobile ? 32 : 32, flexWrap: "wrap" }}>
           {/* Brand */}
           <View style={{ flex: isMobile ? undefined : 1.5, minWidth: 240, marginBottom: isMobile ? 24 : 0 }}>
@@ -469,7 +469,7 @@ export default function LandingPage() {
             <Text style={{ fontSize: 12, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: "#e8e6e1", marginBottom: 14, textTransform: "uppercase", letterSpacing: 1 }}>Contact</Text>
             <TouchableOpacity onPress={() => Platform.OS === "web" && window.open("mailto:info-contact@normx-ai.com")}><Text style={{ fontSize: 14, color: PRIMARY, paddingVertical: 3, fontFamily: fonts.regular }}>info-contact@normx-ai.com</Text></TouchableOpacity>
             <TouchableOpacity onPress={() => Platform.OS === "web" && window.open("mailto:support@normx-ai.com")}><Text style={{ fontSize: 14, color: "rgba(255,255,255,0.6)", paddingVertical: 3, fontFamily: fonts.regular }}>support@normx-ai.com</Text></TouchableOpacity>
-            <Text style={{ fontSize: 14, color: "rgba(255,255,255,0.55)", paddingVertical: 3, fontFamily: fonts.regular }}>5/7 rue Benjamin Raspail, 60100 Creil</Text>
+            <Text style={{ fontSize: 14, color: "rgba(255,255,255,0.55)", paddingVertical: 3, fontFamily: fonts.regular }}>71 rue Daire, 80000 Amiens</Text>
           </View>
           {/* Legal */}
           <View style={{ flex: isMobile ? undefined : 1, minWidth: 160 }}>
@@ -482,7 +482,7 @@ export default function LandingPage() {
         {/* Footer bottom */}
         <View style={{ marginTop: 40, paddingVertical: 20, borderTopWidth: 1, borderTopColor: "rgba(255,255,255,0.06)", alignItems: "center" }}>
           <Text style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", fontFamily: fonts.regular }}>
-            © 2026 NORMX AI SAS — 5/7 rue Benjamin Raspail, 60100 Creil, France
+            © 2026 NORMX AI SAS — 71 rue Daire, 80000 Amiens, France
           </Text>
         </View>
       </View>
