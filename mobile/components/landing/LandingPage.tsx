@@ -15,9 +15,48 @@ function useInjectAnimations() {
     style.textContent = `
       @keyframes heroFadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
       @keyframes heroSlideRight { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
+      @keyframes heroSlideLeft { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
       @keyframes heroPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(212,168,67,0); } 50% { box-shadow: 0 0 12px 2px rgba(212,168,67,0.12); } }
+      @keyframes heroFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+      @keyframes heroGlow { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.7; } }
+      @keyframes heroSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+      @keyframes heroScaleIn { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
+      @keyframes heroShimmer { 0% { background-position: -1000px 0; } 100% { background-position: 1000px 0; } }
+
+      /* Scroll reveal — animations qui se déclenchent au scroll */
+      .lp-reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+      .lp-reveal.visible { opacity: 1; transform: translateY(0); }
+      .lp-reveal-left { opacity: 0; transform: translateX(-40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+      .lp-reveal-left.visible { opacity: 1; transform: translateX(0); }
+      .lp-reveal-right { opacity: 0; transform: translateX(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+      .lp-reveal-right.visible { opacity: 1; transform: translateX(0); }
+      .lp-reveal-scale { opacity: 0; transform: scale(0.92); transition: opacity 0.7s ease, transform 0.7s ease; }
+      .lp-reveal-scale.visible { opacity: 1; transform: scale(1); }
+
+      /* Hover effects */
+      .lp-cta-btn { transition: all 0.25s ease; }
+      .lp-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 24px rgba(212,168,67,0.25); }
+      .lp-feature-mockup { transition: transform 0.4s ease, box-shadow 0.4s ease; }
+      .lp-feature-mockup:hover { transform: translateY(-4px); }
+
+      /* Floating decorative blobs */
+      .lp-blob { position: absolute; border-radius: 50%; filter: blur(60px); pointer-events: none; animation: heroFloat 6s ease-in-out infinite; }
     `;
     document.head.appendChild(style);
+
+    // Intersection observer pour scroll reveal
+    if (typeof IntersectionObserver !== "undefined") {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      }, { threshold: 0.15 });
+      const reveals = document.querySelectorAll(".lp-reveal, .lp-reveal-left, .lp-reveal-right, .lp-reveal-scale");
+      reveals.forEach((el) => observer.observe(el));
+      return () => observer.disconnect();
+    }
   }, []);
 }
 
@@ -44,7 +83,7 @@ function FeatureSection({
   mockupTitle: string; mockupLines: string[];
 }) {
   const content = (
-    <View style={{ flex: 1, minWidth: 280 }}>
+    <View>
       <Text style={{ fontSize: 12, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: labelColor, letterSpacing: 2, textTransform: "uppercase", marginBottom: 12 }}>{label}</Text>
       <Text style={{ fontSize: isMobile ? 24 : 32, fontFamily: fonts.black, fontWeight: fontWeights.black, color: DARK, lineHeight: isMobile ? 30 : 40, marginBottom: 16 }}>{title}</Text>
       <Text style={{ fontSize: 15, color: TEXT_SEC, lineHeight: 24, marginBottom: 24, fontFamily: fonts.regular }}>{description}</Text>
@@ -58,7 +97,7 @@ function FeatureSection({
   );
 
   const mockup = (
-    <View style={{ flex: 1, minWidth: 280, maxWidth: 480 }}>
+    <View style={{ width: "100%", maxWidth: 480 }}>
       {/* MacBook Air frame */}
       <View style={{ backgroundColor: "#e2e2e2", borderRadius: 14, padding: 6, paddingBottom: 0, borderWidth: 1, borderColor: "#d4d4d4" }}>
         {/* Caméra notch */}
@@ -116,10 +155,16 @@ function FeatureSection({
     </View>
   );
 
+  const webProps = (cls: string) => Platform.OS === "web" ? ({ className: cls } as Record<string, unknown>) : {};
+
   return (
-    <View style={{ flexDirection: isMobile ? "column" : (reverse ? "row-reverse" : "row"), gap: isMobile ? 32 : 60, paddingVertical: 48, paddingHorizontal: 24, maxWidth: 1100, alignSelf: "center", width: "100%" }}>
-      {content}
-      {mockup}
+    <View style={{ flexDirection: isMobile ? "column" : (reverse ? "row-reverse" : "row"), gap: isMobile ? 32 : 60, paddingVertical: 64, paddingHorizontal: 24, maxWidth: 1100, alignSelf: "center", width: "100%" }}>
+      <View {...webProps(reverse ? "lp-reveal-right" : "lp-reveal-left")} style={{ flex: 1, minWidth: 280 }}>
+        {content}
+      </View>
+      <View {...webProps(reverse ? "lp-reveal-left lp-feature-mockup" : "lp-reveal-right lp-feature-mockup")} style={{ flex: 1, minWidth: 280, alignItems: "center" }}>
+        {mockup}
+      </View>
     </View>
   );
 }
@@ -162,8 +207,16 @@ export default function LandingPage() {
       <View style={{ height: 64 }} />
 
       {/* Hero */}
-      <View style={{ paddingTop: isMobile ? 60 : 100, paddingBottom: 60, paddingHorizontal: 24, backgroundColor: BG_WARM }}>
-        <View style={{ maxWidth: 1200, width: "100%", alignSelf: "center", flexDirection: isMobile ? "column" : "row", alignItems: "center", gap: isMobile ? 40 : 60 }}>
+      <View style={{ paddingTop: isMobile ? 60 : 100, paddingBottom: 60, paddingHorizontal: 24, backgroundColor: BG_WARM, position: "relative", overflow: "hidden" }}>
+        {/* Blobs décoratifs */}
+        {Platform.OS === "web" && !isMobile && (
+          <>
+            <View style={{ position: "absolute", top: 80, left: -100, width: 320, height: 320, borderRadius: 160, backgroundColor: "rgba(212,168,67,0.15)", ...({ filter: "blur(80px)", animationName: "heroFloat", animationDuration: "8s", animationIterationCount: "infinite", animationTimingFunction: "ease-in-out" } as Record<string, string>) }} />
+            <View style={{ position: "absolute", bottom: 60, right: -120, width: 380, height: 380, borderRadius: 190, backgroundColor: "rgba(124,58,237,0.10)", ...({ filter: "blur(90px)", animationName: "heroFloat", animationDuration: "10s", animationDelay: "2s", animationIterationCount: "infinite", animationTimingFunction: "ease-in-out" } as Record<string, string>) }} />
+            <View style={{ position: "absolute", top: 200, right: 200, width: 200, height: 200, borderRadius: 100, backgroundColor: "rgba(37,99,235,0.08)", ...({ filter: "blur(60px)", animationName: "heroGlow", animationDuration: "6s", animationIterationCount: "infinite", animationTimingFunction: "ease-in-out" } as Record<string, string>) }} />
+          </>
+        )}
+        <View style={{ maxWidth: 1200, width: "100%", alignSelf: "center", flexDirection: isMobile ? "column" : "row", alignItems: "center", gap: isMobile ? 40 : 60, position: "relative", zIndex: 1 }}>
 
           {/* MacBook mockup CSS — gauche */}
           {!isMobile && (
@@ -257,10 +310,10 @@ export default function LandingPage() {
             </Text>
 
             <View style={{ flexDirection: "row", gap: 12, justifyContent: isMobile ? "center" : "flex-start", marginBottom: 32 }}>
-              <TouchableOpacity onPress={login} style={{ paddingVertical: 14, paddingHorizontal: 28, borderRadius: 10, backgroundColor: PRIMARY }}>
+              <TouchableOpacity {...(Platform.OS === "web" ? ({ className: "lp-cta-btn" } as Record<string, unknown>) : {})} onPress={login} style={{ paddingVertical: 14, paddingHorizontal: 28, borderRadius: 10, backgroundColor: PRIMARY }}>
                 <Text style={{ color: DARK, fontSize: 15, fontFamily: fonts.bold, fontWeight: fontWeights.bold }}>Se connecter →</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={login} style={{ paddingVertical: 14, paddingHorizontal: 28, borderRadius: 10, borderWidth: 1.5, borderColor: "rgba(0,0,0,0.1)", backgroundColor: "#ffffff" }}>
+              <TouchableOpacity {...(Platform.OS === "web" ? ({ className: "lp-cta-btn" } as Record<string, unknown>) : {})} onPress={login} style={{ paddingVertical: 14, paddingHorizontal: 28, borderRadius: 10, borderWidth: 1.5, borderColor: "rgba(0,0,0,0.1)", backgroundColor: "#ffffff" }}>
                 <Text style={{ color: DARK, fontSize: 15, fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold }}>Créer un compte</Text>
               </TouchableOpacity>
             </View>
@@ -374,15 +427,18 @@ export default function LandingPage() {
       </View>
 
       {/* CTA */}
-      <View style={{ alignItems: "center", paddingVertical: 60, paddingHorizontal: 24, backgroundColor: "#ffffff" }}>
-        <View style={{ backgroundColor: BG_WARM, borderWidth: 1, borderColor: "rgba(0,0,0,0.06)", borderRadius: 20, padding: 48, maxWidth: 700, width: "100%", alignItems: "center" }}>
+      <View {...(Platform.OS === "web" ? ({ className: "lp-reveal-scale" } as Record<string, unknown>) : {})} style={{ alignItems: "center", paddingVertical: 80, paddingHorizontal: 24, backgroundColor: "#ffffff", position: "relative", overflow: "hidden" }}>
+        {Platform.OS === "web" && (
+          <View style={{ position: "absolute", top: 40, left: "50%", marginLeft: -300, width: 600, height: 200, borderRadius: 100, backgroundColor: "rgba(212,168,67,0.12)", ...({ filter: "blur(80px)", animationName: "heroGlow", animationDuration: "5s", animationIterationCount: "infinite" } as Record<string, string>) }} />
+        )}
+        <View style={{ backgroundColor: BG_WARM, borderWidth: 1, borderColor: "rgba(0,0,0,0.06)", borderRadius: 24, padding: 48, maxWidth: 700, width: "100%", alignItems: "center", position: "relative", zIndex: 1, ...(Platform.OS === "web" ? { boxShadow: "0 20px 60px rgba(0,0,0,0.08)" } as Record<string, string> : {}) }}>
           <Text style={{ fontFamily: fonts.black, fontWeight: fontWeights.black, fontSize: 28, color: DARK, textAlign: "center", marginBottom: 12 }}>
             Prêt à simplifier vos actes juridiques ?
           </Text>
           <Text style={{ color: TEXT_SEC, fontSize: 16, fontFamily: fonts.regular, marginBottom: 28, textAlign: "center" }}>
             59 modèles conformes OHADA, génération instantanée en Word et PDF.
           </Text>
-          <TouchableOpacity onPress={login} style={{ paddingVertical: 16, paddingHorizontal: 32, borderRadius: 10, backgroundColor: PRIMARY }}>
+          <TouchableOpacity {...(Platform.OS === "web" ? ({ className: "lp-cta-btn" } as Record<string, unknown>) : {})} onPress={login} style={{ paddingVertical: 16, paddingHorizontal: 32, borderRadius: 10, backgroundColor: PRIMARY }}>
             <Text style={{ color: DARK, fontSize: 16, fontFamily: fonts.bold, fontWeight: fontWeights.bold }}>Se connecter →</Text>
           </TouchableOpacity>
           <Text style={{ marginTop: 16, fontSize: 13, color: "#9ca3af", fontFamily: fonts.regular }}>Connexion sécurisée via NORMX AI</Text>
