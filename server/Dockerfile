@@ -8,10 +8,10 @@ RUN npx prisma generate
 COPY . .
 RUN npm run build
 
-FROM node:20-alpine
+FROM node:20-bookworm-slim
 
 # LibreOffice for PDF conversion
-RUN apk add --no-cache libreoffice
+RUN apt-get update && apt-get install -y --no-install-recommends libreoffice && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 COPY --from=builder /app/dist ./dist
