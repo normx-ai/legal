@@ -1,8 +1,25 @@
-import { ScrollView, View, Text, TouchableOpacity, Image } from "react-native";
+import { ScrollView, View, Text, TouchableOpacity, Platform } from "react-native";
+import { useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { fonts, fontWeights } from "@/lib/theme/fonts";
 import { useAuthStore } from "@/lib/store/auth";
 import { useResponsive } from "@/lib/hooks/useResponsive";
+
+function useInjectAnimations() {
+  useEffect(() => {
+    if (Platform.OS !== "web") return;
+    const id = "normx-legal-hero-animations";
+    if (document.getElementById(id)) return;
+    const style = document.createElement("style");
+    style.id = id;
+    style.textContent = `
+      @keyframes heroFadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+      @keyframes heroSlideRight { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
+      @keyframes heroPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(212,168,67,0); } 50% { box-shadow: 0 0 12px 2px rgba(212,168,67,0.12); } }
+    `;
+    document.head.appendChild(style);
+  }, []);
+}
 
 const PRIMARY = "#D4A843";
 const DARK = "#1A3A5C";
@@ -77,6 +94,7 @@ function FeatureSection({
 export default function LandingPage() {
   const login = useAuthStore((s) => s.login);
   const { isMobile } = useResponsive();
+  useInjectAnimations();
 
   return (
     <ScrollView style={{ flex: 1, backgroundColor: "#ffffff" }}>
@@ -100,16 +118,77 @@ export default function LandingPage() {
       <View style={{ paddingTop: isMobile ? 60 : 100, paddingBottom: 60, paddingHorizontal: 24, backgroundColor: BG_WARM }}>
         <View style={{ maxWidth: 1200, width: "100%", alignSelf: "center", flexDirection: isMobile ? "column" : "row", alignItems: "center", gap: isMobile ? 40 : 60 }}>
 
-          {/* MacBook screenshot — gauche */}
+          {/* MacBook mockup CSS — gauche */}
           {!isMobile && (
-            <View style={{ flex: 1, maxWidth: 520 }}>
-              <View style={{ backgroundColor: "#222", borderRadius: 12, padding: 4, paddingBottom: 0, borderWidth: 2, borderColor: "#333" }}>
-                <View style={{ width: 6, height: 6, borderRadius: 3, backgroundColor: "#444", alignSelf: "center", marginBottom: 3 }} />
-                <Image source={require("@/assets/hero_legal.png")} style={{ width: "100%", aspectRatio: 1.6, borderRadius: 2 }} resizeMode="cover" />
+            <View style={{ flex: 1, maxWidth: 540 }}>
+              {/* MacBook Air frame */}
+              <View style={{ backgroundColor: "#e2e2e2", borderRadius: 14, padding: 6, paddingBottom: 0, borderWidth: 1, borderColor: "#d4d4d4", ...(Platform.OS === "web" ? { animationName: "heroPulse", animationDuration: "3s", animationIterationCount: "infinite", animationDelay: "2s", animationTimingFunction: "ease-in-out" } as Record<string, string> : {}) }}>
+                {/* Caméra notch */}
+                <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: "#1a1a1a", alignSelf: "center", marginBottom: 4, borderWidth: 1, borderColor: "#333" }} />
+                {/* Ecran */}
+                <View style={{ backgroundColor: "#fff", borderRadius: 2, overflow: "hidden" }}>
+                  {/* Topbar mockup */}
+                  <View style={{ backgroundColor: DARK, height: 32, flexDirection: "row", alignItems: "center", paddingHorizontal: 10, gap: 6 }}>
+                    <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: "#ef4444" }} />
+                    <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: "#f59e0b" }} />
+                    <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: "#22c55e" }} />
+                    <Text style={{ flex: 1, textAlign: "center", fontSize: 10, fontWeight: "600", color: "rgba(255,255,255,0.6)" }}>NORMX Legal — Statuts SARL</Text>
+                  </View>
+                  {/* Content */}
+                  <View style={{ flexDirection: "row" }}>
+                    {/* Sidebar */}
+                    <View style={{ width: 110, backgroundColor: DARK, paddingVertical: 10, paddingHorizontal: 8, gap: 5, minHeight: 320 }}>
+                      {["Dashboard", "Statuts", "PV & AG", "Cessions", "Bulletins", "Assistant IA", "Mes documents", "Mon profil"].map((item, i) => (
+                        <View key={i} style={{ paddingVertical: 6, paddingHorizontal: 8, borderRadius: 4, backgroundColor: i === 1 ? "rgba(212,168,67,0.2)" : "transparent", ...(Platform.OS === "web" ? { animationName: "heroSlideRight", animationDuration: "0.4s", animationFillMode: "both", animationDelay: `${0.2 + i * 0.1}s` } as Record<string, string> : {}) }}>
+                          <Text style={{ fontSize: 9, color: i === 1 ? PRIMARY : "rgba(255,255,255,0.5)", fontWeight: i === 1 ? "700" : "400" }}>{item}</Text>
+                        </View>
+                      ))}
+                    </View>
+                    {/* Main */}
+                    <View style={{ flex: 1, padding: 12 }}>
+                      <Text style={{ fontSize: 13, fontWeight: "700", color: "#1f2937", marginBottom: 10 }}>Statuts SARL — OHADA</Text>
+                      {/* Stats row */}
+                      <View style={{ flexDirection: "row", gap: 8, marginBottom: 10 }}>
+                        {[{ val: "59", lbl: "Modèles", color: PRIMARY }, { val: "OHADA", lbl: "Conforme", color: GREEN }, { val: "PDF", lbl: "Export", color: "#2563eb" }].map((s, i) => (
+                          <View key={i} style={{ flex: 1, backgroundColor: "#f9fafb", padding: 8, borderRadius: 4, ...(Platform.OS === "web" ? { animationName: "heroFadeUp", animationDuration: "0.5s", animationFillMode: "both", animationDelay: `${0.3 + i * 0.2}s` } as Record<string, string> : {}) }}>
+                            <Text style={{ fontSize: 14, fontWeight: "700", color: s.color }}>{s.val}</Text>
+                            <Text style={{ fontSize: 8, color: "#6b7280", marginTop: 2 }}>{s.lbl}</Text>
+                          </View>
+                        ))}
+                      </View>
+                      {/* Table */}
+                      <View style={{ backgroundColor: "#f9fafb", borderRadius: 4, overflow: "hidden" }}>
+                        <View style={{ flexDirection: "row", paddingVertical: 4, paddingHorizontal: 6, backgroundColor: "#f3f4f6" }}>
+                          <Text style={{ flex: 2, fontSize: 7, fontWeight: "700", color: "#6b7280" }}>RUBRIQUE</Text>
+                          <Text style={{ flex: 1, fontSize: 7, fontWeight: "700", color: "#6b7280", textAlign: "right" }}>VALEUR</Text>
+                        </View>
+                        {[
+                          { label: "DENOMINATION SOCIALE", val: "OMEGA SARL", color: "#1f2937" },
+                          { label: "FORME JURIDIQUE", val: "SARL", color: PRIMARY },
+                          { label: "CAPITAL SOCIAL", val: "5 000 000", color: "#1f2937" },
+                          { label: "NOMBRE DE PARTS", val: "500", color: "#1f2937" },
+                          { label: "VALEUR NOMINALE", val: "10 000", color: "#1f2937" },
+                          { label: "SIEGE SOCIAL", val: "Brazzaville", color: "#1f2937" },
+                          { label: "DUREE", val: "99 ans", color: "#1f2937" },
+                          { label: "GERANT", val: "M. MABIKA J.", color: PRIMARY },
+                          { label: "STATUT", val: "Validé ✓", color: GREEN },
+                        ].map((row, i) => (
+                          <View key={i} style={{ flexDirection: "row", paddingVertical: 5, paddingHorizontal: 8, borderBottomWidth: 1, borderBottomColor: "#e5e7eb", ...(Platform.OS === "web" ? { animationName: "heroFadeUp", animationDuration: "0.4s", animationFillMode: "both", animationDelay: `${0.8 + i * 0.1}s` } as Record<string, string> : {}) }}>
+                            <Text style={{ flex: 2, fontSize: 9, color: "#374151" }}>{row.label}</Text>
+                            <Text style={{ flex: 1, fontSize: 9, fontWeight: "600", color: row.color, textAlign: "right" }}>{row.val}</Text>
+                          </View>
+                        ))}
+                      </View>
+                    </View>
+                  </View>
+                </View>
               </View>
-              <View style={{ height: 12, backgroundColor: "#c8c8c8", borderBottomLeftRadius: 4, borderBottomRightRadius: 4 }}>
-                <View style={{ width: 80, height: 4, backgroundColor: "#9a9a9a", borderBottomLeftRadius: 4, borderBottomRightRadius: 4, alignSelf: "center" }} />
+              {/* MacBook Air base — wedge design */}
+              <View style={{ height: 8, backgroundColor: "#d1d1d1", borderBottomLeftRadius: 2, borderBottomRightRadius: 2, marginHorizontal: 20 }}>
+                <View style={{ width: 60, height: 3, backgroundColor: "#b0b0b0", borderBottomLeftRadius: 2, borderBottomRightRadius: 2, alignSelf: "center" }} />
               </View>
+              {/* Ombre */}
+              <View style={{ height: 4, marginHorizontal: 40, ...(Platform.OS === "web" ? { background: "radial-gradient(ellipse at center, rgba(0,0,0,0.1) 0%, transparent 70%)" } as Record<string, string> : {}) }} />
             </View>
           )}
 
