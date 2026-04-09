@@ -1,5 +1,5 @@
 import { ScrollView, View, Text, TouchableOpacity, Platform, Image } from "react-native";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { fonts, fontWeights } from "@/lib/theme/fonts";
 import { useAuthStore } from "@/lib/store/auth";
@@ -216,7 +216,19 @@ function FeatureSection({
 export default function LandingPage() {
   const login = useAuthStore((s) => s.login);
   const { isMobile } = useResponsive();
+  const [productsOpen, setProductsOpen] = useState(false);
   useInjectAnimations();
+
+  // Fermer le dropdown au clic extérieur
+  useEffect(() => {
+    if (Platform.OS !== "web" || !productsOpen) return;
+    const handler = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest("[data-products-dropdown]")) setProductsOpen(false);
+    };
+    document.addEventListener("click", handler);
+    return () => document.removeEventListener("click", handler);
+  }, [productsOpen]);
 
   return (
     <ScrollView style={{ flex: 1, backgroundColor: "#ffffff" }}>
@@ -236,9 +248,44 @@ export default function LandingPage() {
                 <TouchableOpacity onPress={() => Platform.OS === "web" && window.scrollTo({ top: 700, behavior: "smooth" })} style={{ paddingVertical: 8, paddingHorizontal: 14 }}>
                   <Text style={{ fontSize: 14, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: TEXT_SEC }}>Fonctionnalités</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => Platform.OS === "web" && window.open("https://normx-ai.com#products", "_blank")} style={{ paddingVertical: 8, paddingHorizontal: 14 }}>
-                  <Text style={{ fontSize: 14, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: TEXT_SEC }}>Produits ▾</Text>
-                </TouchableOpacity>
+                <View {...(Platform.OS === "web" ? ({ "data-products-dropdown": "true" } as Record<string, unknown>) : {})} style={{ position: "relative" }}>
+                  <TouchableOpacity onPress={(e) => { e.stopPropagation && e.stopPropagation(); setProductsOpen(!productsOpen); }} style={{ paddingVertical: 8, paddingHorizontal: 14 }}>
+                    <Text style={{ fontSize: 14, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: TEXT_SEC }}>Produits ▾</Text>
+                  </TouchableOpacity>
+                  {productsOpen && (
+                    <View style={{ position: "absolute", top: "100%" as unknown as number, right: 0, marginTop: 8, backgroundColor: "#fff", borderRadius: 16, borderWidth: 1, borderColor: "rgba(0,0,0,0.08)", padding: 20, width: 360, zIndex: 200, ...(Platform.OS === "web" ? { boxShadow: "0 20px 60px rgba(0,0,0,0.12)" } as Record<string, string> : {}) }}>
+                    <Text style={{ fontSize: 16, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: DARK, marginBottom: 4 }}>Produits</Text>
+                    <Text style={{ fontSize: 12, color: TEXT_SEC, marginBottom: 14, fontFamily: fonts.regular }}>Suite logicielle pour l'espace OHADA</Text>
+                    <TouchableOpacity onPress={() => Platform.OS === "web" && window.open("https://app.normx-ai.com", "_self")} style={{ flexDirection: "row", alignItems: "center", gap: 12, padding: 10, borderRadius: 10, marginBottom: 4 }}>
+                      <View style={{ width: 36, height: 36, borderRadius: 10, backgroundColor: "#2563eb", alignItems: "center", justifyContent: "center" }}>
+                        <Ionicons name="calculator-outline" size={18} color="#fff" />
+                      </View>
+                      <View style={{ flex: 1 }}>
+                        <Text style={{ fontSize: 14, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: DARK }}>NORMX Finance</Text>
+                        <Text style={{ fontSize: 11, color: TEXT_SEC, fontFamily: fonts.regular }}>Comptabilité, états financiers et paie</Text>
+                      </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => Platform.OS === "web" && window.open("https://tax.normx-ai.com", "_self")} style={{ flexDirection: "row", alignItems: "center", gap: 12, padding: 10, borderRadius: 10, marginBottom: 4 }}>
+                      <View style={{ width: 36, height: 36, borderRadius: 10, backgroundColor: PRIMARY, alignItems: "center", justifyContent: "center" }}>
+                        <Ionicons name="receipt-outline" size={18} color={DARK} />
+                      </View>
+                      <View style={{ flex: 1 }}>
+                        <Text style={{ fontSize: 14, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: DARK }}>NORMX Tax</Text>
+                        <Text style={{ fontSize: 11, color: TEXT_SEC, fontFamily: fonts.regular }}>Simulateur fiscal CGI 2026 et IA</Text>
+                      </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => Platform.OS === "web" && window.open("https://legal.normx-ai.com", "_self")} style={{ flexDirection: "row", alignItems: "center", gap: 12, padding: 10, borderRadius: 10, backgroundColor: "rgba(124,58,237,0.06)" }}>
+                      <View style={{ width: 36, height: 36, borderRadius: 10, backgroundColor: "#7c3aed", alignItems: "center", justifyContent: "center" }}>
+                        <Ionicons name="document-text-outline" size={18} color="#fff" />
+                      </View>
+                      <View style={{ flex: 1 }}>
+                        <Text style={{ fontSize: 14, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: DARK }}>NORMX Legal</Text>
+                        <Text style={{ fontSize: 11, color: TEXT_SEC, fontFamily: fonts.regular }}>Documents juridiques OHADA automatisés</Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                  )}
+                </View>
               </>
             )}
             <TouchableOpacity onPress={login} style={{ paddingVertical: 9, paddingHorizontal: 22, borderRadius: 8, backgroundColor: DARK }}>
