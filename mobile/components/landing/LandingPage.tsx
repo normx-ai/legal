@@ -389,11 +389,46 @@ export default function LandingPage() {
         </View>
       </View>
 
-      {/* Footer */}
-      <View style={{ borderTopWidth: 1, borderTopColor: "rgba(0,0,0,0.06)", paddingVertical: 32, paddingHorizontal: 24, alignItems: "center" }}>
-        <Text style={{ fontSize: 13, color: TEXT_SEC, fontFamily: fonts.regular }}>
-          © 2026 NORMX AI SAS — 5/7 rue Benjamin Raspail, 60100 Creil, France
-        </Text>
+      {/* Footer style app.normx-ai.com */}
+      <View style={{ backgroundColor: "#0F2A42", borderTopWidth: 1, borderTopColor: "rgba(255,255,255,0.08)", paddingTop: 48, paddingHorizontal: 24 }}>
+        <View style={{ maxWidth: 1100, width: "100%", alignSelf: "center", flexDirection: isMobile ? "column" : "row", gap: isMobile ? 32 : 32, flexWrap: "wrap" }}>
+          {/* Brand */}
+          <View style={{ flex: isMobile ? undefined : 1.5, minWidth: 240, marginBottom: isMobile ? 24 : 0 }}>
+            <Text style={{ fontSize: 19, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: "#e8e6e1", marginBottom: 8 }}>
+              NORMX <Text style={{ color: PRIMARY }}>AI</Text>
+            </Text>
+            <Text style={{ fontSize: 13, color: "rgba(255,255,255,0.55)", lineHeight: 21, fontFamily: fonts.regular }}>
+              Plateforme d'intelligence comptable, fiscale, sociale et juridique pour les professionnels africains.
+            </Text>
+          </View>
+          {/* Produits */}
+          <View style={{ flex: isMobile ? undefined : 1, minWidth: 140, marginBottom: isMobile ? 24 : 0 }}>
+            <Text style={{ fontSize: 12, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: "#e8e6e1", marginBottom: 14, textTransform: "uppercase", letterSpacing: 1 }}>Produits</Text>
+            <TouchableOpacity onPress={() => Platform.OS === "web" && window.open("https://app.normx-ai.com", "_blank")}><Text style={{ fontSize: 14, color: "rgba(255,255,255,0.6)", paddingVertical: 3, fontFamily: fonts.regular }}>NORMX Finance</Text></TouchableOpacity>
+            <TouchableOpacity onPress={() => Platform.OS === "web" && window.open("https://tax.normx-ai.com", "_blank")}><Text style={{ fontSize: 14, color: "rgba(255,255,255,0.6)", paddingVertical: 3, fontFamily: fonts.regular }}>NORMX Tax</Text></TouchableOpacity>
+            <TouchableOpacity onPress={() => Platform.OS === "web" && window.open("https://legal.normx-ai.com", "_blank")}><Text style={{ fontSize: 14, color: "rgba(255,255,255,0.6)", paddingVertical: 3, fontFamily: fonts.regular }}>NORMX Legal</Text></TouchableOpacity>
+          </View>
+          {/* Contact */}
+          <View style={{ flex: isMobile ? undefined : 1, minWidth: 220, marginBottom: isMobile ? 24 : 0 }}>
+            <Text style={{ fontSize: 12, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: "#e8e6e1", marginBottom: 14, textTransform: "uppercase", letterSpacing: 1 }}>Contact</Text>
+            <TouchableOpacity onPress={() => Platform.OS === "web" && window.open("mailto:info-contact@normx-ai.com")}><Text style={{ fontSize: 14, color: PRIMARY, paddingVertical: 3, fontFamily: fonts.regular }}>info-contact@normx-ai.com</Text></TouchableOpacity>
+            <TouchableOpacity onPress={() => Platform.OS === "web" && window.open("mailto:support@normx-ai.com")}><Text style={{ fontSize: 14, color: "rgba(255,255,255,0.6)", paddingVertical: 3, fontFamily: fonts.regular }}>support@normx-ai.com</Text></TouchableOpacity>
+            <Text style={{ fontSize: 14, color: "rgba(255,255,255,0.55)", paddingVertical: 3, fontFamily: fonts.regular }}>5/7 rue Benjamin Raspail, 60100 Creil</Text>
+          </View>
+          {/* Legal */}
+          <View style={{ flex: isMobile ? undefined : 1, minWidth: 160 }}>
+            <Text style={{ fontSize: 12, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: "#e8e6e1", marginBottom: 14, textTransform: "uppercase", letterSpacing: 1 }}>Legal</Text>
+            <TouchableOpacity onPress={() => Platform.OS === "web" && window.open("https://tax.normx-ai.com/legal/cgu", "_blank")}><Text style={{ fontSize: 14, color: "rgba(255,255,255,0.6)", paddingVertical: 3, fontFamily: fonts.regular }}>Conditions générales</Text></TouchableOpacity>
+            <TouchableOpacity onPress={() => Platform.OS === "web" && window.open("https://tax.normx-ai.com/legal/confidentialite", "_blank")}><Text style={{ fontSize: 14, color: "rgba(255,255,255,0.6)", paddingVertical: 3, fontFamily: fonts.regular }}>Politique de confidentialité</Text></TouchableOpacity>
+            <TouchableOpacity onPress={() => Platform.OS === "web" && window.open("https://tax.normx-ai.com/legal/mentions", "_blank")}><Text style={{ fontSize: 14, color: "rgba(255,255,255,0.6)", paddingVertical: 3, fontFamily: fonts.regular }}>Mentions légales</Text></TouchableOpacity>
+          </View>
+        </View>
+        {/* Footer bottom */}
+        <View style={{ marginTop: 40, paddingVertical: 20, borderTopWidth: 1, borderTopColor: "rgba(255,255,255,0.06)", alignItems: "center" }}>
+          <Text style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", fontFamily: fonts.regular }}>
+            © 2026 NORMX AI SAS — 5/7 rue Benjamin Raspail, 60100 Creil, France
+          </Text>
+        </View>
       </View>
     </ScrollView>
   );
