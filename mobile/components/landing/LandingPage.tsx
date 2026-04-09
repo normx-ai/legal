@@ -1,4 +1,4 @@
-import { ScrollView, View, Text, TouchableOpacity, Platform } from "react-native";
+import { ScrollView, View, Text, TouchableOpacity, Platform, Image } from "react-native";
 import { useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { fonts, fontWeights } from "@/lib/theme/fonts";
@@ -99,20 +99,34 @@ export default function LandingPage() {
   return (
     <ScrollView style={{ flex: 1, backgroundColor: "#ffffff" }}>
 
-      {/* Header */}
-      <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", height: 64, paddingHorizontal: 24, maxWidth: 1200, width: "100%", alignSelf: "center", borderBottomWidth: 1, borderBottomColor: "rgba(0,0,0,0.08)", backgroundColor: "rgba(255,255,255,0.92)" }}>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-          <View style={{ width: 34, height: 34, borderRadius: 10, backgroundColor: PRIMARY, alignItems: "center", justifyContent: "center" }}>
-            <Text style={{ fontFamily: fonts.black, fontWeight: fontWeights.black, fontSize: 16, color: DARK }}>N</Text>
+      {/* Header — Nav app.normx-ai.com style */}
+      <View style={{ position: "absolute", top: 0, left: 0, right: 0, zIndex: 100, backgroundColor: "rgba(255,255,255,0.92)", borderBottomWidth: 1, borderBottomColor: "rgba(0,0,0,0.08)", ...(Platform.OS === "web" ? { backdropFilter: "blur(20px)" } as Record<string, string> : {}) }}>
+        <View style={{ flexDirection: "row", alignItems: "center", height: 64, paddingHorizontal: 24, maxWidth: 1200, width: "100%", alignSelf: "center" }}>
+          {/* Logo */}
+          <TouchableOpacity onPress={() => Platform.OS === "web" && window.scrollTo({ top: 0, behavior: "smooth" })} style={{ flexDirection: "row", alignItems: "center" }}>
+            <Image source={require("@/assets/logo-horizontal.png")} style={{ height: 30, width: 130 }} resizeMode="contain" />
+          </TouchableOpacity>
+
+          {/* Nav links — droite */}
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 6, marginLeft: "auto" as unknown as number }}>
+            {!isMobile && (
+              <>
+                <TouchableOpacity onPress={() => Platform.OS === "web" && window.scrollTo({ top: 700, behavior: "smooth" })} style={{ paddingVertical: 8, paddingHorizontal: 14 }}>
+                  <Text style={{ fontSize: 14, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: TEXT_SEC }}>Fonctionnalités</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => Platform.OS === "web" && window.open("https://normx-ai.com#products", "_blank")} style={{ paddingVertical: 8, paddingHorizontal: 14 }}>
+                  <Text style={{ fontSize: 14, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: TEXT_SEC }}>Produits ▾</Text>
+                </TouchableOpacity>
+              </>
+            )}
+            <TouchableOpacity onPress={login} style={{ paddingVertical: 9, paddingHorizontal: 22, borderRadius: 8, backgroundColor: DARK }}>
+              <Text style={{ color: "#ffffff", fontFamily: fonts.bold, fontWeight: fontWeights.bold, fontSize: 14 }}>Se connecter</Text>
+            </TouchableOpacity>
           </View>
-          <Text style={{ fontSize: 22, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: DARK }}>
-            NORMX <Text style={{ color: PRIMARY }}>Legal</Text>
-          </Text>
         </View>
-        <TouchableOpacity onPress={login} style={{ paddingVertical: 9, paddingHorizontal: 22, borderRadius: 8, backgroundColor: DARK }}>
-          <Text style={{ color: "#ffffff", fontFamily: fonts.bold, fontWeight: fontWeights.bold, fontSize: 14 }}>Connexion</Text>
-        </TouchableOpacity>
       </View>
+      {/* Spacer pour compenser le header fixed */}
+      <View style={{ height: 64 }} />
 
       {/* Hero */}
       <View style={{ paddingTop: isMobile ? 60 : 100, paddingBottom: 60, paddingHorizontal: 24, backgroundColor: BG_WARM }}>
