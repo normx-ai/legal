@@ -275,7 +275,7 @@ export default function LandingPage() {
                             <Ionicons name="journal-outline" size={18} color="#fff" />
                           </View>
                           <View style={{ flex: 1 }}>
-                            <Text style={{ fontSize: 14, fontWeight: "600", color: DARK }}>NORMX</Text>
+                            <Text style={{ fontSize: 14, fontWeight: "600", color: DARK }}>NORMX Finance</Text>
                             <Text style={{ fontSize: 12, color: TEXT_SEC, lineHeight: 16, marginTop: 2 }}>Comptabilité, états financiers et paie</Text>
                           </View>
                         </TouchableOpacity>
