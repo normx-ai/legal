@@ -233,20 +233,21 @@ export default function LandingPage() {
   return (
     <ScrollView style={{ flex: 1, backgroundColor: "#ffffff" }}>
 
-      {/* Header — Nav app.normx-ai.com style */}
-      <View style={{ position: "absolute", top: 0, left: 0, right: 0, zIndex: 100, backgroundColor: "rgba(255,255,255,0.92)", borderBottomWidth: 1, borderBottomColor: "rgba(0,0,0,0.08)", ...(Platform.OS === "web" ? { backdropFilter: "blur(20px)" } as Record<string, string> : {}) }}>
-        <View style={{ flexDirection: "row", alignItems: "center", height: 64, paddingHorizontal: 16, maxWidth: 1600, width: "100%", alignSelf: "center" }}>
+      {/* Header — Nav identique à tax.normx-ai.com */}
+      <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", height: 64, paddingHorizontal: 16, maxWidth: 1600, width: "100%", alignSelf: "center", borderBottomWidth: 1, borderBottomColor: "rgba(0,0,0,0.08)", backgroundColor: "rgba(255,255,255,0.92)", zIndex: 100 }}>
           {/* Logo */}
           <TouchableOpacity onPress={() => Platform.OS === "web" && window.scrollTo({ top: 0, behavior: "smooth" })} style={{ flexDirection: "row", alignItems: "center" }}>
             <Image source={require("@/assets/logo-horizontal.png")} style={{ height: 30, width: 130 }} resizeMode="contain" />
           </TouchableOpacity>
 
-          {/* Nav links — droite */}
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 6, marginLeft: "auto" as unknown as number }}>
-            {!isMobile && (
-              <>
-                <TouchableOpacity onPress={() => Platform.OS === "web" && window.scrollTo({ top: 700, behavior: "smooth" })} style={{ paddingVertical: 8, paddingHorizontal: 14 }}>
-                  <Text style={{ fontSize: 14, fontFamily: fonts.bold, fontWeight: fontWeights.bold, color: TEXT_SEC }}>Fonctionnalités</Text>
+          {/* Navigation — centre */}
+          {!isMobile && (
+            <View style={{ flexDirection: "row", gap: 6, alignItems: "center" }}>
+                <TouchableOpacity onPress={() => Platform.OS === "web" && window.scrollTo({ top: 700, behavior: "smooth" })} style={{ paddingVertical: 8, paddingHorizontal: 14, borderRadius: 8 }}>
+                  <Text style={{ fontSize: 14, color: "#6b7280", fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold }}>Fonctionnalités</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => Platform.OS === "web" && window.scrollTo({ top: 99999, behavior: "smooth" })} style={{ paddingVertical: 8, paddingHorizontal: 14, borderRadius: 8 }}>
+                  <Text style={{ fontSize: 14, color: "#6b7280", fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold }}>Contact</Text>
                 </TouchableOpacity>
                 <View {...(Platform.OS === "web" ? ({ "data-products-dropdown": "true" } as Record<string, unknown>) : {})} style={{ position: "relative" }}>
                   <TouchableOpacity onPress={(e) => { e.stopPropagation && e.stopPropagation(); setProductsOpen(!productsOpen); }} style={{ paddingVertical: 8, paddingHorizontal: 14, borderRadius: 8 }}>
@@ -307,15 +308,19 @@ export default function LandingPage() {
                     </View>
                   )}
                 </View>
-              </>
+            </View>
+          )}
+
+          {/* CTA Connexion — séparé à droite */}
+          <TouchableOpacity onPress={login} style={{ paddingVertical: 9, paddingHorizontal: isMobile ? 16 : 22, borderRadius: 8, backgroundColor: DARK, flexDirection: "row", alignItems: "center", gap: 6 }}>
+            {isMobile ? (
+              <Ionicons name="log-in-outline" size={20} color="#ffffff" />
+            ) : (
+              <Text style={{ color: "#ffffff", fontFamily: fonts.bold, fontWeight: fontWeights.bold, fontSize: 14 }}>Connexion</Text>
             )}
-            <TouchableOpacity onPress={login} style={{ paddingVertical: 9, paddingHorizontal: 22, borderRadius: 8, backgroundColor: DARK }}>
-              <Text style={{ color: "#ffffff", fontFamily: fonts.bold, fontWeight: fontWeights.bold, fontSize: 14 }}>Se connecter</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+          </TouchableOpacity>
       </View>
-      {/* Spacer pour compenser le header fixed */}
+      {/* Spacer pour compenser le header */}
       <View style={{ height: 64 }} />
 
       {/* Hero */}
