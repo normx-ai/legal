@@ -2,8 +2,6 @@ import { View, Text, TouchableOpacity, ActivityIndicator, Platform } from "react
 import { useEffect } from "react";
 import { useAuthStore } from "@/lib/store/auth";
 import { fonts, fontWeights } from "@/lib/theme/fonts";
-import LandingPage from "@/components/landing/LandingPage";
-
 const BG = "#1A3A5C";
 const GOLD = "#D4A843";
 const PURPLE = "#7c3aed";
@@ -40,11 +38,7 @@ export default function LoginKeycloak() {
     );
   }
 
-  // Sur web : afficher la landing page complète
-  if (Platform.OS === "web") {
-    return <LandingPage />;
-  }
-
+  // Landing HTML statique servie par nginx sur web
   return (
     <View style={{ flex: 1, backgroundColor: BG, justifyContent: "center", alignItems: "center", padding: 24 }}>
       <Text style={{ color: PURPLE, fontSize: 40, fontFamily: fonts.bold, fontWeight: fontWeights.bold }}>
