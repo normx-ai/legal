@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/lib/theme/ThemeContext";
@@ -30,11 +30,12 @@ export function MainHeader({ onTabPress, activeTab, compact }: MainHeaderProps) 
         flexDirection: "row", justifyContent: "space-between", alignItems: "center",
         paddingHorizontal: 24, paddingTop: compact ? 8 : 50, paddingBottom: compact ? 6 : 10,
       }}>
-        <TouchableOpacity onPress={() => router.navigate("/(app)")} style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-          <View style={{ width: 32, height: 32, borderRadius: 6, backgroundColor: colors.headerBg, alignItems: "center", justifyContent: "center" }}>
-            <Ionicons name="document-text" size={16} color="#fff" />
-          </View>
-          <Text style={{ fontFamily: fonts.bold, fontWeight: fontWeights.bold, fontSize: 17, color: colors.headerBg }}>NORMX Legal</Text>
+        <TouchableOpacity onPress={() => router.navigate("/(app)")} style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+          <Image
+            source={require("@/assets/logo-horizontal.png")}
+            style={{ width: 130, height: 26, resizeMode: "contain" }}
+          />
+          <Text style={{ fontFamily: fonts.medium, fontWeight: fontWeights.medium, fontSize: 15, color: colors.headerBg }}>Legal</Text>
         </TouchableOpacity>
         <View style={{ flexDirection: "row", gap: 8, alignItems: "center" }}>
           <Text style={{ fontFamily: fonts.medium, fontSize: 13, color: colors.textSecondary }}>{user?.prenom} {user?.nom}</Text>

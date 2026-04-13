@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ActivityIndicator, Platform } from "react-native";
+import { View, Text, TouchableOpacity, ActivityIndicator, Platform, Image } from "react-native";
 import { useEffect } from "react";
 import { useAuthStore } from "@/lib/store/auth";
 import { fonts, fontWeights } from "@/lib/theme/fonts";
@@ -41,16 +41,15 @@ export default function LoginKeycloak() {
   // Landing HTML statique servie par nginx sur web
   return (
     <View style={{ flex: 1, backgroundColor: BG, justifyContent: "center", alignItems: "center", padding: 24 }}>
-      <Text style={{ color: PURPLE, fontSize: 40, fontFamily: fonts.bold, fontWeight: fontWeights.bold }}>
-        NX
-      </Text>
-
-      <Text style={{
-        color: "#fff", fontSize: 28, fontFamily: fonts.bold, fontWeight: fontWeights.bold,
-        marginTop: 16, marginBottom: 8, textAlign: "center",
-      }}>
-        NORMX Legal
-      </Text>
+      <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 12 }}>
+        <Image
+          source={require("@/assets/logo-horizontal.png")}
+          style={{ width: 180, height: 36, resizeMode: "contain" }}
+        />
+        <Text style={{ color: "#e8e6e1", fontSize: 22, fontFamily: fonts.medium, fontWeight: fontWeights.medium }}>
+          Legal
+        </Text>
+      </View>
 
       <Text style={{
         color: "rgba(255,255,255,0.7)", fontSize: 15, fontFamily: fonts.regular,

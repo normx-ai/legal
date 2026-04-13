@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, ScrollView, FlatList, Platform } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, FlatList, Platform, Image } from "react-native";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/lib/theme/ThemeContext";
@@ -424,11 +424,12 @@ export default function DashboardScreen() {
       {/* Header + Logo */}
       <View style={{ backgroundColor: colors.card, paddingTop: 50, borderBottomWidth: 1, borderBottomColor: colors.border }}>
         <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingHorizontal: 24, paddingBottom: 12 }}>
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-            <View style={{ width: 36, height: 36, borderRadius: 6, backgroundColor: colors.headerBg, alignItems: "center", justifyContent: "center" }}>
-              <Ionicons name="document-text" size={18} color="#fff" />
-            </View>
-            <Text style={{ fontFamily: fonts.bold, fontWeight: fontWeights.bold, fontSize: 18, color: colors.headerBg }}>NORMX Legal</Text>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+            <Image
+              source={require("@/assets/logo-horizontal.png")}
+              style={{ width: 130, height: 26, resizeMode: "contain" }}
+            />
+            <Text style={{ fontFamily: fonts.medium, fontWeight: fontWeights.medium, fontSize: 16, color: colors.headerBg }}>Legal</Text>
           </View>
           <View style={{ flexDirection: "row", gap: 8, alignItems: "center" }}>
             <Text style={{ fontFamily: fonts.medium, fontSize: 13, color: colors.textSecondary }}>{user?.prenom} {user?.nom}</Text>

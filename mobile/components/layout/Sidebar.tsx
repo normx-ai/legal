@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { fonts, fontWeights } from "@/lib/theme/fonts";
 
@@ -112,15 +112,13 @@ export function Sidebar({ collapsed, onToggle, activeSection, onSectionPress }: 
         </TouchableOpacity>
 
         {!collapsed && (
-          <View style={{ flexDirection: "row", alignItems: "baseline", justifyContent: "center" }}>
-            <Text style={{ fontFamily: "'Inter', sans-serif", fontWeight: "bold", fontSize: 22, color: "#D4A843" }}>
-              N
-            </Text>
-            <Text style={{ fontFamily: "'Inter', sans-serif", fontWeight: "bold", fontSize: 16, color: "#374151" }}>
-              ormX
-            </Text>
-            <Text style={{ fontFamily: "'Inter', sans-serif", fontWeight: "bold", fontSize: 16, color: "#374151" }}>
-              {" "}Legal
+          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 6 }}>
+            <Image
+              source={require("@/assets/logo-horizontal.png")}
+              style={{ width: 110, height: 22, resizeMode: "contain" }}
+            />
+            <Text style={{ fontFamily: "'Inter', sans-serif", fontWeight: "400", fontSize: 14, color: "#374151" }}>
+              Legal
             </Text>
           </View>
         )}

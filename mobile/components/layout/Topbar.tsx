@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity, Platform } from "react-native";
+import { View, Text, TouchableOpacity, Platform, Image } from "react-native";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { fonts, fontWeights } from "@/lib/theme/fonts";
@@ -20,16 +20,17 @@ export function Topbar() {
         // Pas de position:fixed — le conteneur AppLayout gère le 100vh
       }}
     >
-      {/* Logo — style Playfair Display comme normx */}
+      {/* Logo */}
       <TouchableOpacity
         onPress={() => router.navigate("/(app)")}
-        style={{ flexDirection: "row", alignItems: "baseline", gap: 2 }}
+        style={{ flexDirection: "row", alignItems: "center", gap: 8 }}
       >
-        <Text style={{ fontFamily: "'Inter', sans-serif", fontWeight: "bold", fontSize: 26, color: "#D4A843", letterSpacing: -1 }}>
-          NORMX
-        </Text>
-        <Text style={{ fontFamily: "'Inter', sans-serif", fontWeight: "400", fontSize: 26, color: "#e8e6e1", letterSpacing: -1 }}>
-          {" "}Legal
+        <Image
+          source={require("@/assets/logo-horizontal.png")}
+          style={{ width: 140, height: 28, resizeMode: "contain" }}
+        />
+        <Text style={{ fontFamily: "'Inter', sans-serif", fontWeight: "400", fontSize: 18, color: "#e8e6e1", letterSpacing: -0.5 }}>
+          Legal
         </Text>
       </TouchableOpacity>
 
