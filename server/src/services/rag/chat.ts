@@ -89,7 +89,7 @@ export async function chat(
 
   // Appeler Claude avec le contexte
   const response = await anthropic.messages.create({
-    model: "claude-sonnet-4-20250514",
+    model: "claude-sonnet-4-6",
     max_tokens: 4096,
     system: SYSTEM_PROMPT + ragContext,
     messages: messages.map((m) => ({
