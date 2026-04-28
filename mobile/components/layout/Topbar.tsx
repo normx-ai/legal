@@ -5,8 +5,13 @@ import { Ionicons } from "@expo/vector-icons";
 import { fonts, fontWeights } from "@/lib/theme/fonts";
 import { useAuthStore } from "@/lib/store/auth";
 
-export function Topbar() {
-  const { user, logout } = useAuthStore();
+interface TopbarProps {
+  onSearchClick?: () => void;
+}
+
+export function Topbar({ onSearchClick }: TopbarProps = {}) {
+  const { user } = useAuthStore();
+  const isMac = Platform.OS === "web" && typeof navigator !== "undefined" && /Mac/i.test(navigator.platform);
 
   return (
     <View
@@ -34,9 +39,36 @@ export function Topbar() {
         </Text>
       </TouchableOpacity>
 
-      {/* User info + profil */}
+      {/* Recherche globale + User */}
+      <View style={{ flexDirection: "row", alignItems: "center", gap: 14 }}>
+        {onSearchClick && (
+          <TouchableOpacity
+            onPress={onSearchClick}
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 10,
+              paddingLeft: 12,
+              paddingRight: 8,
+              paddingVertical: 7,
+              borderRadius: 8,
+              backgroundColor: "rgba(255,255,255,0.08)",
+              borderWidth: 1,
+              borderColor: "rgba(255,255,255,0.12)",
+              minWidth: 240,
+            }}
+          >
+            <Ionicons name="search" size={14} color="rgba(255,255,255,0.55)" />
+            <Text style={{ flex: 1, fontFamily: fonts.regular, fontSize: 13, color: "rgba(255,255,255,0.55)" }}>
+              Rechercher un document...
+            </Text>
+            <Text style={{ fontFamily: fonts.medium, fontSize: 11, color: "rgba(255,255,255,0.7)", backgroundColor: "rgba(255,255,255,0.1)", paddingHorizontal: 6, paddingVertical: 2, borderRadius: 3 }}>
+              {isMac ? "⌘K" : "Ctrl K"}
+            </Text>
+          </TouchableOpacity>
+        )}
       <TouchableOpacity
-        onPress={() => router.navigate("/(app)/profil" as any)}
+        onPress={() => router.navigate("/(app)/profil" as never)}
         style={{ flexDirection: "row", alignItems: "center", gap: 8 }}
       >
         <View
@@ -65,6 +97,7 @@ export function Topbar() {
         </Text>
         <Ionicons name="chevron-down" size={14} color="rgba(255,255,255,0.5)" />
       </TouchableOpacity>
+      </View>
     </View>
   );
 }

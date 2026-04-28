@@ -1,9 +1,11 @@
-import React, { useState, createContext, useContext } from "react";
+import React, { useState, useEffect, createContext, useContext } from "react";
 import { View, Platform } from "react-native";
 import { router, type Href } from "expo-router";
 import { useResponsive } from "@/lib/hooks/useResponsive";
 import { Topbar } from "./Topbar";
 import { Topbar2 } from "./Topbar2";
+import { CommandPalette } from "@/components/CommandPalette";
+import { FloatingAIChat } from "@/components/FloatingAIChat";
 
 // ── Context for sidebar state (so index.tsx can read it) ──
 type LayoutContextType = {
@@ -13,6 +15,7 @@ type LayoutContextType = {
   setSidebar2Section: (s: string | null) => void;
   activeSubItem: string | null;
   setActiveSubItem: (s: string | null) => void;
+  openCommandPalette: () => void;
 };
 
 const LayoutContext = createContext<LayoutContextType>({
@@ -22,6 +25,7 @@ const LayoutContext = createContext<LayoutContextType>({
   setSidebar2Section: () => {},
   activeSubItem: null,
   setActiveSubItem: () => {},
+  openCommandPalette: () => {},
 });
 
 export const useLayoutContext = () => useContext(LayoutContext);
@@ -38,6 +42,20 @@ export function AppLayout({ children }: AppLayoutProps) {
   const [activeSection, setActiveSection] = useState("accueil");
   const [sidebar2Section, setSidebar2Section] = useState<string | null>(null);
   const [activeSubItem, setActiveSubItem] = useState<string | null>(null);
+  const [paletteOpen, setPaletteOpen] = useState(false);
+
+  // Raccourci global Ctrl+K / Cmd+K pour ouvrir la palette
+  useEffect(() => {
+    if (Platform.OS !== "web") return;
+    const handler = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setPaletteOpen(true);
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, []);
 
   const handleSectionPress = (key: string) => {
     setActiveSection(key);
@@ -70,6 +88,7 @@ export function AppLayout({ children }: AppLayoutProps) {
     setSidebar2Section,
     activeSubItem,
     setActiveSubItem,
+    openCommandPalette: () => setPaletteOpen(true),
   };
 
   // ── Mobile: just topbar + content ──
@@ -79,6 +98,7 @@ export function AppLayout({ children }: AppLayoutProps) {
         <View style={{ flex: 1 }}>
           {children}
         </View>
+        <CommandPalette visible={paletteOpen} onClose={() => setPaletteOpen(false)} />
       </LayoutContext.Provider>
     );
   }
@@ -88,7 +108,7 @@ export function AppLayout({ children }: AppLayoutProps) {
     <LayoutContext.Provider value={contextValue}>
       <View style={{ height: "100vh" as any, width: "100vw" as any, overflow: "hidden" }}>
         {/* Topbar (header) */}
-        <Topbar />
+        <Topbar onSearchClick={() => setPaletteOpen(true)} />
 
         {/* Topbar2 (navigation horizontale + dropdown) */}
         <Topbar2
@@ -102,7 +122,10 @@ export function AppLayout({ children }: AppLayoutProps) {
         <View style={{ flex: 1, backgroundColor: "#f3f4f6", overflow: "auto" as any }}>
           {children}
         </View>
+
+        <FloatingAIChat />
       </View>
+      <CommandPalette visible={paletteOpen} onClose={() => setPaletteOpen(false)} />
     </LayoutContext.Provider>
   );
 }
