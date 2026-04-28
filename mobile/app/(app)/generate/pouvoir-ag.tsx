@@ -1,13 +1,12 @@
-import React, { useState, useCallback, useMemo } from "react";
-import { View, Text, TouchableOpacity, Platform } from "react-native";
+import React, { useMemo } from "react";
+import { View } from "react-native";
 import { router } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/lib/theme/ThemeContext";
-import { fonts, fontWeights } from "@/lib/theme/fonts";
 import { Field, Choice, SectionTitle } from "@/components/wizard/FormComponents";
 import { WizardLayout, type PreviewLine } from "@/components/wizard/WizardLayout";
-import { documentsApi } from "@/lib/api/documents";
-import { useDocumentsStore } from "@/lib/store/documents";
+import { DownloadStep } from "@/components/wizard/DownloadStep";
+import { useDocumentGeneration } from "@/lib/wizard/useDocumentGeneration";
+import { parseAmount } from "@/lib/utils/parseAmount";
 import { create } from "zustand";
 
 interface PouvoirAgState {
@@ -75,54 +74,30 @@ const STEPS = ["Société", "Mandant", "Mandataire", "Assemblée", "Aperçu"];
 export default function PouvoirAgWizardScreen() {
   const { colors } = useTheme();
   const w = useStore();
-  const { addDocument } = useDocumentsStore();
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [generatedUrl, setGeneratedUrl] = useState<string | null>(null);
-  const [error, setError] = useState("");
+  const { isGenerating, generatedUrl, error, generate, download } = useDocumentGeneration("/generate/pouvoir-ag", w.nextStep);
 
-  const handleGenerate = useCallback(async () => {
-    setIsGenerating(true);
-    setError("");
-    try {
-      const { data } = await documentsApi.generate("/generate/pouvoir-ag", {
-        denomination: w.denomination,
-        forme_juridique: w.forme_juridique,
-        siege_social: w.siege_social,
-        capital: w.capital,
-        mandant_civilite: w.mandant_civilite,
-        mandant_nom: w.mandant_nom,
-        mandant_prenom: w.mandant_prenom,
-        mandant_adresse: w.mandant_adresse,
-        mandant_parts: w.mandant_parts,
-        mandataire_civilite: w.mandataire_civilite,
-        mandataire_nom: w.mandataire_nom,
-        mandataire_prenom: w.mandataire_prenom,
-        mandataire_adresse: w.mandataire_adresse,
-        type_ag: w.type_ag,
-        date_ag: w.date_ag,
-        heure_ag: w.heure_ag,
-        lieu_ag: w.lieu_ag,
-        ordre_du_jour: w.ordre_du_jour,
-        lieu_signature: w.lieu_signature,
-        date_signature: w.date_signature || new Date().toLocaleDateString("fr-FR"),
-      });
-      addDocument(data.document);
-      setGeneratedUrl(data.docx_url);
-      w.nextStep();
-    } catch (err: unknown) {
-      const e = err as { response?: { data?: { errors?: { message: string }[]; error?: string } } };
-      const errors = e.response?.data?.errors;
-      if (errors && Array.isArray(errors)) { setError(errors.map((x) => x.message).join("\n")); }
-      else { setError(e.response?.data?.error || "Erreur lors de la génération"); }
-    } finally { setIsGenerating(false); }
-  }, [w, addDocument]);
-
-  const handleDownload = useCallback(() => {
-    if (generatedUrl && Platform.OS === "web") {
-      const baseUrl = process.env.EXPO_PUBLIC_API_URL || "http://localhost:3004";
-      window.open(`${baseUrl.replace(/\/api$/, "")}${generatedUrl}`, "_blank");
-    }
-  }, [generatedUrl]);
+  const handleGenerate = () => generate({
+    denomination: w.denomination,
+    forme_juridique: w.forme_juridique,
+    siege_social: w.siege_social,
+    capital: parseAmount(w.capital),
+    mandant_civilite: w.mandant_civilite,
+    mandant_nom: w.mandant_nom,
+    mandant_prenom: w.mandant_prenom,
+    mandant_adresse: w.mandant_adresse,
+    mandant_parts: w.mandant_parts,
+    mandataire_civilite: w.mandataire_civilite,
+    mandataire_nom: w.mandataire_nom,
+    mandataire_prenom: w.mandataire_prenom,
+    mandataire_adresse: w.mandataire_adresse,
+    type_ag: w.type_ag,
+    date_ag: w.date_ag,
+    heure_ag: w.heure_ag,
+    lieu_ag: w.lieu_ag,
+    ordre_du_jour: w.ordre_du_jour,
+    lieu_signature: w.lieu_signature,
+    date_signature: w.date_signature || new Date().toLocaleDateString("fr-FR"),
+  });
 
   const isLastDataStep = w.currentStep === 3;
   const isDownloadStep = w.currentStep === 4;
@@ -179,7 +154,7 @@ export default function PouvoirAgWizardScreen() {
             { value: "SNC", label: "SNC" },
           ]} value={w.forme_juridique} onChange={(v) => w.set({ forme_juridique: v })} />
           <Field colors={colors} label="Siège social" value={w.siege_social} onChangeText={(v) => w.set({ siege_social: v })} placeholder="Adresse complète" />
-          <Field colors={colors} label="Capital social (FCFA)" value={w.capital} onChangeText={(v) => w.set({ capital: v })} placeholder="Ex: 1 000 000" />
+          <Field colors={colors} label="Capital social (FCFA)" value={w.capital} onChangeText={(v) => w.set({ capital: v })} placeholder="Ex: 1 000 000" keyboardType="numeric" />
         </>
       )}
 
@@ -224,37 +199,14 @@ export default function PouvoirAgWizardScreen() {
       )}
 
       {w.currentStep === 4 && (
-        <>
-          <View style={{ backgroundColor: "#ffffff", padding: 32, marginBottom: 20, borderWidth: 1, borderColor: colors.border }}>
-            <Text style={{ fontFamily: fonts.heading, fontWeight: fontWeights.heading, fontSize: 20, color: "#1f2937", textAlign: "center", marginBottom: 16 }}>POUVOIR</Text>
-            <Text style={{ fontFamily: fonts.bold, fontWeight: fontWeights.bold, fontSize: 16, color: "#1f2937", textAlign: "center", marginBottom: 8 }}>{w.denomination}</Text>
-            <Text style={{ fontFamily: fonts.regular, fontSize: 13, color: "#374151", textAlign: "center", marginBottom: 20 }}>{typeAgLabel} du {w.date_ag} - {w.lieu_ag}</Text>
-            <Text style={{ fontFamily: fonts.regular, fontSize: 13, color: "#374151", marginBottom: 8 }}>
-              Je soussigné(e), {w.mandant_civilite} {w.mandant_prenom} {w.mandant_nom}, associé(e) détenant {w.mandant_parts} parts, donne pouvoir à {w.mandataire_civilite} {w.mandataire_prenom} {w.mandataire_nom} de me représenter à l'{typeAgLabel}.
-            </Text>
-            <Text style={{ fontFamily: fonts.regular, fontSize: 13, color: "#9ca3af", textAlign: "center", marginTop: 16 }}>··· Document complet dans le fichier DOCX ···</Text>
-            <Text style={{ fontFamily: fonts.regular, fontSize: 13, color: "#374151", textAlign: "center", marginTop: 16 }}>
-              Fait à {w.lieu_signature || "Brazzaville"}, le {w.date_signature || new Date().toLocaleDateString("fr-FR")}
-            </Text>
-          </View>
-          <View style={{ alignItems: "center", paddingBottom: 24 }}>
-            {generatedUrl ? (
-              <TouchableOpacity onPress={handleDownload}
-                style={{ backgroundColor: colors.primary, paddingHorizontal: 32, paddingVertical: 16, flexDirection: "row", alignItems: "center", gap: 10, width: "100%", justifyContent: "center" }}>
-                <Ionicons name="download-outline" size={22} color="#ffffff" />
-                <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 16, color: "#ffffff" }}>Télécharger le DOCX</Text>
-              </TouchableOpacity>
-            ) : (
-              <View style={{ backgroundColor: colors.success + "15", padding: 16, width: "100%", alignItems: "center" }}>
-                <Ionicons name="checkmark-circle" size={32} color={colors.success} />
-                <Text style={{ fontFamily: fonts.semiBold, fontSize: 16, color: colors.text, marginTop: 8 }}>Document généré</Text>
-              </View>
-            )}
-            <TouchableOpacity onPress={() => { w.reset(); router.replace("/(app)"); }} style={{ marginTop: 16, padding: 12 }}>
-              <Text style={{ fontFamily: fonts.medium, fontSize: 15, color: colors.primary }}>Retour au tableau de bord</Text>
-            </TouchableOpacity>
-          </View>
-        </>
+        <DownloadStep
+          colors={colors}
+          generatedUrl={generatedUrl}
+          onDownload={download}
+          onReset={() => { w.reset(); router.replace("/(app)"); }}
+          title="POUVOIR"
+          subtitle={w.denomination}
+        />
       )}
     </WizardLayout>
   );

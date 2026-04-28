@@ -1,13 +1,12 @@
-import React, { useState, useCallback, useMemo } from "react";
-import { View, Text, TouchableOpacity, Platform } from "react-native";
+import React, { useMemo } from "react";
+import { View } from "react-native";
 import { router } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/lib/theme/ThemeContext";
-import { fonts, fontWeights } from "@/lib/theme/fonts";
 import { Field, Choice, SectionTitle } from "@/components/wizard/FormComponents";
 import { WizardLayout, type PreviewLine } from "@/components/wizard/WizardLayout";
-import { documentsApi } from "@/lib/api/documents";
-import { useDocumentsStore } from "@/lib/store/documents";
+import { DownloadStep } from "@/components/wizard/DownloadStep";
+import { useDocumentGeneration } from "@/lib/wizard/useDocumentGeneration";
+import { parseAmount } from "@/lib/utils/parseAmount";
 import { create } from "zustand";
 
 interface ConvAgoState {
@@ -69,51 +68,27 @@ const STEPS = ["Société", "Destinataire", "Assemblée", "Gérant & Envoi", "Ap
 export default function ConvAgoWizardScreen() {
   const { colors } = useTheme();
   const w = useStore();
-  const { addDocument } = useDocumentsStore();
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [generatedUrl, setGeneratedUrl] = useState<string | null>(null);
-  const [error, setError] = useState("");
+  const { isGenerating, generatedUrl, error, generate, download } = useDocumentGeneration("/generate/conv-ago", w.nextStep);
 
-  const handleGenerate = useCallback(async () => {
-    setIsGenerating(true);
-    setError("");
-    try {
-      const { data } = await documentsApi.generate("/generate/conv-ago", {
-        denomination: w.denomination,
-        forme_juridique: w.forme_juridique,
-        siege_social: w.siege_social,
-        capital: w.capital,
-        destinataire_civilite: w.destinataire_civilite,
-        destinataire_nom: w.destinataire_nom,
-        destinataire_prenom: w.destinataire_prenom,
-        destinataire_adresse: w.destinataire_adresse,
-        date_ag: w.date_ag,
-        heure_ag: w.heure_ag,
-        lieu_ag: w.lieu_ag,
-        ordre_du_jour: w.ordre_du_jour,
-        gerant_civilite: w.gerant_civilite,
-        gerant_nom: w.gerant_nom,
-        gerant_prenom: w.gerant_prenom,
-        date_envoi: w.date_envoi || new Date().toLocaleDateString("fr-FR"),
-        lieu_envoi: w.lieu_envoi,
-      });
-      addDocument(data.document);
-      setGeneratedUrl(data.docx_url);
-      w.nextStep();
-    } catch (err: unknown) {
-      const e = err as { response?: { data?: { errors?: { message: string }[]; error?: string } } };
-      const errors = e.response?.data?.errors;
-      if (errors && Array.isArray(errors)) { setError(errors.map((x) => x.message).join("\n")); }
-      else { setError(e.response?.data?.error || "Erreur lors de la génération"); }
-    } finally { setIsGenerating(false); }
-  }, [w, addDocument]);
-
-  const handleDownload = useCallback(() => {
-    if (generatedUrl && Platform.OS === "web") {
-      const baseUrl = process.env.EXPO_PUBLIC_API_URL || "http://localhost:3004";
-      window.open(`${baseUrl.replace(/\/api$/, "")}${generatedUrl}`, "_blank");
-    }
-  }, [generatedUrl]);
+  const handleGenerate = () => generate({
+    denomination: w.denomination,
+    forme_juridique: w.forme_juridique,
+    siege_social: w.siege_social,
+    capital: parseAmount(w.capital),
+    destinataire_civilite: w.destinataire_civilite,
+    destinataire_nom: w.destinataire_nom,
+    destinataire_prenom: w.destinataire_prenom,
+    destinataire_adresse: w.destinataire_adresse,
+    date_ag: w.date_ag,
+    heure_ag: w.heure_ag,
+    lieu_ag: w.lieu_ag,
+    ordre_du_jour: w.ordre_du_jour,
+    gerant_civilite: w.gerant_civilite,
+    gerant_nom: w.gerant_nom,
+    gerant_prenom: w.gerant_prenom,
+    date_envoi: w.date_envoi || new Date().toLocaleDateString("fr-FR"),
+    lieu_envoi: w.lieu_envoi,
+  });
 
   const isLastDataStep = w.currentStep === 3;
   const isDownloadStep = w.currentStep === 4;
@@ -170,7 +145,7 @@ export default function ConvAgoWizardScreen() {
             { value: "SNC", label: "SNC" },
           ]} value={w.forme_juridique} onChange={(v) => w.set({ forme_juridique: v })} />
           <Field colors={colors} label="Siège social" value={w.siege_social} onChangeText={(v) => w.set({ siege_social: v })} />
-          <Field colors={colors} label="Capital social (FCFA)" value={w.capital} onChangeText={(v) => w.set({ capital: v })} />
+          <Field colors={colors} label="Capital social (FCFA)" value={w.capital} onChangeText={(v) => w.set({ capital: v })} keyboardType="numeric" />
         </>
       )}
 
@@ -210,29 +185,14 @@ export default function ConvAgoWizardScreen() {
       )}
 
       {w.currentStep === 4 && (
-        <>
-          <View style={{ backgroundColor: "#ffffff", padding: 32, marginBottom: 20, borderWidth: 1, borderColor: colors.border }}>
-            <Text style={{ fontFamily: fonts.heading, fontWeight: fontWeights.heading, fontSize: 20, color: "#1f2937", textAlign: "center", marginBottom: 16 }}>CONVOCATION AGO</Text>
-            <Text style={{ fontFamily: fonts.bold, fontWeight: fontWeights.bold, fontSize: 16, textAlign: "center" }}>{w.denomination}</Text>
-            <Text style={{ fontFamily: fonts.regular, fontSize: 13, color: "#9ca3af", textAlign: "center", marginTop: 16 }}>··· Document complet dans le fichier DOCX ···</Text>
-          </View>
-          <View style={{ alignItems: "center", paddingBottom: 24 }}>
-            {generatedUrl ? (
-              <TouchableOpacity onPress={handleDownload} style={{ backgroundColor: colors.primary, paddingHorizontal: 32, paddingVertical: 16, flexDirection: "row", alignItems: "center", gap: 10, width: "100%", justifyContent: "center" }}>
-                <Ionicons name="download-outline" size={22} color="#ffffff" />
-                <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 16, color: "#ffffff" }}>Télécharger le DOCX</Text>
-              </TouchableOpacity>
-            ) : (
-              <View style={{ backgroundColor: colors.success + "15", padding: 16, width: "100%", alignItems: "center" }}>
-                <Ionicons name="checkmark-circle" size={32} color={colors.success} />
-                <Text style={{ fontFamily: fonts.semiBold, fontSize: 16, marginTop: 8 }}>Document généré</Text>
-              </View>
-            )}
-            <TouchableOpacity onPress={() => { w.reset(); router.replace("/(app)"); }} style={{ marginTop: 16, padding: 12 }}>
-              <Text style={{ fontFamily: fonts.medium, fontSize: 15, color: colors.primary }}>Retour au tableau de bord</Text>
-            </TouchableOpacity>
-          </View>
-        </>
+        <DownloadStep
+          colors={colors}
+          generatedUrl={generatedUrl}
+          onDownload={download}
+          onReset={() => { w.reset(); router.replace("/(app)"); }}
+          title="CONVOCATION AGO"
+          subtitle={w.denomination}
+        />
       )}
     </WizardLayout>
   );
