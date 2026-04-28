@@ -22,6 +22,7 @@ export default function AppLayoutScreen() {
         <Stack.Screen name="chat" />
         <Stack.Screen name="profil" />
         <Stack.Screen name="templates/index" />
+        <Stack.Screen name="clauses/index" />
         <Stack.Screen name="workflows/creer-societe" />
       </Stack>
     </AppLayout>

@@ -18,6 +18,7 @@ interface NavSection {
 const NAV: NavSection[] = [
   { key: "accueil", label: "Tableau de bord", icon: "home-outline", route: "/(app)" },
   { key: "templates", label: "Bibliothèque", icon: "library-outline", route: "/(app)/templates" },
+  { key: "clauses", label: "Clauses-types", icon: "bookmark-outline", route: "/(app)/clauses" },
   { key: "creer-societe", label: "Créer une société", icon: "rocket-outline", route: "/(app)/workflows/creer-societe" },
   { key: "creer", label: "Créer", icon: "add-circle-outline", expandable: true },
   { key: "gerer", label: "Gérer", icon: "settings-outline", expandable: true },

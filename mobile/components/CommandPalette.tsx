@@ -95,6 +95,7 @@ const ITEMS: PaletteItem[] = [
 
   // Workflows guidés
   { id: "_wf-creer-societe", label: "Créer une société de A à Z", category: "Workflow guidé", route: "/(app)/workflows/creer-societe", keywords: "constitution statuts drc parcours guide" },
+  { id: "_clauses", label: "Clauses-types OHADA", category: "Bibliothèque", route: "/(app)/clauses", keywords: "preemption agrement inalienabilite tag drag pacte" },
 
   // Navigation
   { id: "_nav-dashboard", label: "Tableau de bord", category: "Navigation", route: "/(app)" },

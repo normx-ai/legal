@@ -9,6 +9,9 @@ import { WizardLayout, type PreviewLine } from "@/components/wizard/WizardLayout
 import { useDocumentGeneration } from "@/lib/wizard/useDocumentGeneration";
 import { parseAmount } from "@/lib/utils/parseAmount";
 import { openDocx } from "@/lib/wizard/openDocx";
+import { calculateCessionParts } from "@/lib/fiscal/cessions";
+import { useOhadaStore } from "@/lib/ohada/store";
+import { FiscalImpactCard } from "@/components/FiscalImpactCard";
 import { create } from "zustand";
 
 // ── Types ──
@@ -111,6 +114,12 @@ export default function ActeCessionPartsWizardScreen() {
   const { colors } = useTheme();
   const w = useStore();
   const { isGenerating, generatedUrl, error, generate } = useDocumentGeneration("/generate/acte-cession-parts", w.nextStep);
+  const { country } = useOhadaStore();
+
+  const fiscalImpact = useMemo(() => {
+    if (!w.prix_cession || w.prix_cession <= 0) return null;
+    return calculateCessionParts({ prixCession: w.prix_cession, countryCode: country || "CG" });
+  }, [w.prix_cession, country]);
   const handleGenerate = () => generate({
         denomination: w.denomination,
         siege_social: w.siege_social,
@@ -236,6 +245,8 @@ export default function ActeCessionPartsWizardScreen() {
               <View style={{ flex: 1 }}><Field colors={colors} label="Numéro de part (à)" value={w.numero_parts_a} onChangeText={(v) => w.set({ numero_parts_a: v })} placeholder="Ex: 50" /></View>
             </View>
             <Field colors={colors} label="Prix de cession (FCFA)" value={w.prix_cession ? String(w.prix_cession) : ""} onChangeText={(v) => w.set({ prix_cession: parseInt(v) || 0 })} keyboardType="numeric" />
+
+            {fiscalImpact && <FiscalImpactCard summary={fiscalImpact} />}
 
             <View style={{ marginTop: 8 }}>
               <ToggleRow colors={colors} label="Agrément préalable requis" value={w.has_agrement} onToggle={(v) => w.set({ has_agrement: v })} />

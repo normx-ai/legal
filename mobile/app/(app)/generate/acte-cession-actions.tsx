@@ -9,6 +9,9 @@ import { WizardLayout } from "@/components/wizard/WizardLayout";
 import { useDocumentGeneration } from "@/lib/wizard/useDocumentGeneration";
 import { parseAmount } from "@/lib/utils/parseAmount";
 import { openDocx } from "@/lib/wizard/openDocx";
+import { calculateCessionActions } from "@/lib/fiscal/cessions";
+import { useOhadaStore } from "@/lib/ohada/store";
+import { FiscalImpactCard } from "@/components/FiscalImpactCard";
 import { create } from "zustand";
 
 // ── Types ──
@@ -89,8 +92,14 @@ export default function ActeCessionActionsWizardScreen() {
   const { colors } = useTheme();
   const w = useStore();
   const { isGenerating, generatedUrl, error, generate } = useDocumentGeneration("/generate/acte-cession-actions", w.nextStep);
+  const { country } = useOhadaStore();
 
   const prixTotal = w.nombre_actions_cedees * w.prix_par_action;
+
+  const fiscalImpact = useMemo(() => {
+    if (!prixTotal || prixTotal <= 0) return null;
+    return calculateCessionActions({ prixCession: prixTotal, countryCode: country || "CG" });
+  }, [prixTotal, country]);
   const handleGenerate = () => generate({
         denomination: w.denomination,
         siege_social: w.siege_social,
@@ -212,6 +221,7 @@ export default function ActeCessionActionsWizardScreen() {
           <>
             <Field colors={colors} label="Nombre d'actions c\u00e9d\u00e9es" value={w.nombre_actions_cedees ? String(w.nombre_actions_cedees) : ""} onChangeText={(v) => w.set({ nombre_actions_cedees: parseInt(v) || 0 })} keyboardType="numeric" />
             <Field colors={colors} label="Prix par action (FCFA)" value={w.prix_par_action ? String(w.prix_par_action) : ""} onChangeText={(v) => w.set({ prix_par_action: parseInt(v) || 0 })} keyboardType="numeric" />
+            {fiscalImpact && <FiscalImpactCard summary={fiscalImpact} />}
             {prixTotal > 0 && (
               <View style={{ backgroundColor: colors.primary + "10", padding: 12, borderRadius: 8, marginBottom: 8 }}>
                 <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 14, color: colors.primary }}>
