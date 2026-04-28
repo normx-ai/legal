@@ -100,7 +100,8 @@ const ITEMS: PaletteItem[] = [
   { id: "_nav-dashboard", label: "Tableau de bord", category: "Navigation", route: "/(app)" },
   { id: "_nav-chat", label: "Assistant IA", category: "Navigation", route: "/(app)/chat", keywords: "ia ohada questions" },
   { id: "_nav-profil", label: "Profil", category: "Navigation", route: "/(app)/profil" },
-  { id: "_nav-templates", label: "Tous les modèles", category: "Navigation", route: "/(app)/generate" },
+  { id: "_nav-templates", label: "Bibliothèque de modèles", category: "Navigation", route: "/(app)/templates", keywords: "modeles apercu" },
+  { id: "_nav-templates-old", label: "Tous les modèles (liste)", category: "Navigation", route: "/(app)/generate" },
 ];
 
 function normalize(s: string) {

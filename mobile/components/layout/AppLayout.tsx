@@ -3,7 +3,7 @@ import { View, Platform } from "react-native";
 import { router, type Href } from "expo-router";
 import { useResponsive } from "@/lib/hooks/useResponsive";
 import { Topbar } from "./Topbar";
-import { Topbar2 } from "./Topbar2";
+import { SidebarPersistent } from "./SidebarPersistent";
 import { CommandPalette } from "@/components/CommandPalette";
 import { FloatingAIChat } from "@/components/FloatingAIChat";
 
@@ -103,24 +103,24 @@ export function AppLayout({ children }: AppLayoutProps) {
     );
   }
 
-  // ── Desktop: topbar + topbar2 (nav horizontale + dropdown) + content ──
+  // ── Desktop: topbar (header) + sidebar gauche persistante + content ──
   return (
     <LayoutContext.Provider value={contextValue}>
-      <View style={{ height: "100vh" as any, width: "100vw" as any, overflow: "hidden" }}>
+      <View style={{ height: "100vh" as any, width: "100vw" as any, overflow: "hidden", flexDirection: "column" }}>
         {/* Topbar (header) */}
         <Topbar onSearchClick={() => setPaletteOpen(true)} />
 
-        {/* Topbar2 (navigation horizontale + dropdown) */}
-        <Topbar2
-          activeSection={activeSection}
-          onSectionPress={handleSectionPress}
-          activeSubItem={activeSubItem}
-          onItemPress={(id) => setActiveSubItem(id)}
-        />
+        {/* Corps : sidebar + main content */}
+        <View style={{ flex: 1, flexDirection: "row", overflow: "hidden" }}>
+          <SidebarPersistent
+            collapsed={collapsed}
+            onToggleCollapse={() => setCollapsed(!collapsed)}
+          />
 
-        {/* Main content — occupe tout l'espace restant */}
-        <View style={{ flex: 1, backgroundColor: "#f3f4f6", overflow: "auto" as any }}>
-          {children}
+          {/* Main content — occupe tout l'espace restant */}
+          <View style={{ flex: 1, backgroundColor: "#f3f4f6", overflow: "auto" as any }}>
+            {children}
+          </View>
         </View>
 
         <FloatingAIChat />

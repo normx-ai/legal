@@ -4,6 +4,7 @@ import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { fonts, fontWeights } from "@/lib/theme/fonts";
 import { useAuthStore } from "@/lib/store/auth";
+import { OhadaCountryPicker } from "@/components/OhadaCountryPicker";
 
 interface TopbarProps {
   onSearchClick?: () => void;
@@ -39,8 +40,9 @@ export function Topbar({ onSearchClick }: TopbarProps = {}) {
         </Text>
       </TouchableOpacity>
 
-      {/* Recherche globale + User */}
-      <View style={{ flexDirection: "row", alignItems: "center", gap: 14 }}>
+      {/* Pays OHADA + Recherche globale + User */}
+      <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
+        <OhadaCountryPicker variant="pill" />
         {onSearchClick && (
           <TouchableOpacity
             onPress={onSearchClick}
