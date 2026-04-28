@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { View, Text, TouchableOpacity, ScrollView, FlatList, Platform, Image } from "react-native";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
@@ -8,6 +8,7 @@ import { useResponsive } from "@/lib/hooks/useResponsive";
 import { useAuthStore } from "@/lib/store/auth";
 import { useDocumentsStore } from "@/lib/store/documents";
 import { documentsApi, type DocumentItem } from "@/lib/api/documents";
+import { openDocx } from "@/lib/wizard/openDocx";
 import { useLayoutContext } from "@/components/layout/AppLayout";
 
 // ── Navigation principale (mobile only) ──
@@ -80,7 +81,7 @@ const TAB_SECTIONS: Record<string, { popular: DocItem[]; sections: Section[] }> 
     ],
     sections: [
       {
-        title: "Creez votre entreprise",
+        title: "Créez votre entreprise",
         docs: [
           { id: "sarl", label: "Statuts SARL", available: true },
           { id: "sarlu", label: "Statuts SARLU", available: true },
@@ -90,7 +91,7 @@ const TAB_SECTIONS: Record<string, { popular: DocItem[]; sections: Section[] }> 
           { id: "sa-ca", label: "Statuts SA (CA)", available: true },
           { id: "sa-uni", label: "Statuts SA Uni.", available: true },
           { id: "gie", label: "Convention GIE", available: true },
-          { id: "ste-part", label: "Ste en Participation", available: true },
+          { id: "ste-part", label: "Sté en Participation", available: true },
           { id: "snc", label: "Statuts SNC", available: true },
           { id: "scs", label: "Statuts SCS", available: true },
         ],
@@ -138,7 +139,7 @@ const TAB_SECTIONS: Record<string, { popular: DocItem[]; sections: Section[] }> 
     ],
     sections: [
       {
-        title: "Recrutez votre equipe",
+        title: "Recrutez votre équipe",
         docs: [
           { id: "cdi", label: "Contrat CDI", available: false },
           { id: "cdd", label: "Contrat CDD", available: false },
@@ -147,7 +148,7 @@ const TAB_SECTIONS: Record<string, { popular: DocItem[]; sections: Section[] }> 
         ],
       },
       {
-        title: "Gerez votre equipe",
+        title: "Gérez votre équipe",
         docs: [
           { id: "avenant", label: "Avenant au contrat", available: false },
           { id: "attestation", label: "Attestation de travail", available: false },
@@ -155,7 +156,7 @@ const TAB_SECTIONS: Record<string, { popular: DocItem[]; sections: Section[] }> 
         ],
       },
       {
-        title: "Se separer d'un employe",
+        title: "Se séparer d'un employé",
         docs: [
           { id: "licenciement", label: "Licenciement", available: false },
           { id: "certificat", label: "Certificat de travail", available: false },
@@ -175,15 +176,15 @@ const TAB_SECTIONS: Record<string, { popular: DocItem[]; sections: Section[] }> 
         docs: [
           { id: "bail-com", label: "Bail commercial", available: false },
           { id: "bail-pro", label: "Bail professionnel", available: false },
-          { id: "resil-bail", label: "Resiliation de bail", available: false },
+          { id: "resil-bail", label: "Résiliation de bail", available: false },
         ],
       },
       {
-        title: "Patrimoine residentiel",
+        title: "Patrimoine résidentiel",
         docs: [
           { id: "bail-hab", label: "Bail d'habitation", available: false },
           { id: "sci", label: "Statuts SCI", available: false },
-          { id: "etat-lieux", label: "Etat des lieux", available: false },
+          { id: "etat-lieux", label: "État des lieux", available: false },
           { id: "quittance", label: "Quittance de loyer", available: false },
         ],
       },
@@ -215,6 +216,44 @@ const TAB_SECTIONS: Record<string, { popular: DocItem[]; sections: Section[] }> 
   },
 };
 
+// ── Hiérarchie d'accès rapide (le plus utilisé en premier, badge sur le top) ──
+const QUICK_ACCESS = [
+  { id: "sarl", label: "Statuts SARL", icon: "briefcase-outline" as const, badge: "Populaire" },
+  { id: "drc", label: "DRC (art. 73)", icon: "alert-circle-outline" as const, badge: "Annuel" },
+  { id: "sas", label: "Statuts SAS", icon: "briefcase-outline" as const },
+  { id: "pv-ago-sa", label: "PV AGO", icon: "document-text-outline" as const },
+  { id: "acte-cession-parts", label: "Cession de parts", icon: "swap-horizontal-outline" as const },
+  { id: "pacte-actionnaires", label: "Pacte d'actionnaires", icon: "people-outline" as const },
+];
+
+const TYPE_TO_NEXT_DOC: Record<string, { id: string; label: string }> = {
+  "statuts-sarl": { id: "drc", label: "DRC (art. 73)" },
+  "statuts-sarlu": { id: "dec-associe-unique-gerant", label: "Décisions associé unique" },
+  "statuts-sa-ag": { id: "drc", label: "DRC (art. 73)" },
+  "statuts-sa-ca": { id: "drc", label: "DRC (art. 73)" },
+  "statuts-sas": { id: "drc", label: "DRC (art. 73)" },
+  "statuts-sasu": { id: "dec-actionnaire-unique-ag", label: "Décisions actionnaire unique" },
+  "drc": { id: "pv-ago-sa", label: "PV AGO" },
+  "pv-ago-sa": { id: "pv-age-sa", label: "PV AGE" },
+};
+
+function suggestNextDoc(documents: DocumentItem[]): { id: string; label: string; sourceLabel: string } | null {
+  if (documents.length === 0) return null;
+  const last = documents[0];
+  const next = TYPE_TO_NEXT_DOC[last.type];
+  if (!next) return null;
+  return { ...next, sourceLabel: last.label };
+}
+
+function relativeDate(iso: string): string {
+  const days = Math.floor((Date.now() - new Date(iso).getTime()) / 86_400_000);
+  if (days === 0) return "aujourd'hui";
+  if (days === 1) return "hier";
+  if (days < 7) return `il y a ${days} jours`;
+  if (days < 30) return `il y a ${Math.floor(days / 7)} semaines`;
+  return new Date(iso).toLocaleDateString("fr-FR");
+}
+
 export default function DashboardScreen() {
   const { colors } = useTheme();
   const { isMobile } = useResponsive();
@@ -225,7 +264,6 @@ export default function DashboardScreen() {
   const [activeTab, setActiveTab] = useState("entreprise");
   const [showMenu, setShowMenu] = useState(false);
 
-  // Access layout context (safe default for mobile)
   let layoutContext: { activeSection: string; setActiveSection: (s: string) => void } | null = null;
   try {
     layoutContext = useLayoutContext();
@@ -246,13 +284,26 @@ export default function DashboardScreen() {
 
   const navigateTo = (id: string) => {
     const route = ROUTES[id];
-    if (route) { setShowMenu(false); router.navigate(route as any); }
+    if (route) { setShowMenu(false); router.navigate(route as never); }
   };
+
+  // ── KPIs métier ──
+  const kpis = useMemo(() => {
+    const now = new Date();
+    const quarterStart = new Date(now.getFullYear(), Math.floor(now.getMonth() / 3) * 3, 1);
+    const docsTrimestre = documents.filter(d => new Date(d.created_at) >= quarterStart).length;
+    // Estimation : 3h en rédaction manuelle vs 5min via wizard = 175 min économisées par doc
+    const heuresEconomisees = Math.round((documents.length * 175) / 60);
+    const suggestion = suggestNextDoc(documents);
+    return { docsTrimestre, heuresEconomisees, suggestion };
+  }, [documents]);
+
+  const lastDoc = documents[0];
 
   const content = TAB_SECTIONS[activeTab];
 
   const renderDocument = ({ item }: { item: DocumentItem }) => (
-    <TouchableOpacity style={{
+    <View style={{
       backgroundColor: colors.card, padding: 18,
       borderBottomWidth: 1, borderBottomColor: colors.background,
       flexDirection: "row", alignItems: "center", gap: 14,
@@ -263,124 +314,182 @@ export default function DashboardScreen() {
       <View style={{ flex: 1 }}>
         <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 14, color: colors.text }}>{item.label}</Text>
         <Text style={{ fontFamily: fonts.regular, fontSize: 12, color: colors.textSecondary, marginTop: 2 }}>
-          {item.forme_juridique} — {new Date(item.created_at).toLocaleDateString("fr-FR")}
+          {item.forme_juridique} · {relativeDate(item.created_at)}
         </Text>
       </View>
       {item.docx_url && (
-        <View style={{ backgroundColor: "#dbeafe", paddingHorizontal: 8, paddingVertical: 3, borderRadius: 4 }}>
+        <TouchableOpacity
+          onPress={() => openDocx(item.docx_url || null)}
+          style={{ flexDirection: "row", alignItems: "center", gap: 4, backgroundColor: "#dbeafe", paddingHorizontal: 10, paddingVertical: 6, borderRadius: 4 }}
+        >
+          <Ionicons name="download-outline" size={14} color="#2563eb" />
           <Text style={{ fontFamily: fonts.medium, fontSize: 11, color: "#2563eb" }}>DOCX</Text>
-        </View>
+        </TouchableOpacity>
       )}
-    </TouchableOpacity>
+    </View>
   );
 
   // ── Desktop dashboard (sidebar handles navigation) ──
   if (isDesktop) {
     return (
       <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: 32 }}>
-        {/* Welcome */}
+        {/* Hero contextuel */}
         <View style={{
           backgroundColor: colors.headerBg, padding: 32, borderRadius: 12, marginBottom: 28,
         }}>
           <Text style={{ fontFamily: fonts.bold, fontWeight: fontWeights.bold, fontSize: 26, color: "#ffffff", marginBottom: 6 }}>
-            Bonjour, {user?.prenom}
+            Bonjour, {user?.prenom} 👋
           </Text>
-          <Text style={{ fontFamily: fonts.regular, fontSize: 15, color: "rgba(255,255,255,0.7)", marginBottom: 16 }}>
-            Generez vos documents juridiques OHADA en quelques clics.
-          </Text>
-          <TouchableOpacity
-            onPress={() => {
-              if (layoutContext) {
-                layoutContext.setActiveSection("creer");
-              }
-            }}
-            style={{
-              backgroundColor: colors.primary, paddingVertical: 12, paddingHorizontal: 24,
-              borderRadius: 8, alignSelf: "flex-start", flexDirection: "row", alignItems: "center", gap: 8,
-            }}
-          >
-            <Ionicons name="add" size={18} color="#ffffff" />
-            <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 14, color: "#ffffff" }}>
-              Creer un document
+          {lastDoc ? (
+            <Text style={{ fontFamily: fonts.regular, fontSize: 15, color: "rgba(255,255,255,0.78)", marginBottom: 18, lineHeight: 22 }}>
+              Dernier document : <Text style={{ color: "#ffffff", fontFamily: fonts.semiBold }}>{lastDoc.label}</Text> ({relativeDate(lastDoc.created_at)}).
+              {kpis.suggestion ? ` Étape suivante recommandée : ${kpis.suggestion.label}.` : ""}
             </Text>
-          </TouchableOpacity>
+          ) : (
+            <Text style={{ fontFamily: fonts.regular, fontSize: 15, color: "rgba(255,255,255,0.7)", marginBottom: 18 }}>
+              Générez vos documents juridiques OHADA assistés par IA, conformes aux Actes uniformes.
+            </Text>
+          )}
+          <View style={{ flexDirection: "row", gap: 10 }}>
+            <TouchableOpacity
+              onPress={() => {
+                if (kpis.suggestion) navigateTo(kpis.suggestion.id);
+                else if (layoutContext) layoutContext.setActiveSection("creer");
+              }}
+              style={{
+                backgroundColor: colors.primary, paddingVertical: 12, paddingHorizontal: 24,
+                borderRadius: 8, flexDirection: "row", alignItems: "center", gap: 8,
+              }}
+            >
+              <Ionicons name={kpis.suggestion ? "arrow-forward" : "add"} size={18} color="#ffffff" />
+              <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 14, color: "#ffffff" }}>
+                {kpis.suggestion ? `Générer ${kpis.suggestion.label}` : "Créer un document"}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => router.navigate("/(app)/chat" as never)}
+              style={{
+                backgroundColor: "rgba(255,255,255,0.12)", paddingVertical: 12, paddingHorizontal: 20,
+                borderRadius: 8, flexDirection: "row", alignItems: "center", gap: 8,
+                borderWidth: 1, borderColor: "rgba(255,255,255,0.2)",
+              }}
+            >
+              <Ionicons name="sparkles-outline" size={16} color="#ffffff" />
+              <Text style={{ fontFamily: fonts.medium, fontSize: 14, color: "#ffffff" }}>Demander à l'IA</Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
-        {/* Stats */}
+        {/* KPIs métier */}
         <View style={{ flexDirection: "row", gap: 16, marginBottom: 28 }}>
           <View style={{ flex: 1, backgroundColor: colors.card, padding: 24, borderRadius: 12, borderWidth: 1, borderColor: colors.border }}>
             <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 12 }}>
               <View style={{ width: 40, height: 40, borderRadius: 10, backgroundColor: "#FDF8EE", alignItems: "center", justifyContent: "center" }}>
-                <Ionicons name="document-text" size={20} color="#D4A843" />
+                <Ionicons name="bar-chart" size={20} color="#D4A843" />
               </View>
-              <Text style={{ fontFamily: fonts.medium, fontWeight: fontWeights.medium, fontSize: 13, color: colors.textSecondary }}>Total documents</Text>
+              <Text style={{ fontFamily: fonts.medium, fontWeight: fontWeights.medium, fontSize: 13, color: colors.textSecondary }}>Documents ce trimestre</Text>
             </View>
-            <Text style={{ fontFamily: fonts.bold, fontWeight: fontWeights.bold, fontSize: 32, color: colors.text }}>{documents.length}</Text>
+            <Text style={{ fontFamily: fonts.bold, fontWeight: fontWeights.bold, fontSize: 32, color: colors.text }}>{kpis.docsTrimestre}</Text>
+            <Text style={{ fontFamily: fonts.regular, fontSize: 12, color: colors.textMuted, marginTop: 4 }}>
+              sur {documents.length} au total
+            </Text>
           </View>
           <View style={{ flex: 1, backgroundColor: colors.card, padding: 24, borderRadius: 12, borderWidth: 1, borderColor: colors.border }}>
             <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 12 }}>
               <View style={{ width: 40, height: 40, borderRadius: 10, backgroundColor: "#ecfdf5", alignItems: "center", justifyContent: "center" }}>
-                <Ionicons name="calendar-outline" size={20} color="#22c55e" />
+                <Ionicons name="time-outline" size={20} color="#22c55e" />
               </View>
-              <Text style={{ fontFamily: fonts.medium, fontWeight: fontWeights.medium, fontSize: 13, color: colors.textSecondary }}>Ce mois</Text>
+              <Text style={{ fontFamily: fonts.medium, fontWeight: fontWeights.medium, fontSize: 13, color: colors.textSecondary }}>Temps économisé</Text>
             </View>
-            <Text style={{ fontFamily: fonts.bold, fontWeight: fontWeights.bold, fontSize: 32, color: colors.text }}>
-              {documents.filter(d => new Date(d.created_at).getMonth() === new Date().getMonth()).length}
+            <Text style={{ fontFamily: fonts.bold, fontWeight: fontWeights.bold, fontSize: 32, color: colors.text }}>{kpis.heuresEconomisees}h</Text>
+            <Text style={{ fontFamily: fonts.regular, fontSize: 12, color: colors.textMuted, marginTop: 4 }}>
+              vs rédaction manuelle
             </Text>
           </View>
           <View style={{ flex: 1, backgroundColor: colors.card, padding: 24, borderRadius: 12, borderWidth: 1, borderColor: colors.border }}>
             <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 12 }}>
               <View style={{ width: 40, height: 40, borderRadius: 10, backgroundColor: "#eff6ff", alignItems: "center", justifyContent: "center" }}>
-                <Ionicons name="checkmark-circle-outline" size={20} color="#3b82f6" />
+                <Ionicons name="library-outline" size={20} color="#3b82f6" />
               </View>
-              <Text style={{ fontFamily: fonts.medium, fontWeight: fontWeights.medium, fontSize: 13, color: colors.textSecondary }}>Modeles disponibles</Text>
+              <Text style={{ fontFamily: fonts.medium, fontWeight: fontWeights.medium, fontSize: 13, color: colors.textSecondary }}>Modèles disponibles</Text>
             </View>
-            <Text style={{ fontFamily: fonts.bold, fontWeight: fontWeights.bold, fontSize: 32, color: colors.text }}>10</Text>
+            <Text style={{ fontFamily: fonts.bold, fontWeight: fontWeights.bold, fontSize: 32, color: colors.text }}>65</Text>
+            <Text style={{ fontFamily: fonts.regular, fontSize: 12, color: colors.textMuted, marginTop: 4 }}>
+              conformes OHADA
+            </Text>
           </View>
         </View>
 
-        {/* Quick access */}
+        {/* Suggestion IA contextuelle */}
+        {kpis.suggestion && (
+          <View style={{
+            backgroundColor: "#FDF8EE", padding: 20, borderRadius: 12, marginBottom: 28,
+            borderWidth: 1, borderColor: "rgba(212, 168, 67, 0.3)", flexDirection: "row", alignItems: "center", gap: 14,
+          }}>
+            <View style={{ width: 40, height: 40, borderRadius: 10, backgroundColor: "#D4A843", alignItems: "center", justifyContent: "center" }}>
+              <Ionicons name="sparkles" size={20} color="#ffffff" />
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 14, color: colors.text, marginBottom: 2 }}>
+                Suggestion IA
+              </Text>
+              <Text style={{ fontFamily: fonts.regular, fontSize: 13, color: colors.textSecondary }}>
+                Vous avez créé {kpis.suggestion.sourceLabel}. Voulez-vous générer maintenant {kpis.suggestion.label} ?
+              </Text>
+            </View>
+            <TouchableOpacity
+              onPress={() => navigateTo(kpis.suggestion!.id)}
+              style={{ backgroundColor: colors.headerBg, paddingHorizontal: 16, paddingVertical: 10, borderRadius: 6, flexDirection: "row", alignItems: "center", gap: 6 }}
+            >
+              <Text style={{ fontFamily: fonts.semiBold, fontSize: 13, color: "#ffffff" }}>Générer</Text>
+              <Ionicons name="arrow-forward" size={14} color="#ffffff" />
+            </TouchableOpacity>
+          </View>
+        )}
+
+        {/* Accès rapide avec hiérarchie */}
         <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 18, color: colors.text, marginBottom: 14 }}>
-          Acces rapide
+          Accès rapide
         </Text>
         <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 12, marginBottom: 28 }}>
-          {[
-            { id: "sarl", label: "Statuts SARL", icon: "briefcase-outline" as const },
-            { id: "sas", label: "Statuts SAS", icon: "briefcase-outline" as const },
-            { id: "sasu", label: "Statuts SASU", icon: "briefcase-outline" as const },
-            { id: "sa-ag", label: "Statuts SA (AG)", icon: "briefcase-outline" as const },
-            { id: "drc", label: "DRC (art. 73)", icon: "document-text-outline" as const },
-            { id: "gie", label: "Convention GIE", icon: "people-outline" as const },
-          ].map((item) => (
+          {QUICK_ACCESS.map((item) => (
             <TouchableOpacity
               key={item.id}
               onPress={() => navigateTo(item.id)}
               style={{
                 backgroundColor: colors.card,
                 borderWidth: 1,
-                borderColor: colors.border,
+                borderColor: item.badge === "Populaire" ? colors.primary : colors.border,
                 borderRadius: 10,
                 paddingHorizontal: 20,
                 paddingVertical: 14,
                 flexDirection: "row",
                 alignItems: "center",
                 gap: 10,
-                minWidth: 180,
+                minWidth: 200,
+                position: "relative",
               }}
             >
               <View style={{ width: 36, height: 36, borderRadius: 8, backgroundColor: "#FDF8EE", alignItems: "center", justifyContent: "center" }}>
                 <Ionicons name={item.icon} size={18} color="#D4A843" />
               </View>
-              <Text style={{ fontFamily: fonts.medium, fontWeight: fontWeights.medium, fontSize: 13, color: colors.text }}>{item.label}</Text>
-              <Ionicons name="chevron-forward" size={14} color={colors.textMuted} style={{ marginLeft: "auto" }} />
+              <View style={{ flex: 1 }}>
+                <Text style={{ fontFamily: fonts.medium, fontWeight: fontWeights.medium, fontSize: 13, color: colors.text }}>{item.label}</Text>
+                {item.badge && (
+                  <Text style={{ fontFamily: fonts.medium, fontSize: 10, color: colors.primary, marginTop: 2, textTransform: "uppercase", letterSpacing: 0.5 }}>
+                    {item.badge}
+                  </Text>
+                )}
+              </View>
+              <Ionicons name="chevron-forward" size={14} color={colors.textMuted} />
             </TouchableOpacity>
           ))}
         </View>
 
-        {/* Recent documents */}
+        {/* Documents récents */}
         <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
           <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 18, color: colors.text }}>
-            Mes documents recents
+            Mes documents récents
           </Text>
           {documents.length > 0 && (
             <TouchableOpacity onPress={loadDocuments} style={{ padding: 4 }}>
@@ -404,7 +513,7 @@ export default function DashboardScreen() {
               Aucun document
             </Text>
             <Text style={{ fontFamily: fonts.regular, fontSize: 14, color: colors.textSecondary, textAlign: "center", maxWidth: 360, marginBottom: 24 }}>
-              Utilisez le menu lateral pour creer votre premier document juridique conforme OHADA.
+              Utilisez le menu latéral pour créer votre premier document juridique conforme OHADA.
             </Text>
           </View>
         ) : (
@@ -479,7 +588,7 @@ export default function DashboardScreen() {
         </ScrollView>
       </View>
 
-      {/* Menu deroulant */}
+      {/* Menu déroulant */}
       {showMenu && content && (
         <View style={{ backgroundColor: colors.headerBg, paddingVertical: 20, paddingHorizontal: 24, borderBottomWidth: 1, borderBottomColor: colors.border }}>
           {/* Services populaires */}
@@ -547,11 +656,17 @@ export default function DashboardScreen() {
           backgroundColor: colors.headerBg, padding: 28, borderRadius: 12, marginBottom: 24,
         }}>
           <Text style={{ fontFamily: fonts.bold, fontWeight: fontWeights.bold, fontSize: 24, color: "#ffffff", marginBottom: 6 }}>
-            Bonjour, {user?.prenom}
+            Bonjour, {user?.prenom} 👋
           </Text>
-          <Text style={{ fontFamily: fonts.regular, fontSize: 15, color: "rgba(255,255,255,0.7)", marginBottom: 16 }}>
-            Trouvez tous les documents juridiques dont vous avez besoin.
-          </Text>
+          {lastDoc ? (
+            <Text style={{ fontFamily: fonts.regular, fontSize: 14, color: "rgba(255,255,255,0.78)", marginBottom: 16, lineHeight: 20 }}>
+              Dernier document : {lastDoc.label} ({relativeDate(lastDoc.created_at)}).
+            </Text>
+          ) : (
+            <Text style={{ fontFamily: fonts.regular, fontSize: 15, color: "rgba(255,255,255,0.7)", marginBottom: 16 }}>
+              Trouvez tous les documents juridiques dont vous avez besoin.
+            </Text>
+          )}
           <TouchableOpacity
             onPress={() => { setActiveTab("entreprise"); setShowMenu(true); }}
             style={{
@@ -566,17 +681,15 @@ export default function DashboardScreen() {
           </TouchableOpacity>
         </View>
 
-        {/* Stats */}
+        {/* KPIs */}
         <View style={{ flexDirection: "row", gap: 12, marginBottom: 24 }}>
           <View style={{ flex: 1, backgroundColor: colors.card, padding: 20, borderRadius: 10, borderWidth: 1, borderColor: colors.border }}>
-            <Text style={{ fontFamily: fonts.regular, fontSize: 13, color: colors.textSecondary, marginBottom: 8 }}>Total documents</Text>
-            <Text style={{ fontFamily: fonts.bold, fontWeight: fontWeights.bold, fontSize: 28, color: colors.text }}>{documents.length}</Text>
+            <Text style={{ fontFamily: fonts.regular, fontSize: 12, color: colors.textSecondary, marginBottom: 8 }}>Ce trimestre</Text>
+            <Text style={{ fontFamily: fonts.bold, fontWeight: fontWeights.bold, fontSize: 26, color: colors.text }}>{kpis.docsTrimestre}</Text>
           </View>
           <View style={{ flex: 1, backgroundColor: colors.card, padding: 20, borderRadius: 10, borderWidth: 1, borderColor: colors.border }}>
-            <Text style={{ fontFamily: fonts.regular, fontSize: 13, color: colors.textSecondary, marginBottom: 8 }}>Ce mois</Text>
-            <Text style={{ fontFamily: fonts.bold, fontWeight: fontWeights.bold, fontSize: 28, color: colors.text }}>
-              {documents.filter(d => new Date(d.created_at).getMonth() === new Date().getMonth()).length}
-            </Text>
+            <Text style={{ fontFamily: fonts.regular, fontSize: 12, color: colors.textSecondary, marginBottom: 8 }}>Temps économisé</Text>
+            <Text style={{ fontFamily: fonts.bold, fontWeight: fontWeights.bold, fontSize: 26, color: colors.text }}>{kpis.heuresEconomisees}h</Text>
           </View>
         </View>
 
@@ -607,14 +720,14 @@ export default function DashboardScreen() {
               Aucun document
             </Text>
             <Text style={{ fontFamily: fonts.regular, fontSize: 14, color: colors.textSecondary, textAlign: "center", maxWidth: 320, marginBottom: 24 }}>
-              Creez votre premier document juridique conforme OHADA en quelques minutes.
+              Créez votre premier document juridique conforme OHADA en quelques minutes.
             </Text>
             <TouchableOpacity
               onPress={() => { setActiveTab("entreprise"); setShowMenu(true); }}
               style={{ backgroundColor: colors.primary, paddingHorizontal: 28, paddingVertical: 14, borderRadius: 8, flexDirection: "row", alignItems: "center", gap: 8 }}
             >
               <Ionicons name="add" size={18} color="#ffffff" />
-              <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 14, color: "#ffffff" }}>Creer un document</Text>
+              <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 14, color: "#ffffff" }}>Créer un document</Text>
             </TouchableOpacity>
           </View>
         ) : (
