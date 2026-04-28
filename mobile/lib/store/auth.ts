@@ -52,6 +52,8 @@ interface AuthState {
   isLoading: boolean;
   loggedOut: boolean;
   sessionExpired: boolean;
+  /** true une fois que persist a restauré l'état depuis le storage */
+  hasHydrated: boolean;
 
   login: () => void;
   logout: () => void;
@@ -62,6 +64,7 @@ interface AuthState {
   setSessionExpired: (expired: boolean) => void;
   clearSessionExpired: () => void;
   verifyToken: () => Promise<void>;
+  setHasHydrated: (v: boolean) => void;
 
   // Compat — anciennes methodes (no-op ou redirect)
   setUser: (user: User | null) => void;
@@ -143,8 +146,10 @@ export const useAuthStore = create<AuthState>()(
       isLoading: true,
       loggedOut: false,
       sessionExpired: false,
+      hasHydrated: false,
       email: "",
       step: "email",
+      setHasHydrated: (v) => set({ hasHydrated: v }),
 
       // Redirect vers Keycloak login
       login: () => {
@@ -277,6 +282,8 @@ export const useAuthStore = create<AuthState>()(
             if (!state.isAuthenticated) {
               state.verifyToken();
             }
+          }).finally(() => {
+            state.setHasHydrated(true);
           });
         }
       },
