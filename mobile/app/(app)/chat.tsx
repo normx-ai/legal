@@ -1,5 +1,5 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
-import { View, Text, TextInput, TouchableOpacity, ScrollView, ActivityIndicator, Platform } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, ScrollView, ActivityIndicator, Platform, type TextStyle } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/lib/theme/ThemeContext";
 import { fonts, fontWeights } from "@/lib/theme/fonts";
@@ -317,7 +317,7 @@ export default function ChatScreen() {
               fontFamily: fonts.regular,
               fontSize: 14,
               color: colors.text,
-              ...(Platform.OS === "web" ? { outlineStyle: "none" } : {}),
+              ...(Platform.OS === "web" ? ({ outlineStyle: "none" } as TextStyle & { outlineStyle: "none" }) : {}),
             }}
           />
           <TouchableOpacity

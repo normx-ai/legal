@@ -4,7 +4,7 @@ import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/lib/theme/ThemeContext";
 import { fonts, fontWeights } from "@/lib/theme/fonts";
-import { WizardLayout } from "@/components/wizard/WizardLayout";
+import { WizardLayout, type PreviewLine } from "@/components/wizard/WizardLayout";
 import { useWizardStore } from "@/lib/store/wizard";
 import { useDocumentsStore } from "@/lib/store/documents";
 import { documentsApi } from "@/lib/api/documents";
@@ -134,7 +134,7 @@ export default function SarlWizardScreen() {
     const v = (s: string) => s || "...";
     const isSarlu = w.associes.length === 1;
     const nombreParts = w.valeur_nominale > 0 ? Math.floor(w.capital / w.valeur_nominale) : 0;
-    const lines = [
+    const lines: PreviewLine[] = [
       { text: v(w.denomination), bold: true, center: true, size: "xl" as const, spaceBefore: true },
       { text: isSarlu ? "Société à Responsabilité Limitée Unipersonnelle" : "Société à Responsabilité Limitée", center: true, size: "md" as const },
       { text: `Au capital de ${w.capital.toLocaleString("fr-FR")} FCFA`, center: true, size: "sm" as const },

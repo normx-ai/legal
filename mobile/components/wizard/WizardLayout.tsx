@@ -6,7 +6,7 @@ import { useTheme } from "@/lib/theme/ThemeContext";
 import { fonts, fontWeights } from "@/lib/theme/fonts";
 import { useResponsive } from "@/lib/hooks/useResponsive";
 
-interface PreviewLine {
+export interface PreviewLine {
   text: string;
   bold?: boolean;
   center?: boolean;

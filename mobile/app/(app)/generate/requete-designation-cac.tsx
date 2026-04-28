@@ -5,7 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/lib/theme/ThemeContext";
 import { fonts, fontWeights } from "@/lib/theme/fonts";
 import { Field, Choice, ToggleRow, SectionTitle } from "@/components/wizard/FormComponents";
-import { WizardLayout } from "@/components/wizard/WizardLayout";
+import { WizardLayout, type PreviewLine } from "@/components/wizard/WizardLayout";
 import { documentsApi } from "@/lib/api/documents";
 import { useDocumentsStore } from "@/lib/store/documents";
 import { create } from "zustand";
@@ -150,7 +150,7 @@ export default function RequeteDesignationCacWizardScreen() {
 
   const previewLines = useMemo(() => {
     const v = (s: string) => s || "...";
-    const lines = [
+    const lines: PreviewLine[] = [
       { text: v(w.tribunal_competent), bold: true, center: true, size: "lg" as const, spaceBefore: true },
       { text: "━━━━━━━━━━━━━━━━━━━━━━", center: true },
       { text: "REQUÊTE AUX FINS DE DÉSIGNATION", bold: true, center: true, size: "lg" as const },

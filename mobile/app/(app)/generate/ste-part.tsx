@@ -5,7 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/lib/theme/ThemeContext";
 import { fonts, fontWeights } from "@/lib/theme/fonts";
 import { Field, Choice, ToggleRow, SectionTitle } from "@/components/wizard/FormComponents";
-import { WizardLayout } from "@/components/wizard/WizardLayout";
+import { WizardLayout, type PreviewLine } from "@/components/wizard/WizardLayout";
 import { documentsApi } from "@/lib/api/documents";
 import { useDocumentsStore } from "@/lib/store/documents";
 import { create } from "zustand";
@@ -150,7 +150,7 @@ export default function StePartWizardScreen() {
     const v = (s: string) => s || "...";
     const totalApports = w.associes.reduce((s, a) => s + a.apport, 0);
     const totalParts = w.valeur_part > 0 ? Math.floor(totalApports / w.valeur_part) : 0;
-    const lines = [
+    const lines: PreviewLine[] = [
       { text: v(w.denomination), bold: true, center: true, size: "xl" as const, spaceBefore: true },
       { text: "Soci\u00e9t\u00e9 en Participation", center: true, size: "md" as const },
       { text: `Apports totaux : ${totalApports.toLocaleString("fr-FR")} FCFA`, center: true, size: "sm" as const },

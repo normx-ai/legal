@@ -74,7 +74,7 @@ export interface DocumentItem {
 }
 
 export const documentsApi = {
-  generate: (endpoint: string, data: GenerateSarlPayload) =>
+  generate: <T>(endpoint: string, data: T) =>
     api.post<{ document: DocumentItem; docx_url: string }>(endpoint, data),
 
   generateSarl: (data: GenerateSarlPayload) =>

@@ -5,7 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/lib/theme/ThemeContext";
 import { fonts, fontWeights } from "@/lib/theme/fonts";
 import { Field, Choice, ToggleRow, SectionTitle } from "@/components/wizard/FormComponents";
-import { WizardLayout } from "@/components/wizard/WizardLayout";
+import { WizardLayout, type PreviewLine } from "@/components/wizard/WizardLayout";
 import { documentsApi } from "@/lib/api/documents";
 import { useDocumentsStore } from "@/lib/store/documents";
 import { create } from "zustand";
@@ -137,7 +137,7 @@ export default function FeuillePresenceCaWizardScreen() {
   // -- Apercu document temps reel --
   const previewLines = useMemo(() => {
     const v = (s: string) => s || "...";
-    const lines = [
+    const lines: PreviewLine[] = [
       { text: v(w.denomination), bold: true, center: true, size: "xl" as const, spaceBefore: true },
       { text: `Siège social : ${v(w.siege_social)}`, center: true, size: "sm" as const },
       { text: `Capital : ${v(w.capital)} FCFA`, center: true, size: "sm" as const },
