@@ -1,13 +1,13 @@
-import React, { useState, useCallback, useMemo } from "react";
-import { View, Text, ScrollView, TouchableOpacity, Platform } from "react-native";
+import React, { useMemo } from "react";
+import { View, Text, TouchableOpacity } from "react-native";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/lib/theme/ThemeContext";
 import { fonts, fontWeights } from "@/lib/theme/fonts";
 import { Field, Choice, ToggleRow, SectionTitle } from "@/components/wizard/FormComponents";
 import { WizardLayout, type PreviewLine } from "@/components/wizard/WizardLayout";
-import { documentsApi } from "@/lib/api/documents";
-import { useDocumentsStore } from "@/lib/store/documents";
+import { useDocumentGeneration } from "@/lib/wizard/useDocumentGeneration";
+import { openDocx } from "@/lib/wizard/openDocx";
 import { create } from "zustand";
 
 // ── Types ──
@@ -97,16 +97,8 @@ const STEPS = ["Société", "Souscripteur", "Souscription", "Aperçu"];
 export default function BulletinSouscriptionAugmentationWizardScreen() {
   const { colors } = useTheme();
   const w = useStore();
-  const { addDocument } = useDocumentsStore();
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [generatedUrl, setGeneratedUrl] = useState<string | null>(null);
-  const [error, setError] = useState("");
-
-  const handleGenerate = useCallback(async () => {
-    setIsGenerating(true);
-    setError("");
-    try {
-      const { data } = await documentsApi.generate("/generate/bulletin-souscription-augmentation", {
+  const { isGenerating, generatedUrl, error, generate } = useDocumentGeneration("/generate/bulletin-souscription-augmentation", w.nextStep);
+  const handleGenerate = () => generate({
         denomination: w.denomination,
         forme_juridique: w.forme_juridique,
         siege_social: w.siege_social,
@@ -127,23 +119,7 @@ export default function BulletinSouscriptionAugmentationWizardScreen() {
         lieu_signature: w.lieu_signature,
         date_signature: w.date_signature || new Date().toLocaleDateString("fr-FR"),
       });
-      addDocument(data.document);
-      setGeneratedUrl(data.docx_url);
-      w.nextStep();
-    } catch (err: unknown) {
-      const e = err as { response?: { data?: { errors?: { message: string }[]; error?: string } } };
-      const errors = e.response?.data?.errors;
-      if (errors && Array.isArray(errors)) { setError(errors.map((x) => x.message).join("\n")); }
-      else { setError(e.response?.data?.error || "Erreur lors de la génération"); }
-    } finally { setIsGenerating(false); }
-  }, [w, addDocument]);
-
-  const handleDownload = useCallback(() => {
-    if (generatedUrl && Platform.OS === "web") {
-      const baseUrl = process.env.EXPO_PUBLIC_API_URL || "http://localhost:3004";
-      window.open(`${baseUrl.replace(/\/api$/, "")}${generatedUrl}`, "_blank");
-    }
-  }, [generatedUrl]);
+  const handleDownload = () => openDocx(generatedUrl);
 
   const isLastDataStep = w.currentStep === 2;
   const isDownloadStep = w.currentStep === 3;

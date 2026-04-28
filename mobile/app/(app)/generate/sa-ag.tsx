@@ -1,12 +1,12 @@
-import React, { useState, useCallback, useMemo } from "react";
-import { View, Text, ScrollView, TouchableOpacity, TextInput, Platform } from "react-native";
+import React, { useMemo } from "react";
+import { View, Text, TouchableOpacity, TextInput } from "react-native";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/lib/theme/ThemeContext";
 import { fonts, fontWeights } from "@/lib/theme/fonts";
 import { WizardLayout, type PreviewLine } from "@/components/wizard/WizardLayout";
-import { documentsApi } from "@/lib/api/documents";
-import { useDocumentsStore } from "@/lib/store/documents";
+import { useDocumentGeneration } from "@/lib/wizard/useDocumentGeneration";
+import { openDocx } from "@/lib/wizard/openDocx";
 import { create } from "zustand";
 
 // ── SA AG Store ──
@@ -104,15 +104,8 @@ function SectionTitle({ title, colors }: { title: string; colors: Record<string,
 export default function SaAgWizardScreen() {
   const { colors } = useTheme();
   const w = useSaAgStore();
-  const { addDocument } = useDocumentsStore();
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [generatedUrl, setGeneratedUrl] = useState<string | null>(null);
-  const [error, setError] = useState("");
-
-  const handleGenerate = useCallback(async () => {
-    setIsGenerating(true); setError("");
-    try {
-      const { data } = await documentsApi.generate("/generate/sa-ag", {
+  const { isGenerating, generatedUrl, error, generate } = useDocumentGeneration("/generate/sa-ag", w.nextStep);
+  const handleGenerate = () => generate({
         denomination: w.denomination, sigle: w.sigle, objet_social: w.objet_social,
         siege_social: w.siege_social, ville: w.ville, pays: w.pays, duree: w.duree,
         exercice_debut: w.exercice_debut, exercice_fin: w.exercice_fin, premier_exercice_fin: w.premier_exercice_fin,
@@ -124,23 +117,7 @@ export default function SaAgWizardScreen() {
         representation_libre: w.representation === "libre", representation_actionnaire: w.representation === "actionnaire",
         date_signature: w.date_signature || new Date().toLocaleDateString("fr-FR"), lieu_signature: w.lieu_signature,
       });
-      addDocument(data.document);
-      setGeneratedUrl(data.docx_url);
-      w.nextStep();
-    } catch (err: unknown) {
-      const e = err as { response?: { data?: { errors?: { message: string }[]; error?: string } } };
-      const errs = e.response?.data?.errors;
-      if (errs && Array.isArray(errs)) setError(errs.map((x) => x.message).join("\n"));
-      else setError(e.response?.data?.error || "Erreur lors de la génération");
-    } finally { setIsGenerating(false); }
-  }, [w, addDocument]);
-
-  const handleDownload = useCallback(() => {
-    if (generatedUrl && Platform.OS === "web") {
-      const baseUrl = process.env.EXPO_PUBLIC_API_URL || "http://localhost:3004";
-      window.open(`${baseUrl.replace(/\/api$/, "")}${generatedUrl}`, "_blank");
-    }
-  }, [generatedUrl]);
+  const handleDownload = () => openDocx(generatedUrl);
 
   const isLastDataStep = w.currentStep === 6;
   const isDownloadStep = w.currentStep === 7;

@@ -1,13 +1,13 @@
-import React, { useState, useCallback, useMemo } from "react";
-import { View, Text, ScrollView, TouchableOpacity, TextInput, Platform } from "react-native";
+import React, { useMemo } from "react";
+import { View, Text, TouchableOpacity, TextInput } from "react-native";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/lib/theme/ThemeContext";
 import { fonts, fontWeights } from "@/lib/theme/fonts";
 import { WizardLayout, type PreviewLine } from "@/components/wizard/WizardLayout";
 import { useWizardStore } from "@/lib/store/wizard";
-import { useDocumentsStore } from "@/lib/store/documents";
-import { documentsApi } from "@/lib/api/documents";
+import { useDocumentGeneration } from "@/lib/wizard/useDocumentGeneration";
+import { openDocx } from "@/lib/wizard/openDocx";
 import { useTranslation } from "react-i18next";
 
 const STEPS = ["Société", "Associés", "Capital", "Gérance", "Clauses", "Récapitulatif", "Aperçu"];
@@ -68,63 +68,42 @@ export default function SarlWizardScreen() {
   const { colors } = useTheme();
   const { t } = useTranslation();
   const w = useWizardStore();
-  const { addDocument } = useDocumentsStore();
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [generatedUrl, setGeneratedUrl] = useState<string | null>(null);
-  const [error, setError] = useState("");
+  const { isGenerating, generatedUrl, error, generate } = useDocumentGeneration("/generate/sarl", w.nextStep);
 
-  const handleGenerate = useCallback(async () => {
-    setIsGenerating(true);
-    setError("");
-    try {
-      const isSarlu = w.associes.length === 1;
-      const endpoint = isSarlu ? "/generate/sarlu" : "/generate/sarl";
-      const { data } = await documentsApi.generate(endpoint, {
-        denomination: w.denomination, sigle: w.sigle || undefined,
-        objet_social: w.objet_social, siege_social: w.siege_social,
-        ville: w.ville, pays: w.pays, duree: w.duree,
-        exercice_debut: w.exercice_debut, exercice_fin: w.exercice_fin,
-        premier_exercice_fin: w.premier_exercice_fin,
-        capital: w.capital, valeur_nominale: w.valeur_nominale,
-        mode_liberation: w.mode_liberation,
-        lieu_depot: w.lieu_depot, nom_depositaire: w.nom_depositaire,
-        date_certificat_depot: w.date_certificat_depot,
-        associes: w.associes, gerant: {
-          ...w.gerant, preavis_mois: w.gerant.preavis_mois,
-          seuil_majorite_nomination: w.gerant.seuil_majorite_nomination,
-          seuil_majorite_vie_sociale: w.gerant.seuil_majorite_vie_sociale,
-          limitations_pouvoirs: w.gerant.limitations_pouvoirs,
-        },
-        cession_associes: w.clauses.cession_associes,
-        seuil_cession_associes: w.clauses.seuil_cession_associes,
-        cession_famille: w.clauses.cession_famille,
-        transmission_deces: w.clauses.transmission_deces,
-        mode_contestation: w.clauses.mode_contestation,
-        mandataire: {
-          civilite: w.clauses.mandataire_civilite, nom: w.clauses.mandataire_nom,
-          prenom: w.clauses.mandataire_prenom, adresse: w.clauses.mandataire_adresse,
-        },
-        engagements_mandataire: w.clauses.engagements_mandataire,
-        date_signature: w.date_signature || new Date().toLocaleDateString("fr-FR"),
-        lieu_signature: w.lieu_signature,
-      });
-      addDocument(data.document);
-      setGeneratedUrl(data.docx_url);
-      w.nextStep();
-    } catch (err: unknown) {
-      const e = err as { response?: { data?: { errors?: { message: string }[]; error?: string } } };
-      const errors = e.response?.data?.errors;
-      if (errors && Array.isArray(errors)) { setError(errors.map((x) => x.message).join("\n")); }
-      else { setError(e.response?.data?.error || "Erreur lors de la génération"); }
-    } finally { setIsGenerating(false); }
-  }, [w, addDocument]);
-
-  const handleDownload = useCallback(() => {
-    if (generatedUrl && Platform.OS === "web") {
-      const baseUrl = process.env.EXPO_PUBLIC_API_URL || "http://localhost:3004";
-      window.open(`${baseUrl.replace(/\/api$/, "")}${generatedUrl}`, "_blank");
-    }
-  }, [generatedUrl]);
+  const handleGenerate = () => {
+    const isSarlu = w.associes.length === 1;
+    const endpoint = isSarlu ? "/generate/sarlu" : "/generate/sarl";
+    return generate({
+      denomination: w.denomination, sigle: w.sigle || undefined,
+      objet_social: w.objet_social, siege_social: w.siege_social,
+      ville: w.ville, pays: w.pays, duree: w.duree,
+      exercice_debut: w.exercice_debut, exercice_fin: w.exercice_fin,
+      premier_exercice_fin: w.premier_exercice_fin,
+      capital: w.capital, valeur_nominale: w.valeur_nominale,
+      mode_liberation: w.mode_liberation,
+      lieu_depot: w.lieu_depot, nom_depositaire: w.nom_depositaire,
+      date_certificat_depot: w.date_certificat_depot,
+      associes: w.associes, gerant: {
+        ...w.gerant, preavis_mois: w.gerant.preavis_mois,
+        seuil_majorite_nomination: w.gerant.seuil_majorite_nomination,
+        seuil_majorite_vie_sociale: w.gerant.seuil_majorite_vie_sociale,
+        limitations_pouvoirs: w.gerant.limitations_pouvoirs,
+      },
+      cession_associes: w.clauses.cession_associes,
+      seuil_cession_associes: w.clauses.seuil_cession_associes,
+      cession_famille: w.clauses.cession_famille,
+      transmission_deces: w.clauses.transmission_deces,
+      mode_contestation: w.clauses.mode_contestation,
+      mandataire: {
+        civilite: w.clauses.mandataire_civilite, nom: w.clauses.mandataire_nom,
+        prenom: w.clauses.mandataire_prenom, adresse: w.clauses.mandataire_adresse,
+      },
+      engagements_mandataire: w.clauses.engagements_mandataire,
+      date_signature: w.date_signature || new Date().toLocaleDateString("fr-FR"),
+      lieu_signature: w.lieu_signature,
+    }, endpoint);
+  };
+  const handleDownload = () => openDocx(generatedUrl);
 
   const isLastDataStep = w.currentStep === 5;
   const isDownloadStep = w.currentStep === 6;

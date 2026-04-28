@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { View } from "react-native";
+
 import { router } from "expo-router";
 import { useTheme } from "@/lib/theme/ThemeContext";
 import { Field, Choice, SectionTitle } from "@/components/wizard/FormComponents";

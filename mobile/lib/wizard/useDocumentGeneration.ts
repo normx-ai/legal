@@ -27,11 +27,11 @@ export function useDocumentGeneration<T>(endpoint: string, onSuccess?: () => voi
   const [generatedUrl, setGeneratedUrl] = useState<string | null>(null);
   const [error, setError] = useState("");
 
-  const generate = useCallback(async (payload: T) => {
+  const generate = useCallback(async (payload: T, dynamicEndpoint?: string) => {
     setIsGenerating(true);
     setError("");
     try {
-      const { data } = await documentsApi.generate<T>(endpoint, payload);
+      const { data } = await documentsApi.generate<T>(dynamicEndpoint || endpoint, payload);
       addDocument(data.document);
       setGeneratedUrl(data.docx_url);
       onSuccess?.();

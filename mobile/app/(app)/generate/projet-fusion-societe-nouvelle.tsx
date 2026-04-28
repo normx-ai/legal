@@ -1,13 +1,13 @@
-import React, { useState, useCallback, useMemo } from "react";
-import { View, Text, ScrollView, TouchableOpacity, Platform } from "react-native";
+import React, { useMemo } from "react";
+import { View, Text, TouchableOpacity } from "react-native";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/lib/theme/ThemeContext";
 import { fonts, fontWeights } from "@/lib/theme/fonts";
 import { Field, Choice, ToggleRow, SectionTitle } from "@/components/wizard/FormComponents";
 import { WizardLayout } from "@/components/wizard/WizardLayout";
-import { documentsApi } from "@/lib/api/documents";
-import { useDocumentsStore } from "@/lib/store/documents";
+import { useDocumentGeneration } from "@/lib/wizard/useDocumentGeneration";
+import { openDocx } from "@/lib/wizard/openDocx";
 import { create } from "zustand";
 
 // ── Types ──
@@ -50,16 +50,8 @@ const STEPS = ["Soci\u00e9t\u00e9 A", "Soci\u00e9t\u00e9 B", "Soci\u00e9t\u00e9 
 export default function ProjetFusionSocieteNouvelleWizardScreen() {
   const { colors } = useTheme();
   const w = useStore();
-  const { addDocument } = useDocumentsStore();
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [generatedUrl, setGeneratedUrl] = useState<string | null>(null);
-  const [error, setError] = useState("");
-
-  const handleGenerate = useCallback(async () => {
-    setIsGenerating(true);
-    setError("");
-    try {
-      const { data } = await documentsApi.generate("/generate/projet-fusion-societe-nouvelle", {
+  const { isGenerating, generatedUrl, error, generate } = useDocumentGeneration("/generate/projet-fusion-societe-nouvelle", w.nextStep);
+  const handleGenerate = () => generate({
         denomination_a: w.denomination_a, forme_a: w.forme_a, capital_a: parseInt(w.capital_a) || 0, siege_a: w.siege_a, rccm_a: w.rccm_a, objet_a: w.objet_a, representant_a: w.representant_a,
         denomination_b: w.denomination_b, forme_b: w.forme_b, capital_b: parseInt(w.capital_b) || 0, siege_b: w.siege_b, rccm_b: w.rccm_b, objet_b: w.objet_b, representant_b: w.representant_b,
         denomination_c: w.denomination_c, forme_c: w.forme_c, capital_c: parseInt(w.capital_c) || 0, siege_c: w.siege_c, objet_c: w.objet_c, nombre_actions_c: w.nombre_actions_c, valeur_nominale_c: w.valeur_nominale_c,
@@ -74,23 +66,7 @@ export default function ProjetFusionSocieteNouvelleWizardScreen() {
         lieu_signature: w.lieu_signature,
         date_signature: w.date_signature || new Date().toLocaleDateString("fr-FR"),
       });
-      addDocument(data.document);
-      setGeneratedUrl(data.docx_url);
-      w.nextStep();
-    } catch (err: unknown) {
-      const e = err as { response?: { data?: { errors?: { message: string }[]; error?: string } } };
-      const errors = e.response?.data?.errors;
-      if (errors && Array.isArray(errors)) { setError(errors.map((x) => x.message).join("\n")); }
-      else { setError(e.response?.data?.error || "Erreur lors de la g\u00e9n\u00e9ration"); }
-    } finally { setIsGenerating(false); }
-  }, [w, addDocument]);
-
-  const handleDownload = useCallback(() => {
-    if (generatedUrl && Platform.OS === "web") {
-      const baseUrl = process.env.EXPO_PUBLIC_API_URL || "http://localhost:3004";
-      window.open(`${baseUrl.replace(/\/api$/, "")}${generatedUrl}`, "_blank");
-    }
-  }, [generatedUrl]);
+  const handleDownload = () => openDocx(generatedUrl);
 
   const isLastDataStep = w.currentStep === 5;
   const isDownloadStep = w.currentStep === 6;
