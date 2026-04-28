@@ -7,6 +7,16 @@ export interface AssocieRow {
   mandataire_nom?: string;
 }
 
+export interface ActionnaireRow {
+  civilite: string;
+  nom: string;
+  prenom: string;
+  adresse: string;
+  nombre_actions: number;
+  nombre_voix?: number;
+  mandataire_nom?: string;
+}
+
 export interface GerantRow {
   civilite: string;
   nom: string;
@@ -31,6 +41,14 @@ export const emptyAssocie = (): AssocieRow => ({
   prenom: "",
   adresse: "",
   parts: 0,
+});
+
+export const emptyActionnaire = (): ActionnaireRow => ({
+  civilite: "Monsieur",
+  nom: "",
+  prenom: "",
+  adresse: "",
+  nombre_actions: 0,
 });
 
 export const emptyGerant = (): GerantRow => ({
