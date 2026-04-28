@@ -420,6 +420,40 @@ export default function DashboardScreen() {
           </View>
         </View>
 
+        {/* Workflow guidé "Créer une société" */}
+        <TouchableOpacity
+          onPress={() => router.navigate("/(app)/workflows/creer-societe" as never)}
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 16,
+            backgroundColor: colors.card,
+            borderWidth: 1,
+            borderColor: colors.primary,
+            borderRadius: 12,
+            padding: 20,
+            marginBottom: 28,
+          }}
+        >
+          <View style={{ width: 48, height: 48, borderRadius: 12, backgroundColor: colors.primary, alignItems: "center", justifyContent: "center" }}>
+            <Ionicons name="rocket-outline" size={24} color="#ffffff" />
+          </View>
+          <View style={{ flex: 1 }}>
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 8, marginBottom: 2 }}>
+              <Text style={{ fontFamily: fonts.semiBold, fontWeight: fontWeights.semiBold, fontSize: 15, color: colors.text }}>
+                Créer une société de A à Z
+              </Text>
+              <View style={{ paddingHorizontal: 8, paddingVertical: 2, backgroundColor: "#FDF8EE", borderRadius: 4 }}>
+                <Text style={{ fontFamily: fonts.medium, fontSize: 10, color: colors.primary, textTransform: "uppercase", letterSpacing: 0.5 }}>Nouveau</Text>
+              </View>
+            </View>
+            <Text style={{ fontFamily: fonts.regular, fontSize: 13, color: colors.textSecondary }}>
+              Parcours guidé : statuts → DRC → premiers actes — conforme OHADA
+            </Text>
+          </View>
+          <Ionicons name="arrow-forward" size={20} color={colors.primary} />
+        </TouchableOpacity>
+
         {/* Suggestion IA contextuelle */}
         {kpis.suggestion && (
           <View style={{

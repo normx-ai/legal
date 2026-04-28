@@ -93,6 +93,9 @@ const ITEMS: PaletteItem[] = [
   { id: "projet-fusion-societe-nouvelle", label: "Fusion par société nouvelle", category: "Fusion", route: "/(app)/generate/projet-fusion-societe-nouvelle" },
   { id: "requete-prorogation-ago", label: "Requête prorogation AGO", category: "Fusion", route: "/(app)/generate/requete-prorogation-ago" },
 
+  // Workflows guidés
+  { id: "_wf-creer-societe", label: "Créer une société de A à Z", category: "Workflow guidé", route: "/(app)/workflows/creer-societe", keywords: "constitution statuts drc parcours guide" },
+
   // Navigation
   { id: "_nav-dashboard", label: "Tableau de bord", category: "Navigation", route: "/(app)" },
   { id: "_nav-chat", label: "Assistant IA", category: "Navigation", route: "/(app)/chat", keywords: "ia ohada questions" },
